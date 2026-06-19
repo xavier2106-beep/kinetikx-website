@@ -22,7 +22,7 @@ export default function Nav() {
             width={721}
             height={164}
             priority
-            className="h-2 w-auto sm:h-10"
+            className="h-4 w-auto sm:h-10"
           />
         </a>
         <nav className="hidden gap-6 text-xs uppercase tracking-[0.2em] text-white/70 sm:flex">
