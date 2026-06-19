@@ -1,4 +1,5 @@
 import Nav from "@/components/Nav";
+import SectionNav from "@/components/SectionNav";
 import Hero from "@/components/sections/Hero";
 import Thesis from "@/components/sections/Thesis";
 import Model from "@/components/sections/Model";
@@ -13,6 +14,7 @@ export default function Home() {
   return (
     <>
       <Nav />
+      <SectionNav />
       <main className="flex-1">
         <Hero />
         <Thesis />

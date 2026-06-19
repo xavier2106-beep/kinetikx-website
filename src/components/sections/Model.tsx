@@ -1,4 +1,5 @@
 import SectionHeader from "@/components/ui/SectionHeader";
+import Reveal from "@/components/ui/Reveal";
 
 const COLS = [
   {
@@ -18,20 +19,22 @@ const COLS = [
 export default function Model() {
   return (
     <section id="model" className="w-full bg-black py-24 sm:py-32">
-      <SectionHeader
-        eyebrow="The model"
-        title="We are co-founders, not investors."
-        lead="A KinetiKx Journey doesn&rsquo;t start with a check. It starts with a chair next to the founder, a thirty-six-month plan, and a tech stack that already exists because the last venture in the cohort already used it."
-      />
+      <Reveal>
+        <SectionHeader
+          eyebrow="The model"
+          title="We are co-founders, not investors."
+          lead="A KinetiKx Journey doesn&rsquo;t start with a check. It starts with a chair next to the founder, a thirty-six-month plan, and a tech stack that already exists because the last venture in the cohort already used it."
+        />
+      </Reveal>
 
       <div className="mx-auto mt-16 grid max-w-6xl grid-cols-1 gap-12 px-6 sm:grid-cols-3 sm:gap-10">
-        {COLS.map((c) => (
-          <div key={c.title}>
+        {COLS.map((c, i) => (
+          <Reveal key={c.title} delay={i * 0.12}>
             <h3 className="mb-4 font-heading text-base font-medium uppercase tracking-[0.15em] text-[var(--kx-crimson)]">
               {c.title}
             </h3>
             <p className="text-sm leading-relaxed text-white/80">{c.body}</p>
-          </div>
+          </Reveal>
         ))}
       </div>
     </section>
