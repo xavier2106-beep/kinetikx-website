@@ -17,7 +17,7 @@ export default function Nav() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
         <a href="#home" className="flex items-center" aria-label="KinetiKx Venture Studios — Home">
           <Image
-            src="/brand/kkx-logo.png"
+            src="/brand/kkx-logo-white.png"
             alt="KinetiKx"
             width={143}
             height={59}
