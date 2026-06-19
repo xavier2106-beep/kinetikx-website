@@ -42,7 +42,7 @@ export default function Studio() {
       <div className="relative z-10">
         <Reveal>
           <SectionHeader
-            eyebrow="The studio"
+            eyebrow={<span className="text-black">The studio</span>}
             title="Three lanes. One studio."
             lead={
               <>
