@@ -4,17 +4,17 @@ import Reveal from "@/components/ui/Reveal";
 
 const LANES = [
   {
-    title: "CORPORATE INNOVATION UNIT",
+    title: "CORPORATE INNOVATION\nUNIT",
     body: "We build new revenue lines inside incumbents. Discrete team, separate P&L, our tech stack and operator bench, your distribution. Companies allocating 20% of growth capital to new-venture building outpace peers by two percentage points of revenue growth a year.",
     Icon: Heart,
   },
   {
-    title: "VENTURE INCUBATION STUDIO",
+    title: "VENTURE INCUBATION\nSTUDIO",
     body: "We co-found from day zero. Five ventures in Journey•One, every one with a partner sitting in an operating chair. Capital, conviction, GCC corporate relationships, and an operator bench that has built and exited before.",
     Icon: Eye,
   },
   {
-    title: "GTM GATEWAY",
+    title: "GTM\nGATEWAY",
     body: "We are the GCC entry point for tested ventures. Assessment, regulatory path, corporate buyer warm-introduced. Not an accelerator. Not a consultancy. A studio with skin in the game and a balance sheet behind every introduction.",
     Icon: Send,
   },
@@ -42,7 +42,7 @@ export default function Studio() {
       <div className="relative z-10">
         <Reveal>
           <SectionHeader
-            eyebrow={<span className="text-black">The studio</span>}
+            eyebrow={<span className="text-black">What we have</span>}
             title="Three lanes. One studio."
             lead={
               <>
@@ -64,7 +64,7 @@ export default function Studio() {
                 >
                   <lane.Icon className="h-8 w-8" strokeWidth={1.5} />
                 </div>
-                <h3 className="mb-3 font-heading text-base font-medium uppercase tracking-[0.15em] text-white">
+                <h3 className="mb-3 whitespace-pre-line font-heading text-base font-medium uppercase tracking-[0.15em] text-white">
                   {lane.title}
                 </h3>
                 <p className="text-sm leading-relaxed text-white/90">{lane.body}</p>
