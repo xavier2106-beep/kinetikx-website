@@ -61,6 +61,14 @@ export default function RootLayout({
     <html lang="en" className={`${raleway.variable} ${oswald.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-black text-white font-sans">
         {children}
+        <footer
+          id="skrollex-footer-1"
+          className="border-t border-white/10 bg-black px-6 py-6 text-center"
+        >
+          <p className="text-xs italic text-white/40">
+            Studio benchmarks reflect industry data. Past performance is not predictive.
+          </p>
+        </footer>
       </body>
     </html>
   );

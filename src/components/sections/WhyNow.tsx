@@ -4,7 +4,7 @@ export default function WhyNow() {
   return (
     <section id="why-now" className="w-full border-y border-white/10 bg-black py-24 sm:py-32">
       <SectionHeader
-        eyebrow={<><span className="text-white">The GCC tech window</span> is open.</>}
+        eyebrow="THE WINDOW"
         title="Why now."
         lead="Two shifts have stacked in the same window. Capital is rotating into operator-led studios because the math has stopped being theoretical. GCC regulators have built the legal runway for venture-building because the region is no longer importing growth — it&rsquo;s building it. Both moved together. We&rsquo;re inside it."
       />
@@ -17,10 +17,9 @@ export default function WhyNow() {
           <p className="text-sm leading-relaxed text-white/80">
             Half of global CEOs now name new-venture building a top-three priority.
             Companies that allocate 20% of growth capital to it outpace their peers by two
-            percentage points of revenue a year. The studio asset class is no longer being
+            percentage points of revenue a year.<sup className="fn"><a href="/sources#1">¹</a></sup> The studio asset class is no longer being
             debated — industry benchmarks now show 60% average IRR and 5.8× TVPI for
-            studio-built ventures, against a VC fund benchmark of roughly a third of that.
-            The LPs who needed proof now have it. The ones who didn&rsquo;t are already
+            studio-built ventures, against a VC fund benchmark of roughly a third of that.<sup className="fn"><a href="/sources#2">²</a></sup> The LPs who needed proof now have it. The ones who didn&rsquo;t are already
             allocated.
           </p>
         </div>
