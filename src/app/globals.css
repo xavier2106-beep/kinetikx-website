@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+:root {
+  --kx-black: #0a0a0a;
+  --kx-crimson: #a4161a;
+  --kx-crimson-dark: #7d1115;
+  --kx-grey-warm: #e8e8e8;
+  --kx-grey-mute: #6c757d;
+}
+
+@theme inline {
+  --color-background: var(--kx-black);
+  --color-foreground: #ffffff;
+  --color-crimson: var(--kx-crimson);
+  --color-crimson-dark: var(--kx-crimson-dark);
+  --color-grey-warm: var(--kx-grey-warm);
+  --color-grey-mute: var(--kx-grey-mute);
+  --font-sans: var(--font-raleway), Helvetica, system-ui, sans-serif;
+  --font-heading: var(--font-oswald), Helvetica, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+}
+
+html, body { background: var(--kx-black); color: #fff; }
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); }
+
+html { scroll-behavior: smooth; }
