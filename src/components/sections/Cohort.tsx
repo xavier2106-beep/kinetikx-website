@@ -104,12 +104,12 @@ export default function Cohort() {
     <section id="cohort" className="w-full bg-[#f5f1ea] py-24 sm:py-32 text-[#1a1a1a]">
       <Reveal>
         <div className="mx-auto max-w-3xl px-6 text-center">
-          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[var(--kx-crimson)]">
-            <span className="font-medium text-[#1a1a1a]">Five</span> ventures.
-          </p>
           <h2 className="font-heading text-3xl font-light leading-tight sm:text-5xl">
-            One thesis. One cohort. One journey.
+            One Thesis. One Cohort. One Journey.
           </h2>
+          <p className="mt-3 text-sm uppercase tracking-[0.35em] text-[var(--kx-crimson)] sm:text-base">
+            Five Ventures
+          </p>
           <p className="mt-5 text-base leading-relaxed text-[#1a1a1a]/70 sm:text-lg">
             Each venture was chosen for market timing, founder strength, and fit with the
             other four. Shared tech stack. Complementary segments. Cross-fertilising
