@@ -19,10 +19,10 @@ export default function Nav() {
           <Image
             src="/brand/kkx-logo-white.png"
             alt="KinetiKx"
-            width={143}
-            height={59}
+            width={721}
+            height={164}
             priority
-            className="h-9 w-auto sm:h-10"
+            className="h-8 w-auto sm:h-10"
           />
         </a>
         <nav className="hidden gap-6 text-xs uppercase tracking-[0.2em] text-white/70 sm:flex">
