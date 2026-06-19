@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { AGENTS, GRID } from "@/data/team";
+import { AGENTS, GRID, ZODIAC_SYMBOL } from "@/data/team";
 
 function AgentCard({ agentKey, index }: { agentKey: string; index: number }) {
   if (agentKey === "EMPTY") {
@@ -8,11 +8,15 @@ function AgentCard({ agentKey, index }: { agentKey: string; index: number }) {
   const a = AGENTS[agentKey];
   if (!a) return null;
   const lower = a.key.toLowerCase();
+  const zodiac = ZODIAC_SYMBOL[a.zodiac] ?? "";
   // Stagger animation delays per index so cards don't flip in sync.
   const baseDelay = -(index * 0.7) % 12;
 
   return (
-    <div className="flex flex-col items-center text-center">
+    <div
+      className="group flex flex-col items-center text-center"
+      title={`${a.nationality} · ${a.zodiac}`}
+    >
       <div
         className="relative h-32 w-32 overflow-hidden rounded-full bg-[#1a1a1a] sm:h-36 sm:w-36"
         style={{ boxShadow: "0 0 0 2px rgba(164,22,26,0.4), 0 8px 24px rgba(0,0,0,0.5)" }}
@@ -32,10 +36,29 @@ function AgentCard({ agentKey, index }: { agentKey: string; index: number }) {
         ))}
       </div>
       <div className="mt-3 font-heading text-base font-medium leading-tight text-white">
-        {a.fullName}
+        {a.fullName}{" "}
+        <span
+          className="ml-1 inline-flex items-center gap-1 align-middle text-[0.85em]"
+          title={`${a.nationality} · ${a.zodiac}`}
+          aria-label={`${a.nationality}, ${a.zodiac}`}
+        >
+          <span aria-hidden>{a.flag}</span>
+          {zodiac && (
+            <span
+              aria-hidden
+              className="kx-zodiac text-white/40"
+              style={{ fontVariantEmoji: "text" }}
+            >
+              {zodiac}
+            </span>
+          )}
+        </span>
       </div>
       <div className="mt-1 text-[10px] font-medium uppercase tracking-[0.12em] text-[var(--kx-crimson)]">
         {a.position}
+      </div>
+      <div className="mt-1 text-[10px] uppercase tracking-[0.1em] text-white/40 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+        {a.nationality} &middot; {a.zodiac}
       </div>
       <p className="mt-2 max-w-[15ch] text-xs italic leading-snug text-white/65 sm:max-w-[18ch]">
         &ldquo;{a.tagline}&rdquo;
