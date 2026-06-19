@@ -130,13 +130,9 @@ export default function Cohort() {
 
       <Reveal delay={0.2}>
         <div className="mx-auto mt-16 max-w-3xl px-6 text-center">
-          <h4 className="font-heading text-xl font-light italic text-[#1a1a1a]/90">
-            Journey•One
+          <h4 className="font-heading text-3xl font-light uppercase tracking-[0.25em] text-[#1a1a1a] sm:text-4xl">
+            JOURNEY&middot;ONE
           </h4>
-          <p className="mt-3 text-sm italic text-[#1a1a1a]/60">
-            Five was the maximum number we could co-found seriously across thirty-six months
-            without compromising the standard.
-          </p>
         </div>
       </Reveal>
     </section>
