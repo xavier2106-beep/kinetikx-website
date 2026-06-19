@@ -27,7 +27,9 @@ export default function Reveal({
       className={className}
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once, amount: 0.2 }}
+      // amount: "some" (any part visible) is far more forgiving than 0.2 on
+      // mobile where viewport math is jittery (URL bar collapse, etc).
+      viewport={{ once, amount: "some", margin: "0px 0px -50px 0px" }}
       transition={{ duration, delay, ease: [0.22, 0.61, 0.36, 1] }}
     >
       {children}

@@ -11,8 +11,6 @@ export default function Hero() {
     offset: ["start start", "end start"],
   });
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "20%"]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.6], [1, reduce ? 1 : 0]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "-15%"]);
 
   return (
     <section
@@ -34,10 +32,7 @@ export default function Hero() {
       </motion.div>
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/30 via-black/10 to-black/60 mix-blend-multiply" />
 
-      <motion.div
-        style={{ opacity: contentOpacity, y: contentY }}
-        className="relative z-10 mx-auto max-w-4xl px-6 text-center"
-      >
+      <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -98,7 +93,7 @@ export default function Hero() {
         >
           Transform &middot; Execute &middot; Evolve &nbsp;&mdash;&nbsp; Founder + Studio = Dragon.
         </motion.p>
-      </motion.div>
+      </div>
 
       <style>{`
         .kx-hero-bg {
