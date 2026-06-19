@@ -50,7 +50,7 @@ export default function Hero() {
         </div>
 
         <p className="mt-12 text-xs italic text-white/50">
-          Evolve &middot; Execute &middot; Transform &mdash; Founder + Studio = Dragon.
+          Transform &middot; Execute &middot; Evolve &mdash; Founder + Studio = Dragon.
         </p>
       </div>
     </section>
