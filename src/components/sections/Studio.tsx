@@ -4,17 +4,17 @@ import Reveal from "@/components/ui/Reveal";
 
 const LANES = [
   {
-    title: "CORPORATE INNOVATION",
+    title: "CORPORATE INNOVATION UNIT",
     body: "We build new revenue lines inside incumbents. Discrete team, separate P&L, our tech stack and operator bench, your distribution. Companies allocating 20% of growth capital to new-venture building outpace peers by two percentage points of revenue growth a year.",
     Icon: Heart,
   },
   {
-    title: "STUDIOS",
+    title: "VENTURE INCUBATION STUDIO",
     body: "We co-found from day zero. Five ventures in Journey•One, every one with a partner sitting in an operating chair. Capital, conviction, GCC corporate relationships, and an operator bench that has built and exited before.",
     Icon: Eye,
   },
   {
-    title: "VENTURE GATEWAY",
+    title: "GTM GATEWAY",
     body: "We are the GCC entry point for tested ventures. Assessment, regulatory path, corporate buyer warm-introduced. Not an accelerator. Not a consultancy. A studio with skin in the game and a balance sheet behind every introduction.",
     Icon: Send,
   },
