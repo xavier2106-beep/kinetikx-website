@@ -24,3 +24,16 @@ html, body { background: var(--kx-black); color: #fff; }
 h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); }
 
 html { scroll-behavior: smooth; }
+
+/* Pure-CSS entrance animation used by the Reveal component.
+   Runs once on mount, no JS / observer dependency. */
+.kx-reveal {
+  animation: kx-reveal-in 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+@keyframes kx-reveal-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .kx-reveal { animation: none; opacity: 1; transform: none; }
+}
