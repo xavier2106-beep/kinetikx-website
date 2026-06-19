@@ -130,8 +130,9 @@ export default function Cohort() {
 
       <Reveal delay={0.2}>
         <div className="mx-auto mt-16 max-w-3xl px-6 text-center">
-          <h4 className="font-heading text-3xl font-light uppercase tracking-[0.25em] text-[#1a1a1a] sm:text-4xl">
-            JOURNEY&middot;ONE
+          <h4 className="font-heading text-3xl font-light uppercase tracking-[0.25em] sm:text-4xl">
+            <span className="text-[#1a1a1a]">JOURNEY</span>
+            <span className="text-[var(--kx-crimson)]">&middot;ONE</span>
           </h4>
         </div>
       </Reveal>
