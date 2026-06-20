@@ -39,7 +39,7 @@ export default function Thesis() {
       <div className="relative z-10">
         <Reveal>
           <SectionHeader
-            eyebrow={<><span className="text-white">The studio model</span> works.</>}
+            eyebrow={<><span className="text-white">An untapped asset class</span> with unmatched attributes</>}
             title={<>The studio model works.<br />We&rsquo;re using it to build dragons.</>}
             lead="Three numbers settle the question of whether studios produce different outcomes than traditional founder paths."
           />
