@@ -91,7 +91,7 @@ export default function Hero() {
           transition={{ duration: 1.2, delay: 1 }}
           className="mt-12 text-sm uppercase tracking-[0.18em] text-white sm:text-base"
         >
-          Transform &middot; Execute &middot; Evolve &nbsp;&mdash;&nbsp; Founder + Studio = Dragon.
+          Transform &middot; Execute &middot; Evolve
         </motion.p>
       </div>
 
