@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SignStudio Slideshow v3.9</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: transparent;
+  }
+
+  #wrap {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── Slide base ─────────────────────────────────────────── */
+  .slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 60px;
+    opacity: 0;
+    pointer-events: none;
+    will-change: transform, opacity;
+  }
+
+  .slide-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* ── Transition: FADE ───────────────────────────────────── */
+  .slide[data-trans="fade"].entering  { animation: fadeIn  var(--dur) ease-in-out forwards; }
+  .slide[data-trans="fade"].leaving   { animation: fadeOut var(--dur) ease-in-out forwards; }
+
+  @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+
+  /* ── Transition: SLIDE-LEFT (enter from right) ──────────── */
+  .slide[data-trans="slide-left"].entering { animation: slideLeftIn  var(--dur) ease-in-out forwards; }
+  .slide[data-trans="slide-left"].leaving  { animation: slideLeftOut var(--dur) ease-in-out forwards; }
+
+  @keyframes slideLeftIn  { from { opacity:1; transform: translateX(100%); } to { opacity:1; transform: translateX(0); } }
+  @keyframes slideLeftOut { from { opacity:1; transform: translateX(0);    } to { opacity:1; transform: translateX(-100%); } }
+
+  /* ── Transition: SLIDE-RIGHT (enter from left) ──────────── */
+  .slide[data-trans="slide-right"].entering { animation: slideRightIn  var(--dur) ease-in-out forwards; }
+  .slide[data-trans="slide-right"].leaving  { animation: slideRightOut var(--dur) ease-in-out forwards; }
+
+  @keyframes slideRightIn  { from { opacity:1; transform: translateX(-100%); } to { opacity:1; transform: translateX(0); } }
+  @keyframes slideRightOut { from { opacity:1; transform: translateX(0);      } to { opacity:1; transform: translateX(100%); } }
+
+  /* ── Transition: SLIDE-UP (enter from bottom) ───────────── */
+  .slide[data-trans="slide-up"].entering { animation: slideUpIn  var(--dur) ease-in-out forwards; }
+  .slide[data-trans="slide-up"].leaving  { animation: slideUpOut var(--dur) ease-in-out forwards; }
+
+  @keyframes slideUpIn  { from { opacity:1; transform: translateY(80px);  } to { opacity:1; transform: translateY(0); } }
+  @keyframes slideUpOut { from { opacity:1; transform: translateY(0);      } to { opacity:1; transform: translateY(-80px); } }
+
+  /* ── Transition: SLIDE-DOWN (enter from top) ────────────── */
+  .slide[data-trans="slide-down"].entering { animation: slideDownIn  var(--dur) ease-in-out forwards; }
+  .slide[data-trans="slide-down"].leaving  { animation: slideDownOut var(--dur) ease-in-out forwards; }
+
+  @keyframes slideDownIn  { from { opacity:1; transform: translateY(-80px); } to { opacity:1; transform: translateY(0); } }
+  @keyframes slideDownOut { from { opacity:1; transform: translateY(0);      } to { opacity:1; transform: translateY(80px); } }
+
+  /* ── Transition: ZOOM-IN ────────────────────────────────── */
+  .slide[data-trans="zoom-in"].entering { animation: zoomIn  var(--dur) ease-in-out forwards; }
+  .slide[data-trans="zoom-in"].leaving  { animation: zoomOut var(--dur) ease-in-out forwards; }
+
+  @keyframes zoomIn  { from { opacity:0; transform: scale(0.7); } to { opacity:1; transform: scale(1); } }
+  @keyframes zoomOut { from { opacity:1; transform: scale(1);   } to { opacity:0; transform: scale(1.2); } }
+
+  /* ── Transition: ZOOM-OUT ───────────────────────────────── */
+  .slide[data-trans="zoom-out"].entering { animation: zoomOutIn  var(--dur) ease-in-out forwards; }
+  .slide[data-trans="zoom-out"].leaving  { animation: zoomOutOut var(--dur) ease-in-out forwards; }
+
+  @keyframes zoomOutIn  { from { opacity:0; transform: scale(1.3); } to { opacity:1; transform: scale(1); } }
+  @keyframes zoomOutOut { from { opacity:1; transform: scale(1);   } to { opacity:0; transform: scale(0.8); } }
+
+  /* ── Status message ─────────────────────────────────────── */
+  #status {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+  }
+</style>
+</head>
+
+<body>
+<div id="wrap">
+  <div id="status">Loading…</div>
+</div>
+
+<script>
+// ╔══════════════════════════════════════════════════════════════╗
+// ║                   YOUR CONFIGURATION                         ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+const CONFIG = {
+
+  // ── Data source ───────────────────────────────────────────────
+  dataUrl: "https://script.google.com/macros/s/AKfycbyKf9YNG4_idhLwgJHHRqZaiQ8uUhtCi8xdz_9shTJCpDz59HjheG8Np0cCw98WDtEW/exec",
+
+  // ── Field names (must match your Apps Script JSON keys) ───────
+  fields: {
+    id:          "id",
+    message:     "message",
+    font:        "font",
+    size:        "size",
+    colour:      "colour",
+    transition:  "transition",
+    duration:    "duration",
+    shadowSize:  "shadowSize",
+    shadowMode:  "shadowMode",
+    incSlideshow: "incSlideshow"
+  },
+
+  // ── Defaults (applied when a cell is blank) ───────────────────
+  defaults: {
+    font:        "Arial",
+    size:        "32",
+    colour:      "#FFFFFF",
+    transition:  "fade",
+    duration:    "5",
+    shadowSize:  "0.5",
+    shadowMode:  "0"
+  },
+
+  // ── Transition animation duration (milliseconds) ──────────────
+  // How long the fade/slide/zoom animation takes
+  fadeDuration: 700,
+
+  // ── Refresh interval ──────────────────────────────────────────
+  // How often to re-fetch the data for new/updated messages
+  // 60000 = 1 minute | 120000 = 2 minutes
+  refreshInterval: 60000,
+
+  // ── Display order ─────────────────────────────────────────────
+  randomOrder: false,
+
+  // ── Background color ──────────────────────────────────────────
+  backgroundColor: "transparent",
+};
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║              ENGINE — DO NOT EDIT BELOW HERE                ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+const wrap   = document.getElementById("wrap");
+const status = document.getElementById("status");
+
+document.documentElement.style.setProperty("--dur", CONFIG.fadeDuration + "ms");
+wrap.style.background = CONFIG.backgroundColor;
+
+let messages        = [];
+let currentIndex    = 0;
+let slideTimer      = null;
+let currentSlide    = null;
+let isTransitioning = false;
+let loadedFonts     = new Set();
+
+// ── Google Font loader ────────────────────────────────────────────────────────
+const WEB_SAFE = new Set(["arial", "helvetica", "georgia", "verdana", "times new roman", 
+                          "courier new", "trebuchet ms", "impact", "comic sans ms"]);
+
+function capitalizeFontName(name) {
+  return name.trim().split(/\s+/).map(word =>
+    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+  ).join(" ");
+}
+
+function loadGoogleFont(fontName) {
+  if (!fontName) return;
+  const key = fontName.toLowerCase().trim();
+  if (WEB_SAFE.has(key) || loadedFonts.has(key)) return;
+
+  const proper = capitalizeFontName(fontName);
+  const encoded = proper.replace(/ /g, "+");
+  const link = document.createElement("link");
+  link.rel  = "stylesheet";
+  link.href = `https://fonts.googleapis.com/css2?family=${encoded}:wght@400;700&display=swap`;
+  document.head.appendChild(link);
+  loadedFonts.add(key);
+}
+
+// ── Preload all fonts in the dataset ─────────────────────────────────────────
+function preloadFonts(msgs) {
+  const unique = [...new Set(msgs.map(m => m.font).filter(Boolean))];
+  unique.forEach(loadGoogleFont);
+}
+
+// ── Shadow builder ────────────────────────────────────────────────────────────
+function hexToRgba(hex, alpha) {
+  const full = hex.length === 4 
+    ? "#" + hex[1] + hex[1] + hex[2] + hex[2] + hex[3] + hex[3]
+    : hex;
+  const r = parseInt(full.slice(1, 3), 16);
+  const g = parseInt(full.slice(3, 5), 16);
+  const b = parseInt(full.slice(5, 7), 16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+function buildShadow(size, mode, color) {
+  const s = parseFloat(size);
+  if (s === 0 || isNaN(s)) return "none";
+  
+  const offset = s * 3;
+  const blur = s * 15;
+  const alpha = 0.7 + (s * 0.2);
+  const shadowColor = mode === "1" 
+    ? hexToRgba(color, alpha) 
+    : `rgba(0,0,0,${alpha})`;
+  
+  return `${offset}px ${offset}px ${blur}px ${shadowColor}`;
+}
+
+// ── Normalise a raw data row into a clean message object ──────────────────────
+function normalise(row) {
+  const f = CONFIG.fields;
+  const d = CONFIG.defaults;
+
+  const fontRaw       = row[f.font]       ? row[f.font].toString().trim()       : "";
+  const sizeRaw       = row[f.size]       ? row[f.size].toString().trim()       : "";
+  const colourRaw     = row[f.colour]     ? row[f.colour].toString().trim()     : "";
+  const transRaw      = row[f.transition] ? row[f.transition].toString().trim().toLowerCase() : "";
+  const durationRaw   = row[f.duration]   ? row[f.duration].toString().trim()   : "";
+  const shadowSizeRaw = row[f.shadowSize] ? row[f.shadowSize].toString().trim() : "";
+  const shadowModeRaw = row[f.shadowMode] ? row[f.shadowMode].toString().trim() : "";
+  const incSlideRaw   = row[f.incSlideshow] ? row[f.incSlideshow].toString().trim() : "";
+
+  const validTransitions = ["fade","slide-left","slide-right","slide-up","slide-down","zoom-in","zoom-out"];
+  const colourValid = /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/.test(colourRaw);
+  const sizeNum = parseInt(sizeRaw, 10);
+  const durationNum = parseFloat(durationRaw);
+  const shadowSizeNum = parseFloat(shadowSizeRaw);
+  const incSlideNum = parseInt(incSlideRaw, 10);
+
+  return {
+    id:         row[f.id]      ? row[f.id].toString().trim()      : "",
+    text:       row[f.message] ? row[f.message].toString().trim() : "",
+    font:       fontRaw   !== "" ? fontRaw                        : d.font,
+    size:       (!isNaN(sizeNum) && sizeNum > 0) ? sizeNum        : parseInt(d.size, 10),
+    colour:     colourValid ? colourRaw                           : d.colour,
+    transition: validTransitions.includes(transRaw) ? transRaw   : d.transition,
+    duration:   (!isNaN(durationNum) && durationNum > 0) ? durationNum : parseFloat(d.duration),
+    shadowSize: (!isNaN(shadowSizeNum) && shadowSizeNum >= 0) ? shadowSizeNum : parseFloat(d.shadowSize),
+    shadowMode: shadowModeRaw === "1" ? "1" : "0",
+    incSlideshow: (incSlideNum === 1 || incSlideNum === 0) ? incSlideNum : 1
+  };
+}
+
+// ── Build a slide DOM element ─────────────────────────────────────────────────
+function buildSlide(msg) {
+  const slide = document.createElement("div");
+  slide.className = "slide";
+  slide.dataset.trans = msg.transition;
+  slide.dataset.duration = msg.duration; // Store duration on the element
+
+  const inner = document.createElement("div");
+  inner.className = "slide-inner";
+
+  const shadow = buildShadow(msg.shadowSize, msg.shadowMode, msg.colour);
+
+  const textEl = document.createElement("div");
+  textEl.textContent = msg.text;
+  textEl.style.cssText = `
+    font-family: '${msg.font}', Arial, sans-serif;
+    font-size: ${msg.size}px;
+    font-weight: bold;
+    color: ${msg.colour};
+    line-height: 1.4;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    text-align: center;
+    text-shadow: ${shadow};
+  `;
+
+  inner.appendChild(textEl);
+  slide.appendChild(inner);
+  return slide;
+}
+
+// ── Animate transition between slides ────────────────────────────────────────
+function showSlide(index) {
+  if (isTransitioning || messages.length === 0) return;
+  isTransitioning = true;
+
+  const nextMsg   = messages[index];
+  const nextSlide = buildSlide(nextMsg);
+
+  wrap.appendChild(nextSlide);
+
+  // Animate out current slide
+  if (currentSlide) {
+    currentSlide.classList.add("leaving");
+  }
+
+  // Animate in next slide
+  nextSlide.classList.add("entering");
+
+  setTimeout(() => {
+    if (currentSlide) {
+      currentSlide.remove();
+    }
+    nextSlide.classList.remove("entering");
+    nextSlide.style.opacity = "1";
+    currentSlide    = nextSlide;
+    currentIndex    = index;
+    isTransitioning = false;
+  }, CONFIG.fadeDuration + 50);
+}
+
+// ── Advance to next slide ─────────────────────────────────────────────────────
+function advance() {
+  if (messages.length === 0) return;
+  
+  const next = (currentIndex + 1) % messages.length;
+  showSlide(next);
+  
+  // Schedule next advance based on the CURRENT slide's duration
+  if (slideTimer) clearTimeout(slideTimer);
+  const nextMsg = messages[next];
+  const nextDuration = nextMsg.duration * 1000;
+  slideTimer = setTimeout(advance, nextDuration);
+}
+
+// ── Start slideshow ───────────────────────────────────────────────────────────
+function startSlideshow(msgs) {
+  if (slideTimer) clearTimeout(slideTimer);
+  if (currentSlide) { currentSlide.remove(); currentSlide = null; }
+
+  isTransitioning = false;
+  currentIndex    = 0;
+  messages        = CONFIG.randomOrder ? shuffle([...msgs]) : msgs;
+
+  if (messages.length === 0) {
+    status.textContent = "No messages found.";
+    status.style.display = "block";
+    return;
+  }
+
+  status.style.display = "none";
+
+  // Show first slide with no animation
+  const firstMsg = messages[0];
+  currentSlide = buildSlide(firstMsg);
+  currentSlide.style.opacity = "1";
+  wrap.appendChild(currentSlide);
+
+  // Schedule first transition using first slide's duration
+  const firstDuration = firstMsg.duration * 1000;
+  slideTimer = setTimeout(advance, firstDuration);
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// ── Fetch data ────────────────────────────────────────────────────────────────
+async function fetchData() {
+  try {
+    const url  = CONFIG.dataUrl + (CONFIG.dataUrl.includes("?") ? "&" : "?") + "_cb=" + Date.now();
+    const resp = await fetch(url);
+    if (!resp.ok) throw new Error("HTTP " + resp.status);
+
+    const raw = await resp.json();
+    if (!Array.isArray(raw) || raw.length === 0) {
+      status.textContent = "No data in sheet.";
+      status.style.display = "block";
+      return;
+    }
+
+    const msgs = raw
+      .map(normalise)
+      .filter(m => m.text !== "" && m.incSlideshow === 1);
+
+    if (msgs.length === 0) {
+      status.textContent = "No slideshow messages (check incSlideshow column)";
+      status.style.display = "block";
+      return;
+    }
+
+    preloadFonts(msgs);
+
+    const sig = JSON.stringify(msgs);
+    if (sig !== fetchData._lastSig) {
+      fetchData._lastSig = sig;
+      // Small delay to let new fonts load before displaying
+      setTimeout(() => startSlideshow(msgs), loadedFonts.size > 0 ? 300 : 0);
+    }
+
+  } catch (err) {
+    console.error("Slideshow error:", err);
+    if (messages.length === 0) {
+      status.textContent = "Error loading data: " + err.message;
+      status.style.display = "block";
+    }
+  }
+}
+
+fetchData._lastSig = null;
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+fetchData();
+setInterval(fetchData, CONFIG.refreshInterval);
+</script>
+</body>
+</html>
