@@ -12,7 +12,7 @@ const COLS = [
   },
   {
     title: "TECH STACK",
-    body: "The agentic stack handles what used to take a build team a quarter. Code, content, customer ops, regulatory drafting, financial modelling. Shared across the cohort, fine-tuned per venture. The compounding asset every founder inherits on day one.",
+    body: "A shared team of named colleagues handles what used to take a build crew a quarter. Software, brand, ops support, drafting, models. Fine-tuned per venture, kept sharp across the cohort. The compounding asset every founder inherits on day one.",
   },
 ];
 
