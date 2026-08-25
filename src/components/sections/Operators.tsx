@@ -12,7 +12,7 @@ export default function Operators() {
         />
       </Reveal>
 
-      <div className="mx-auto mt-16 grid max-w-5xl grid-cols-1 gap-12 px-6 sm:grid-cols-2 sm:gap-10">
+      <div className="mx-auto mt-16 grid max-w-5xl grid-cols-1 gap-12 px-6 sm:grid-cols-2 sm:gap-10 md:grid-cols-3">
         <Reveal delay={0.1}>
           <h3 className="mb-3 font-heading text-base font-medium uppercase tracking-[0.15em] text-[var(--kx-crimson)]">
             Partners (4)
@@ -31,6 +31,16 @@ export default function Operators() {
             A standing bench of GTM, product, finance, legal, and ops operators who plug
             into the cohort as each venture hits the stage that needs them. Shared across
             the cohort. Tracked per venture. Compensated against outcomes.
+          </p>
+        </Reveal>
+        <Reveal delay={0.4}>
+          <h3 className="mb-3 font-heading text-base font-medium uppercase tracking-[0.15em] text-[var(--kx-crimson)]">
+            Agent Team
+          </h3>
+          <p className="text-sm leading-relaxed text-white/80">
+            A resident squad of AI agents working alongside the humans — code, ops, comms,
+            design, finance. Each venture gets its own agent bench, tuned to the
+            founder&rsquo;s workflow. Always on. Not tools — teammates.
           </p>
         </Reveal>
       </div>
