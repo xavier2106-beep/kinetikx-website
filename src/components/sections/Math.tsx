@@ -1,8 +1,10 @@
 "use client";
 import { useEffect, useState, FormEvent } from "react";
 
+// PIN reset to 11082012 by XGL msg 6369 (2026-08-25). SHA-256 of the
+// plaintext ; the plaintext itself never lives in the code.
 const EXPECTED_HASH =
-  "ca2dbf3ca0f6504bddc9e7cc1f2b15d36ae6a8e75fb9b1a755e7b67da0f0fa28";
+  "35ca3f89df8abdf11658c8f404a7632d6af53a19cc349b18a827f64ae3e39c31";
 const LS_KEY = "kx-math-unlocked";
 
 async function sha256(text: string): Promise<string> {
