@@ -69,7 +69,7 @@ const JOURNEY_ONE: Venture[] = [
 const JOURNEY_TWO: Venture[] = [
   {
     name: "LIQUID SPACE",
-    eyebrow: "",
+    eyebrow: "A DRINK OUT OF THIS WORLD",
     summary: "",
     market: "",
     stage: "Stage 0",
@@ -77,7 +77,7 @@ const JOURNEY_TWO: Venture[] = [
   },
   {
     name: "DEUCE",
-    eyebrow: "",
+    eyebrow: "YOUR ADVANTAGE",
     summary: "",
     market: "",
     stage: "Stage 0",
@@ -85,7 +85,7 @@ const JOURNEY_TWO: Venture[] = [
   },
   {
     name: "HERAKLYS",
-    eyebrow: "",
+    eyebrow: "THE BACKBONE OF SPORTS VENUES",
     summary: "",
     market: "",
     stage: "Stage 0",
@@ -93,7 +93,7 @@ const JOURNEY_TWO: Venture[] = [
   },
   {
     name: "AOSX",
-    eyebrow: "",
+    eyebrow: "EXECUTIVE TEAM IN A BOX",
     summary: "",
     market: "",
     stage: "Stage 0",
@@ -101,7 +101,7 @@ const JOURNEY_TWO: Venture[] = [
   },
   {
     name: "FALCON",
-    eyebrow: "",
+    eyebrow: "NEXTGEN OF FAN OWNERSHIP",
     summary: "",
     market: "",
     stage: "Stage 0",
