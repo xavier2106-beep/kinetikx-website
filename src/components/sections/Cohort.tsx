@@ -103,7 +103,7 @@ const JOURNEY_TWO: Venture[] = [
     accent: ACCENTS[2],
   },
   {
-    name: "STARDUST CAPITAL",
+    name: "STAR•DUST",
     eyebrow: "THE PASSIONATE",
     summary:
       "Fractional ownership of celebrity-owned real-world assets. Fan capital, professionally structured.",
