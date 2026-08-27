@@ -18,16 +18,19 @@ type Venture = {
 // stage-0 ventures). Journey TWO is queued up behind a red arrow —
 // same design + colour scheme reused so the whole strip reads as one
 // unified family. Taglines / market / stage will land later.
+// XGL msg 6466 · reshuffle : each cohort keeps the same 5-colour
+// sequence (blue → purple → olive → rust → green) so the two rows
+// stay visually parallel ; ventures pick up the gradient of the slot
+// they now occupy rather than dragging their original accent along.
+const ACCENTS = [
+  "linear-gradient(135deg, #1a3a5c 0%, #0a0a0a 100%)", // blue
+  "linear-gradient(135deg, #4a1a3a 0%, #0a0a0a 100%)", // purple
+  "linear-gradient(135deg, #5c4a1a 0%, #0a0a0a 100%)", // olive
+  "linear-gradient(135deg, #4a2a1a 0%, #0a0a0a 100%)", // rust
+  "linear-gradient(135deg, #2a3a1a 0%, #0a0a0a 100%)", // green
+];
+
 const JOURNEY_ONE: Venture[] = [
-  {
-    name: "FIN•WEL",
-    eyebrow: "THE UPLIFTER",
-    summary:
-      "Embedded financial wellness for GCC employees, delivered through the employer. The retention engine inside the org chart.",
-    market: "$2B Embedded Finance + $1.9T GCC Lending",
-    stage: "Stage 0 / MVP",
-    accent: "linear-gradient(135deg, #1a3a5c 0%, #0a0a0a 100%)",
-  },
   {
     name: "N•Y•S•M",
     eyebrow: "THE REVEALER",
@@ -35,7 +38,7 @@ const JOURNEY_ONE: Venture[] = [
       "Video résumés that read as authentic and ship as professional. Script, record, reveal.",
     market: "$4B+ HR Tech / Hiring",
     stage: "Stage 0 / MVP",
-    accent: "linear-gradient(135deg, #4a1a3a 0%, #0a0a0a 100%)",
+    accent: ACCENTS[0],
   },
   {
     name: "TCHIP•IN",
@@ -44,16 +47,23 @@ const JOURNEY_ONE: Venture[] = [
       "Crowd gifting for the GCC. The whole circle chips in for the moments that matter.",
     market: "$30B+ Gifting / Social Commerce",
     stage: "Stage 0 / MVP",
-    accent: "linear-gradient(135deg, #5c4a1a 0%, #0a0a0a 100%)",
+    accent: ACCENTS[1],
   },
   {
-    name: "STAR•DUST",
-    eyebrow: "THE PASSIONATE",
-    summary:
-      "Fractional ownership of celebrity-owned real-world assets. Fan capital, professionally structured.",
-    market: "$1T+ Fan Economy + Alternative Assets",
-    stage: "Stage 0 / MVP",
-    accent: "linear-gradient(135deg, #4a2a1a 0%, #0a0a0a 100%)",
+    name: "LIQUID SPACE",
+    eyebrow: "A DRINK OUT OF THIS WORLD",
+    summary: "",
+    market: "",
+    stage: "Stage 0",
+    accent: ACCENTS[2],
+  },
+  {
+    name: "HERAKLYS",
+    eyebrow: "THE BACKBONE OF SPORTS VENUES",
+    summary: "",
+    market: "",
+    stage: "Stage 0",
+    accent: ACCENTS[3],
   },
   {
     name: "PETS•NATION",
@@ -62,34 +72,19 @@ const JOURNEY_ONE: Venture[] = [
       "Pet care for the GCC, end-to-end. One app for every need your animal has.",
     market: "$2B+ GCC Pet Economy",
     stage: "Stage 0 / MVP",
-    accent: "linear-gradient(135deg, #2a3a1a 0%, #0a0a0a 100%)",
+    accent: ACCENTS[4],
   },
 ];
 
 const JOURNEY_TWO: Venture[] = [
   {
-    name: "LIQUID SPACE",
-    eyebrow: "A DRINK OUT OF THIS WORLD",
-    summary: "",
-    market: "",
-    stage: "Stage 0",
-    accent: "linear-gradient(135deg, #1a3a5c 0%, #0a0a0a 100%)",
-  },
-  {
-    name: "DEUCE",
-    eyebrow: "YOUR ADVANTAGE",
-    summary: "",
-    market: "",
-    stage: "Stage 0",
-    accent: "linear-gradient(135deg, #4a1a3a 0%, #0a0a0a 100%)",
-  },
-  {
-    name: "HERAKLYS",
-    eyebrow: "THE BACKBONE OF SPORTS VENUES",
-    summary: "",
-    market: "",
-    stage: "Stage 0",
-    accent: "linear-gradient(135deg, #5c4a1a 0%, #0a0a0a 100%)",
+    name: "FIN•WEL",
+    eyebrow: "THE UPLIFTER",
+    summary:
+      "Embedded financial wellness for GCC employees, delivered through the employer. The retention engine inside the org chart.",
+    market: "$2B Embedded Finance + $1.9T GCC Lending",
+    stage: "Stage 0 / MVP",
+    accent: ACCENTS[0],
   },
   {
     name: "AOSX",
@@ -97,7 +92,24 @@ const JOURNEY_TWO: Venture[] = [
     summary: "",
     market: "",
     stage: "Stage 0",
-    accent: "linear-gradient(135deg, #4a2a1a 0%, #0a0a0a 100%)",
+    accent: ACCENTS[1],
+  },
+  {
+    name: "DEUCE",
+    eyebrow: "YOUR ADVANTAGE",
+    summary: "",
+    market: "",
+    stage: "Stage 0",
+    accent: ACCENTS[2],
+  },
+  {
+    name: "STARDUST CAPITAL",
+    eyebrow: "THE PASSIONATE",
+    summary:
+      "Fractional ownership of celebrity-owned real-world assets. Fan capital, professionally structured.",
+    market: "$1T+ Fan Economy + Alternative Assets",
+    stage: "Stage 0 / MVP",
+    accent: ACCENTS[3],
   },
   {
     name: "FALCON",
@@ -105,7 +117,7 @@ const JOURNEY_TWO: Venture[] = [
     summary: "",
     market: "",
     stage: "Stage 0",
-    accent: "linear-gradient(135deg, #2a3a1a 0%, #0a0a0a 100%)",
+    accent: ACCENTS[4],
   },
 ];
 
