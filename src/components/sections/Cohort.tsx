@@ -186,7 +186,8 @@ export default function Cohort() {
           </p>
           <p className="mt-5 text-base leading-relaxed text-[#1a1a1a]/70 sm:text-lg">
             Each venture was chosen for market timing, founder strength, and fit with the
-            other four. Shared tech stack. Complementary segments. Cross-fertilising
+            segment and audiences of the other four to optimize cross-marketing
+            potential. Shared tech stack. Complementary segments. Cross-fertilising
             distribution.{" "}
             <strong className="text-[#1a1a1a]">
               The cohort is the asset. The dragons are what come out of it.
