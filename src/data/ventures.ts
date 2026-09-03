@@ -126,7 +126,10 @@ export const HERAKLYS_DETAIL: VentureDetail = {
     { label: "Primary hosting", value: "Canada", hint: "Supabase AWS ca-central-1 (Montréal) + Vercel" },
     { label: "Languages at launch", value: "EN + FR", hint: "Loi 25 / Loi 96 built in" },
     { label: "Market opportunity", value: "8,950-venue TAM", hint: "110-venue five-year SOM" },
-    { label: "Live public demo", value: "demo.heraklys.com", hint: "Fictional venue, real depth" },
+    // 2026-09-03 · demo URL removed from Key Numbers pending task #319 i18n
+    // fix — same anonymity leak Lucy caught on UI/UX tab. Re-add both once
+    // demo.heraklys.com no longer leaks Longueuil / CSL in its SSR HTML.
+    { label: "Live public demo", value: "Publishing shortly", hint: "Fictional venue, real depth" },
   ],
   team: {
     intro:
