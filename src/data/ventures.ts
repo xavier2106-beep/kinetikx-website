@@ -169,8 +169,82 @@ export const HERAKLYS_DETAIL: VentureDetail = {
   },
 };
 
+// === NYSM · pilot 2 (XGL msg 7086) · placeholders pending Lucy copy ======
+// Mirror of the HERAKLYS pattern — Lucy is briefed for the exec-summary
+// content (2026-09-04, matrix-dm). XGL provides the concept diagram image.
+export const NYSM_DETAIL: VentureDetail = {
+  description: [
+    "N•Y•S•M is The Revealer — a video-résumé platform that lets candidates ship a professionally-produced 60-second pitch instead of a static CV. Script, record, reveal: three steps between a job seeker and a hiring manager watching them speak, not scanning their bullet points.",
+    "[LUCY placeholder] Second paragraph — product positioning: why video, why now, what makes NYSM different from Loom-style upload or the LinkedIn one-shot camera.",
+    "[LUCY placeholder] Third paragraph — market moment + why-now + KinetiKx thesis fit.",
+  ],
+  conceptDiagramSrc: undefined, // XGL to provide the image
+  conceptDiagramCaption:
+    "[LUCY placeholder] One-line caption if the image benefits from context.",
+  market: {
+    tam: {
+      label: "TAM",
+      amountLabel: "[LUCY]",
+      paragraph:
+        "[LUCY placeholder] Total addressable — global HR tech / hiring software (already teased at $4B+ on the cohort card). Bottom-up ideal: annual job-seeker × ARPU + recruiter seats × ACV.",
+    },
+    sam: {
+      label: "SAM",
+      amountLabel: "[LUCY]",
+      paragraph:
+        "[LUCY placeholder] Serviceable available — geography + language + segment filters applied to the TAM over 24-36 months.",
+    },
+    som: {
+      label: "SOM",
+      amountLabel: "[LUCY]",
+      paragraph:
+        "[LUCY placeholder] Serviceable obtainable — realistic 24-36 month capture given pilot + warm-intro pipeline.",
+    },
+  },
+  uiUx: {
+    paragraph:
+      "[LUCY placeholder] Product experience: script assistant → record on any device → reveal via a public share page that plays like a Loom without the enterprise vibe. Mobile-first for candidates, dashboard for recruiters.",
+    demoUrl: "https://mypage.nysm.me",
+    demoLabel: "See a real reveal",
+    demoNote:
+      "[LUCY placeholder] One-line note about what the visitor will find at the demo URL.",
+    screenshots: [],
+  },
+  businessModel: [
+    "[LUCY placeholder] Revenue model — Candidate-side vs recruiter-side monetisation, freemium threshold, paid tiers, add-ons.",
+    "[LUCY placeholder] Segment — primary (job seekers in which geographies + verticals), secondary (recruiters, agencies, schools).",
+  ],
+  gtm: [
+    "[LUCY placeholder] Acquisition strategy for the first N users + first M recruiters. Viral loops, paid, partnerships, ATS integrations.",
+    "[LUCY placeholder] Expected cycle, ACV per recruiter side, CAC assumptions.",
+  ],
+  keyNumbers: [
+    { label: "Product status", value: "MVP live", hint: "mypage.nysm.me · Stage 0" },
+    { label: "[LUCY] User signups", value: "[LUCY]", hint: "to-date" },
+    { label: "[LUCY] Videos published", value: "[LUCY]", hint: "reveals shipped" },
+    { label: "[LUCY] Retention D7 / D30", value: "[LUCY]", hint: "cohort curves" },
+    { label: "[LUCY] Recruiter pilots", value: "[LUCY]", hint: "in conversation / signed" },
+    { label: "[LUCY] MRR / Pipeline", value: "[LUCY]", hint: "if published-safe" },
+    { label: "Market opportunity", value: "$4B+ TAM", hint: "HR Tech / Hiring — Lucy to refine" },
+    { label: "Languages at launch", value: "[LUCY]", hint: "which locales live today" },
+  ],
+  team: {
+    intro:
+      "[LUCY placeholder] KinetiKx Venture Studios framing — founder-led with an AI-native squad. Mirror the HERAKLYS team paragraph, tuned for NYSM's product surface.",
+    members: [
+      { name: "Xavier (XGL)", role: "Founder + Product Architect", note: "Vision + partnerships + GCC/Canada network" },
+      { name: "[LUCY] Nina Solheim", role: "Engineering (web + infra)", note: "[LUCY]" },
+      { name: "[LUCY] Mike", role: "Mobile (S7 · React Native / Expo)", note: "[LUCY]" },
+      { name: "[LUCY] Rebecca Falcone", role: "Legal counsel", note: "Contracts, privacy, GDPR/Loi 25" },
+      { name: "[LUCY] Lucy del Mar", role: "Brand, marketing & sales", note: "[LUCY]" },
+      { name: "[LUCY] additions", role: "[LUCY]", note: "Any additional callouts (advisors, coaches)" },
+    ],
+  },
+};
+
 // Slug → detail lookup. Add new venture keys here as content lands.
 // A venture without an entry hides the "click to expand" affordance.
 export const VENTURE_DETAILS: Record<string, VentureDetail> = {
   heraklys: HERAKLYS_DETAIL,
+  nysm: NYSM_DETAIL,
 };
