@@ -18,17 +18,18 @@ type Venture = {
 // stage-0 ventures). Journey TWO is queued up behind a red arrow —
 // same design + colour scheme reused so the whole strip reads as one
 // unified family. Taglines / market / stage will land later.
-// XGL msg 6466 · reshuffle : each cohort keeps the same 5-colour
-// sequence (blue → purple → olive → rust → green) so the two rows
-// stay visually parallel ; ventures pick up the gradient of the slot
-// they now occupy rather than dragging their original accent along.
-const ACCENTS = [
-  "linear-gradient(135deg, #1a3a5c 0%, #0a0a0a 100%)", // blue
-  "linear-gradient(135deg, #4a1a3a 0%, #0a0a0a 100%)", // purple
-  "linear-gradient(135deg, #5c4a1a 0%, #0a0a0a 100%)", // olive
-  "linear-gradient(135deg, #4a2a1a 0%, #0a0a0a 100%)", // rust
-  "linear-gradient(135deg, #2a3a1a 0%, #0a0a0a 100%)", // green
-];
+// XGL msg 7039 (2026-09-03) · colour is now a BRAND attribute, not a
+// slot attribute. Each venture in J1 pairs with one in J2 on the same
+// colour (NYSM↔FinWel blue, Heraklys↔Falcon purple, Tchipin↔Stardust
+// green, PetsNation↔AOSX brown, LiquidSpace↔Deuce yellow). Positions
+// within each row are independent.
+const COLOR = {
+  blue:   "linear-gradient(135deg, #1a3a5c 0%, #0a0a0a 100%)",
+  purple: "linear-gradient(135deg, #4a1a3a 0%, #0a0a0a 100%)",
+  green:  "linear-gradient(135deg, #1a4a2a 0%, #0a0a0a 100%)",
+  brown:  "linear-gradient(135deg, #4a2a1a 0%, #0a0a0a 100%)",
+  yellow: "linear-gradient(135deg, #6a5010 0%, #0a0a0a 100%)",
+} as const;
 
 const JOURNEY_ONE: Venture[] = [
   {
@@ -38,7 +39,15 @@ const JOURNEY_ONE: Venture[] = [
       "Video résumés that read as authentic and ship as professional. Script, record, reveal.",
     market: "$4B+ HR Tech / Hiring",
     stage: "Stage 0 / MVP",
-    accent: ACCENTS[0],
+    accent: COLOR.blue,
+  },
+  {
+    name: "HERAKLYS",
+    eyebrow: "THE BACKBONE OF SPORTS VENUES",
+    summary: "",
+    market: "",
+    stage: "Stage 0",
+    accent: COLOR.purple,
   },
   {
     name: "TCHIP•IN",
@@ -47,23 +56,7 @@ const JOURNEY_ONE: Venture[] = [
       "Crowd gifting for the GCC. The whole circle chips in for the moments that matter.",
     market: "$30B+ Gifting / Social Commerce",
     stage: "Stage 0 / MVP",
-    accent: ACCENTS[1],
-  },
-  {
-    name: "LIQUID SPACE",
-    eyebrow: "A DRINK OUT OF THIS WORLD",
-    summary: "",
-    market: "",
-    stage: "Stage 0",
-    accent: ACCENTS[2],
-  },
-  {
-    name: "HERAKLYS",
-    eyebrow: "THE BACKBONE OF SPORTS VENUES",
-    summary: "",
-    market: "",
-    stage: "Stage 0",
-    accent: ACCENTS[3],
+    accent: COLOR.green,
   },
   {
     name: "PETS•NATION",
@@ -72,7 +65,15 @@ const JOURNEY_ONE: Venture[] = [
       "Pet care for the GCC, end-to-end. One app for every need your animal has.",
     market: "$2B+ GCC Pet Economy",
     stage: "Stage 0 / MVP",
-    accent: ACCENTS[4],
+    accent: COLOR.brown,
+  },
+  {
+    name: "LIQUID SPACE",
+    eyebrow: "A DRINK OUT OF THIS WORLD",
+    summary: "",
+    market: "",
+    stage: "Stage 0",
+    accent: COLOR.yellow,
   },
 ];
 
@@ -84,7 +85,7 @@ const JOURNEY_TWO: Venture[] = [
       "Embedded financial wellness for GCC employees, delivered through the employer. The retention engine inside the org chart.",
     market: "$2B Embedded Finance + $1.9T GCC Lending",
     stage: "Stage 0 / MVP",
-    accent: ACCENTS[0],
+    accent: COLOR.blue,
   },
   {
     name: "AOSX",
@@ -92,15 +93,7 @@ const JOURNEY_TWO: Venture[] = [
     summary: "",
     market: "",
     stage: "Stage 0",
-    accent: ACCENTS[1],
-  },
-  {
-    name: "DEUCE",
-    eyebrow: "YOUR ADVANTAGE",
-    summary: "",
-    market: "",
-    stage: "Stage 0",
-    accent: ACCENTS[2],
+    accent: COLOR.brown,
   },
   {
     name: "STAR•DUST",
@@ -109,7 +102,7 @@ const JOURNEY_TWO: Venture[] = [
       "Fractional ownership of celebrity-owned real-world assets. Fan capital, professionally structured.",
     market: "$1T+ Fan Economy + Alternative Assets",
     stage: "Stage 0 / MVP",
-    accent: ACCENTS[3],
+    accent: COLOR.green,
   },
   {
     name: "FALCON",
@@ -117,7 +110,15 @@ const JOURNEY_TWO: Venture[] = [
     summary: "",
     market: "",
     stage: "Stage 0",
-    accent: ACCENTS[4],
+    accent: COLOR.purple,
+  },
+  {
+    name: "DEUCE",
+    eyebrow: "YOUR ADVANTAGE",
+    summary: "",
+    market: "",
+    stage: "Stage 0",
+    accent: COLOR.yellow,
   },
 ];
 
