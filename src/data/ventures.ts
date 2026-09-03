@@ -92,10 +92,16 @@ export const HERAKLYS_DETAIL: VentureDetail = {
   uiUx: {
     paragraph:
       "HERAKLYS is built for three users at once: the member who books, pays and enters in three taps; the staff member who runs the counter from one screen instead of five tools; and the director who watches occupancy, revenue and attendance live instead of reconstructing them in spreadsheets weeks later. Bilingual (EN / FR) by design, mobile-first, with an interface that behaves like the consumer apps members already love.",
-    demoUrl: "https://demo.heraklys.com",
-    demoLabel: "Explore the live demo",
+    // 2026-09-03 · demo link + creds temporarily masked pending i18n tenant-
+    // conditioning fix (task #319). Root cause : demo.heraklys.com SSRs the
+    // default i18n catalogue, which leaks "Complexe Sportif Longueuil" +
+    // "CSL" in the HTML before any login → Loi 25 anonymity exposure. Lucy
+    // caught this in QC. Re-enable both once the message catalogue reads
+    // `{venue_name}`/`{venue_short}` from `tenants.display_name` at runtime.
+    demoUrl: undefined,
+    demoLabel: undefined,
     demoNote:
-      "Fully operating instance running on fictional venue data (login: demo / demo). Book a court, watch it land in the back office, and see the BI cockpit update in real time.",
+      "Live demo access is being finalised — a fully operating instance on fictional venue data will be published here shortly.",
     screenshots: [],
   },
   businessModel: [
