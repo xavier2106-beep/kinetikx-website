@@ -182,6 +182,11 @@ export const HERAKLYS_DETAIL: VentureDetail = {
 //       profiling is EU AI Act art. 5 + NYC LL144 + GDPR / Loi 25 territory.
 //       No "scoring / profiling / matching automatisé" claim ships without
 //       her sign-off.
+//   (4) Any endpoint that emits data derived from the demo tenant DB
+//       (ICS, .vcf, PDF exports, CSV downloads…) DEFAULTS to fail-closed
+//       404 on the demo host. Never fail-open. Enforced in the route
+//       handler, not just in middleware. See /booking/[id]/ics/route.ts
+//       for the HERAKLYS reference implementation.
 export const NYSM_DETAIL: VentureDetail = {
   description: [
     "N•Y•S•M is The Revealer — a video-résumé platform that lets candidates ship a professionally-produced 60-second pitch instead of a static CV. Script, record, reveal: three steps between a job seeker and a hiring manager watching them speak, not scanning their bullet points.",
