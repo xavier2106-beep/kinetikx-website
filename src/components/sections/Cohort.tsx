@@ -4,8 +4,11 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
+import VentureDrawer from "@/components/sections/VentureDrawer";
+import { VENTURE_DETAILS } from "@/data/ventures";
 
 type Venture = {
+  slug: string;
   name: string;
   eyebrow: string;
   summary: string;
@@ -33,6 +36,7 @@ const COLOR = {
 
 const JOURNEY_ONE: Venture[] = [
   {
+    slug: "nysm",
     name: "N•Y•S•M",
     eyebrow: "THE REVEALER",
     summary:
@@ -42,6 +46,7 @@ const JOURNEY_ONE: Venture[] = [
     accent: COLOR.blue,
   },
   {
+    slug: "heraklys",
     name: "HERAKLYS",
     eyebrow: "THE BACKBONE OF SPORTS VENUES",
     summary: "",
@@ -50,6 +55,7 @@ const JOURNEY_ONE: Venture[] = [
     accent: COLOR.purple,
   },
   {
+    slug: "tchipin",
     name: "TCHIP•IN",
     eyebrow: "THE GIFTER",
     summary:
@@ -59,6 +65,7 @@ const JOURNEY_ONE: Venture[] = [
     accent: COLOR.green,
   },
   {
+    slug: "petsnation",
     name: "PETS•NATION",
     eyebrow: "THE CARETAKER",
     summary:
@@ -68,6 +75,7 @@ const JOURNEY_ONE: Venture[] = [
     accent: COLOR.brown,
   },
   {
+    slug: "liquid-space",
     name: "LIQUID SPACE",
     eyebrow: "A DRINK OUT OF THIS WORLD",
     summary: "",
@@ -79,6 +87,7 @@ const JOURNEY_ONE: Venture[] = [
 
 const JOURNEY_TWO: Venture[] = [
   {
+    slug: "finwel",
     name: "FIN•WEL",
     eyebrow: "THE UPLIFTER",
     summary:
@@ -88,6 +97,7 @@ const JOURNEY_TWO: Venture[] = [
     accent: COLOR.blue,
   },
   {
+    slug: "aosx",
     name: "AOSX",
     eyebrow: "EXECUTIVE TEAM IN A BOX",
     summary: "",
@@ -96,6 +106,7 @@ const JOURNEY_TWO: Venture[] = [
     accent: COLOR.brown,
   },
   {
+    slug: "stardust",
     name: "STAR•DUST",
     eyebrow: "THE PASSIONATE",
     summary:
@@ -105,6 +116,7 @@ const JOURNEY_TWO: Venture[] = [
     accent: COLOR.green,
   },
   {
+    slug: "falcon",
     name: "FALCON",
     eyebrow: "NEXTGEN OF FAN OWNERSHIP",
     summary: "",
@@ -113,6 +125,7 @@ const JOURNEY_TWO: Venture[] = [
     accent: COLOR.purple,
   },
   {
+    slug: "deuce",
     name: "DEUCE",
     eyebrow: "YOUR ADVANTAGE",
     summary: "",
@@ -122,11 +135,41 @@ const JOURNEY_TWO: Venture[] = [
   },
 ];
 
-function VentureCard({ v, i }: { v: Venture; i: number }) {
+function VentureCard({
+  v,
+  i,
+  isOpen,
+  onClick,
+}: {
+  v: Venture;
+  i: number;
+  isOpen: boolean;
+  onClick: () => void;
+}) {
   const hasBack = v.summary.trim().length > 0 || v.market.trim().length > 0;
+  const hasDetail = Boolean(VENTURE_DETAILS[v.slug]);
   return (
     <Reveal delay={i * 0.08}>
-      <article className="group relative overflow-hidden bg-[#1a1a1a] shadow-[0_8px_24px_rgba(0,0,0,0.5)] transition-transform duration-300 hover:-translate-y-1">
+      <motion.article
+        onClick={onClick}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onClick();
+          }
+        }}
+        animate={
+          isOpen
+            ? { scale: 1.02, boxShadow: "0 12px 32px rgba(0,0,0,0.7)" }
+            : { scale: 1, boxShadow: "0 8px 24px rgba(0,0,0,0.5)" }
+        }
+        transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
+        className={`group relative cursor-pointer overflow-hidden bg-[#1a1a1a] transition-transform duration-300 hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 ${
+          isOpen ? "ring-2 ring-white/70" : ""
+        }`}
+      >
         <div
           className="relative aspect-[3/4] overflow-hidden"
           style={{ background: v.accent }}
@@ -163,8 +206,15 @@ function VentureCard({ v, i }: { v: Venture; i: number }) {
               </div>
             </div>
           )}
+
+          {/* Bottom-right badge signals deep-dive drawer is available */}
+          {hasDetail && (
+            <span className="pointer-events-none absolute bottom-3 right-3 font-mono text-[9px] uppercase tracking-[0.15em] text-white/60">
+              {isOpen ? "Open →" : "Click to expand →"}
+            </span>
+          )}
         </div>
-      </article>
+      </motion.article>
     </Reveal>
   );
 }
@@ -172,8 +222,20 @@ function VentureCard({ v, i }: { v: Venture; i: number }) {
 export default function Cohort() {
   // 1 = JOURNEY·ONE (default), 2 = JOURNEY·TWO
   const [cohort, setCohort] = useState<1 | 2>(1);
+  // Slug of the currently expanded venture ; null = drawer closed.
+  const [openSlug, setOpenSlug] = useState<string | null>(null);
   const list = cohort === 1 ? JOURNEY_ONE : JOURNEY_TWO;
   const direction = cohort === 1 ? -1 : 1;
+
+  // Close the drawer whenever the user swaps journeys (open venture may
+  // no longer be visible in the new list) — feels clean, avoids stale UI.
+  const swapCohort = (target: 1 | 2) => {
+    setOpenSlug(null);
+    setCohort(target);
+  };
+
+  const openVenture = openSlug ? list.find((v) => v.slug === openSlug) : null;
+  const openDetail = openSlug ? VENTURE_DETAILS[openSlug] ?? null : null;
 
   return (
     <section id="cohort" className="w-full bg-[#f5f1ea] py-24 sm:py-32 text-[#1a1a1a]">
@@ -210,18 +272,40 @@ export default function Cohort() {
             className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5"
           >
             {list.map((v, i) => (
-              <VentureCard key={`${cohort}-${v.name}`} v={v} i={i} />
+              <VentureCard
+                key={`${cohort}-${v.name}`}
+                v={v}
+                i={i}
+                isOpen={openSlug === v.slug}
+                onClick={() =>
+                  setOpenSlug((prev) => (prev === v.slug ? null : v.slug))
+                }
+              />
             ))}
           </motion.div>
         </AnimatePresence>
       </div>
+
+      {/* Full-width venture detail drawer — opens below the card grid */}
+      <AnimatePresence>
+        {openVenture ? (
+          <VentureDrawer
+            key={openVenture.slug}
+            ventureName={openVenture.name}
+            ventureEyebrow={openVenture.eyebrow || "STAGE 0"}
+            accent={openVenture.accent}
+            detail={openDetail}
+            onClose={() => setOpenSlug(null)}
+          />
+        ) : null}
+      </AnimatePresence>
 
       <Reveal delay={0.2}>
         <div className="mx-auto mt-16 flex max-w-3xl items-center justify-center gap-4 px-6">
           {cohort === 2 && (
             <button
               type="button"
-              onClick={() => setCohort(1)}
+              onClick={() => swapCohort(1)}
               aria-label="Voir Journey One"
               className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--kx-crimson)]/40 text-[var(--kx-crimson)] transition hover:border-[var(--kx-crimson)] hover:bg-[var(--kx-crimson)]/10"
             >
@@ -237,7 +321,7 @@ export default function Cohort() {
           {cohort === 1 && (
             <button
               type="button"
-              onClick={() => setCohort(2)}
+              onClick={() => swapCohort(2)}
               aria-label="Voir Journey Two"
               className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--kx-crimson)]/40 text-[var(--kx-crimson)] transition hover:border-[var(--kx-crimson)] hover:bg-[var(--kx-crimson)]/10"
             >
