@@ -172,6 +172,16 @@ export const HERAKLYS_DETAIL: VentureDetail = {
 // === NYSM · pilot 2 (XGL msg 7086) · placeholders pending Lucy copy ======
 // Mirror of the HERAKLYS pattern — Lucy is briefed for the exec-summary
 // content (2026-09-04, matrix-dm). XGL provides the concept diagram image.
+//
+// Guardrails carried over from the HERAKLYS incident (Charlotte 2026-09-04) :
+//   (1) Tripwire mypage.nysm.me for PII exposure BEFORE re-enabling the
+//       demo link in the drawer (host public + API-level, not just SSR HTML).
+//   (2) Section 7 key numbers = XGL-arbitrated only. No automatic DB pulls
+//       into published copy. Placeholders stay until he explicitly approves.
+//   (3) Section 1 product description = Rebecca review required. Video
+//       profiling is EU AI Act art. 5 + NYC LL144 + GDPR / Loi 25 territory.
+//       No "scoring / profiling / matching automatisé" claim ships without
+//       her sign-off.
 export const NYSM_DETAIL: VentureDetail = {
   description: [
     "N•Y•S•M is The Revealer — a video-résumé platform that lets candidates ship a professionally-produced 60-second pitch instead of a static CV. Script, record, reveal: three steps between a job seeker and a hiring manager watching them speak, not scanning their bullet points.",
