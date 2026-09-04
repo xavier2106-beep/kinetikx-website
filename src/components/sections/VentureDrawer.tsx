@@ -100,7 +100,7 @@ export default function VentureDrawer({
           opacity: { duration: 0.22, ease: [0.4, 0, 1, 1] },
         },
       }}
-      className="relative w-full overflow-hidden"
+      className="relative mt-5 w-full overflow-hidden"
     >
       {/* Solid dark base — guarantees text-legible bg everywhere */}
       <div aria-hidden className="absolute inset-0 bg-[#0a0a0a]" />
