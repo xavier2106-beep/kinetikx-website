@@ -140,8 +140,12 @@ const JOURNEY_TWO: Venture[] = [
     eyebrow: "EXECUTIVE TEAM IN A BOX",
     summary: "",
     accent: COLOR.brown,
-    sector: "AI-Enterprise",
-    ...TBD_INFO,
+    // XGL msg 7141 — real AOSX values, verbatim.
+    sector: "AI & Device",
+    segment: "B2B & B2C",
+    marketSize: "GCC $XB, US & CAN $ZB, GLB $YB",
+    model: "Subscription + HW Margin",
+    stage: "Build → MVP Q1-27",
   },
   {
     slug: "stardust",
