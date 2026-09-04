@@ -154,8 +154,12 @@ const JOURNEY_TWO: Venture[] = [
     summary:
       "Fractional ownership of celebrity-owned real-world assets. Fan capital, professionally structured.",
     accent: COLOR.green,
-    sector: "FanEconomy",
-    ...TBD_INFO,
+    // XGL msg 7143 — real Stardust Capital values, verbatim.
+    sector: "FinTech",
+    segment: "B2C",
+    marketSize: "GCC $XB, US & CAN $ZB, GLB $YB",
+    model: "Trx Fee + Revenue Share",
+    stage: "Validation & Regulatory Assessment",
   },
   {
     slug: "falcon",
