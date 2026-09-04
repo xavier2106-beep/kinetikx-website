@@ -169,8 +169,12 @@ const JOURNEY_TWO: Venture[] = [
     summary: "",
     accent: COLOR.yellow,
     logoSrc: "/images/ventures/deuce-symbol.png",
-    sector: "SportsTech",
-    ...TBD_INFO,
+    // XGL msg 7137 — real DEUCE values, verbatim (Collection typo fixed).
+    sector: "Fashion & Apparel",
+    segment: "B2B2C & B2C",
+    marketSize: "GCC $XB, US & CAN $ZB, GLB $YB",
+    model: "Sales Margin",
+    stage: "Validation + Collection V1",
   },
 ];
 
