@@ -105,8 +105,12 @@ const JOURNEY_ONE: Venture[] = [
       "Pet care for the GCC, end-to-end. One app for every need your animal has.",
     accent: COLOR.brown,
     logoSrc: "/images/ventures/petsnation-symbol.png",
-    sector: "PetTech",
-    ...TBD_INFO,
+    // XGL msg 7135 — real PETSNATION values, verbatim.
+    sector: "PetsTech, eCommerce",
+    segment: "B2C",
+    marketSize: "GCC $XB, GLB $YB",
+    model: "Subscription + Revenue Share",
+    stage: "Build → MVP Q127",
   },
   {
     slug: "liquid-space",
