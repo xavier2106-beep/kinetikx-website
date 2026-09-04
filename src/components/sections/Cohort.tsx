@@ -99,6 +99,7 @@ const JOURNEY_ONE: Venture[] = [
     summary:
       "Pet care for the GCC, end-to-end. One app for every need your animal has.",
     accent: COLOR.brown,
+    logoSrc: "/images/ventures/petsnation-symbol.png",
     sector: "PetTech",
     ...TBD_INFO,
   },
@@ -177,19 +178,18 @@ function VentureCard({
   onMouseEnter?: () => void;
 }) {
   const hasLogo = Boolean(v.logoSrc);
-  // XGL msg 7117-7118 : same 5-row labeled info block across all cards.
-  // Rows only render when a value is present, so early cohort placeholders
-  // don't ship empty lines.
-  const infoRows = [
-    { label: "Sector", value: v.sector },
-    { label: "Segment", value: v.segment },
-    { label: "Market Size", value: v.marketSize },
-    { label: "Model", value: v.model },
-    { label: "Stage", value: v.stage },
-  ].filter((r): r is { label: string; value: string } =>
-    Boolean(r.value && r.value.trim())
-  );
-  const hasInfo = infoRows.length > 0;
+  // XGL msg 7117-7118 + 7124 : same 5-row labeled info block across all
+  // cards, fixed positions. Always render 5 rows so any missing value
+  // reserves its slot ; empty ones show a nbsp so the block height stays
+  // constant no matter what data lands. XGL will shorten strings to fit.
+  const infoRows: Array<{ label: string; value: string }> = [
+    { label: "Sector", value: v.sector ?? "" },
+    { label: "Segment", value: v.segment ?? "" },
+    { label: "Market", value: v.marketSize ?? "" },
+    { label: "Model", value: v.model ?? "" },
+    { label: "Stage", value: v.stage ?? "" },
+  ];
+  const hasInfo = infoRows.some((r) => r.value.trim().length > 0);
   const hasHover = hasLogo || hasInfo;
   return (
     <Reveal delay={i * 0.08}>
@@ -231,45 +231,60 @@ function VentureCard({
             </h3>
           </div>
 
-          {/* Hover face — unified overlay (XGL msg 7117-7118) : logo
-              (or fallback headline) top-half + 5-row labeled info block
-              bottom. Same 5-row schema across all cards so ventures read
-              as a family ; per-row render is guarded so empty values
-              don't ship as blank lines. */}
+          {/* Hover face — XGL msg 7124 v3 :
+              • Top strip : eyebrow + name (small) — cross-fade with the
+                large front-face copy so the identity reads as "moved
+                from bottom to top", not "disappeared".
+              • Middle : logo in a FIXED square container so every
+                symbol renders at the same visual footprint regardless
+                of source aspect ratio ; CSS filter forces white so
+                coloured source SVGs/PNGs still ship as pure white.
+              • Bottom : 5 fixed-height slots so no row ever pushes
+                another down when text length varies (XGL will shorten
+                strings that overflow). */}
           {hasHover && (
             <div className="pointer-events-none absolute inset-0 flex flex-col bg-black/60 opacity-0 backdrop-blur-sm transition-opacity duration-400 group-hover:opacity-100">
-              <div className="flex flex-1 items-center justify-center px-6 pb-2 pt-6">
-                {hasLogo ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={v.logoSrc}
-                    alt={`${v.name} symbol`}
-                    className="max-h-full max-w-[65%] object-contain"
-                  />
-                ) : (
-                  <div className="text-center">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--kx-crimson)]">
-                      {v.eyebrow}
-                    </p>
-                    <h3 className="mt-2 font-heading text-3xl font-extralight text-white">
-                      {v.name}
-                    </h3>
+              {/* Top identity strip */}
+              <div className="shrink-0 px-4 pt-4">
+                <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-[var(--kx-crimson)]">
+                  {v.eyebrow || " "}
+                </p>
+                <h3 className="mt-1 font-heading text-lg font-extralight leading-tight text-white">
+                  {v.name}
+                </h3>
+              </div>
+
+              {/* Middle logo slot — fixed square container */}
+              <div className="flex flex-1 items-center justify-center px-4 py-3">
+                {hasLogo && (
+                  <div className="flex aspect-square w-[58%] items-center justify-center">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={v.logoSrc}
+                      alt={`${v.name} symbol`}
+                      className="h-full w-full object-contain"
+                      style={{ filter: "brightness(0) invert(1)" }}
+                    />
                   </div>
                 )}
               </div>
 
-              {hasInfo && (
-                <dl className="space-y-1 px-4 pb-4 font-mono text-[10px] leading-tight text-white/90">
-                  {infoRows.map((r) => (
-                    <div key={r.label} className="flex items-baseline gap-2">
-                      <dt className="min-w-[76px] uppercase tracking-[0.08em] text-white/50">
-                        {r.label}
-                      </dt>
-                      <dd className="flex-1 text-white/95">{r.value}</dd>
-                    </div>
-                  ))}
-                </dl>
-              )}
+              {/* Bottom info block — fixed slots, one row per attribute */}
+              <dl className="shrink-0 px-4 pb-4 font-mono text-[9px] leading-none text-white/90">
+                {infoRows.map((r) => (
+                  <div
+                    key={r.label}
+                    className="mt-1 flex h-[13px] items-baseline gap-1.5 overflow-hidden first:mt-0"
+                  >
+                    <dt className="w-[56px] shrink-0 uppercase tracking-[0.06em] text-white/50">
+                      {r.label}
+                    </dt>
+                    <dd className="flex-1 truncate text-white/95">
+                      {r.value || " "}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
             </div>
           )}
         </div>
