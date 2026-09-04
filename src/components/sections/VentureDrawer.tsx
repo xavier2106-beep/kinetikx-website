@@ -8,6 +8,21 @@ import type { VentureDetail } from "@/data/ventures";
 // XGL msg 7042 (2026-09-03) · full-width drawer that opens downward when a
 // swatch is clicked. 8 tabs, parallax background gradient, sticky tab nav.
 // Pilot = HERAKLYS ; other ventures currently render a "coming soon" state.
+//
+// XGL msg 7104 (2026-09-04) · v2 layout fix : the swatch gradient is
+// 135deg (top-left → bottom-right) which reads fine on a 3:4 card but
+// concentrates the venture colour in one corner across a wide drawer,
+// leaving the right/bottom near-black and killing text contrast. Fix:
+// extract the venture's primary hex and render a vertical top-anchored
+// wash so the colour reads consistently across the full width. Tab bar
+// gets a solid dark backing so it stops floating.
+
+// Extracts the first #rrggbb from a linear-gradient string so we can
+// rebuild a top-anchored vertical wash inside the drawer.
+function extractPrimaryColor(accent: string): string {
+  const m = accent.match(/#[0-9a-fA-F]{6}/);
+  return m?.[0] ?? "#1a1a1a";
+}
 
 type Tab = {
   key: string;
@@ -43,13 +58,14 @@ export default function VentureDrawer({
 }: Props) {
   const [tab, setTab] = useState<string>("description");
   const scrollRef = useRef<HTMLDivElement>(null);
+  const primary = extractPrimaryColor(accent);
 
-  // Parallax: background gradient translates at 0.3x scroll speed inside
+  // Parallax: background gradient translates at 0.2x scroll speed inside
   // the drawer, giving a subtle depth cue as the user reads through.
   const { scrollYProgress } = useScroll({
     container: scrollRef,
   });
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
 
   // Esc closes
   useEffect(() => {
@@ -71,15 +87,23 @@ export default function VentureDrawer({
       }}
       className="relative w-full overflow-hidden"
     >
-      {/* Parallax gradient backdrop — venture accent colour */}
+      {/* Solid dark base — guarantees text-legible bg everywhere */}
+      <div aria-hidden className="absolute inset-0 bg-[#0a0a0a]" />
+      {/* Venture-colour wash: top-anchored vertical fade so the accent
+          reads consistently across the whole width of the drawer, unlike
+          the swatch's diagonal 135deg which would corner-concentrate. */}
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-[140%] w-full"
-        style={{ background: accent, y: bgY }}
+        className="pointer-events-none absolute inset-x-0 top-0 h-[120%] w-full"
+        style={{
+          background: `linear-gradient(180deg, ${primary} 0%, ${primary} 25%, rgba(10,10,10,0.6) 70%, #0a0a0a 100%)`,
+          y: bgY,
+        }}
       />
+      {/* Readability veil — mild darkening under body text */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/60"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-black/25 to-black/45"
       />
 
       <div
@@ -117,7 +141,7 @@ export default function VentureDrawer({
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25, duration: 0.4 }}
-            className="sticky top-0 z-20 -mx-6 border-b border-white/15 bg-black/40 px-6 py-3 backdrop-blur-md"
+            className="sticky top-0 z-20 -mx-6 border-y border-white/15 bg-[#0a0a0a]/95 px-6 py-3 backdrop-blur-md shadow-[0_6px_20px_rgba(0,0,0,0.35)]"
           >
             <div className="flex gap-1 overflow-x-auto scrollbar-none">
               {TABS.map((t) => {
