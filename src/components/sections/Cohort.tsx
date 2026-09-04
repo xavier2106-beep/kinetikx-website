@@ -286,10 +286,8 @@ function VentureCard({
             <div className="pointer-events-none absolute inset-0 flex flex-col bg-black/60 opacity-0 backdrop-blur-sm transition-opacity duration-400 group-hover:opacity-100">
               {/* Top identity strip */}
               <div className="shrink-0 px-4 pt-4">
-                <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-[var(--kx-crimson)]">
-                  {v.eyebrow || " "}
-                </p>
-                <h3 className="mt-1 font-heading text-lg font-extralight leading-tight text-white">
+                {/* XGL msg 7155 : eyebrow dropped on hover face ; still on the default card. */}
+                <h3 className="font-heading text-lg font-extralight leading-tight text-white">
                   {v.name}
                 </h3>
                 {v.summary.trim() && (
@@ -302,7 +300,7 @@ function VentureCard({
               {/* Middle logo slot — fixed square container */}
               <div className="flex flex-1 items-center justify-center px-4 py-3">
                 {hasLogo && (
-                  <div className="flex aspect-square w-[58%] items-center justify-center">
+                  <div className="flex aspect-square w-[46%] items-center justify-center">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={v.logoSrc}

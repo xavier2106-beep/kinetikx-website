@@ -280,7 +280,7 @@ function ConceptTab({
     );
   }
   return (
-    <figure className="mx-auto max-w-5xl">
+    <figure className="mx-auto max-w-2xl">
       <img
         src={src}
         alt={caption ?? "Concept diagram"}
