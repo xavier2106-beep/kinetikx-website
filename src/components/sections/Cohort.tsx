@@ -159,8 +159,12 @@ const JOURNEY_TWO: Venture[] = [
     eyebrow: "NEXTGEN OF FAN OWNERSHIP",
     summary: "",
     accent: COLOR.purple,
-    sector: "SportsCulture",
-    ...TBD_INFO,
+    // XGL msg 7139 — real FALCON values, verbatim.
+    sector: "EventsTech",
+    segment: "B2B2C",
+    marketSize: "GCC $XB, GLB $YB",
+    model: "License + Revenue Share",
+    stage: "Validation + 2x Anchor Clients pitch",
   },
   {
     slug: "deuce",
