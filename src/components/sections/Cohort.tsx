@@ -76,7 +76,7 @@ const JOURNEY_ONE: Venture[] = [
   {
     slug: "heraklys",
     name: "HERAKLYS",
-    eyebrow: "THE BACKBONE OF SPORTS VENUES",
+    eyebrow: "THE BACKBONE OF PERFORMANCE",
     summary: "",
     accent: COLOR.purple,
     logoSrc: "/images/ventures/heraklys-symbol.png",
