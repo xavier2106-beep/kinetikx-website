@@ -158,7 +158,10 @@ export default function VentureDrawer({
             transition={{ delay: 0.25, duration: 0.4 }}
             className="sticky top-0 z-20 -mx-6 border-y border-white/15 bg-[#0a0a0a]/95 px-6 py-3 backdrop-blur-md shadow-[0_6px_20px_rgba(0,0,0,0.35)]"
           >
-            <div className="flex gap-1 overflow-x-auto scrollbar-none">
+            {/* XGL msg 7129 · mobile : 8 tabs won't fit one line, so
+                switch to a 4-column grid = 4×2 rows using short labels.
+                sm+ keeps the horizontal scroll-strip with long labels. */}
+            <div className="grid grid-cols-4 gap-1.5 sm:flex sm:gap-1 sm:overflow-x-auto sm:scrollbar-none">
               {TABS.map((t) => {
                 const active = t.key === tab;
                 return (
@@ -166,7 +169,7 @@ export default function VentureDrawer({
                     key={t.key}
                     type="button"
                     onClick={() => setTab(t.key)}
-                    className={`whitespace-nowrap rounded-full px-4 py-1.5 text-xs uppercase tracking-[0.15em] transition ${
+                    className={`whitespace-nowrap rounded-full px-2 py-1.5 text-center text-[10px] uppercase tracking-[0.12em] transition sm:px-4 sm:text-xs sm:tracking-[0.15em] ${
                       active
                         ? "bg-white text-[#1a1a1a]"
                         : "text-white/70 hover:bg-white/10 hover:text-white"

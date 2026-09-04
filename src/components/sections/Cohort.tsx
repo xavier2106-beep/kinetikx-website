@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
@@ -313,6 +313,22 @@ export default function Cohort() {
   const openVenture = openSlug ? list.find((v) => v.slug === openSlug) : null;
   const openDetail = openSlug ? VENTURE_DETAILS[openSlug] ?? null : null;
 
+  // XGL msg 7129 : on mobile the drawer opens below the fold and looks
+  // like nothing happened. Autoscroll the drawer anchor into view on
+  // narrow viewports only ; desktop keeps its natural layout since the
+  // grid + drawer both fit on the same screen. The 120ms delay lets the
+  // AnimatePresence child mount before we scroll to it.
+  const drawerAnchorRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!openSlug || typeof window === "undefined") return;
+    const isMobile = window.matchMedia("(max-width: 639.98px)").matches;
+    if (!isMobile) return;
+    const t = window.setTimeout(() => {
+      drawerAnchorRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 120);
+    return () => window.clearTimeout(t);
+  }, [openSlug]);
+
   return (
     <section id="cohort" className="w-full bg-[#f5f1ea] py-24 sm:py-32 text-[#1a1a1a]">
       <Reveal>
@@ -401,6 +417,11 @@ export default function Cohort() {
           </motion.div>
         </AnimatePresence>
       </div>
+
+      {/* Anchor for mobile autoscroll — placed right where the drawer
+          appears so scrollIntoView brings the drawer top to the viewport
+          top. Zero-height, invisible ; purely for scroll targeting. */}
+      <div ref={drawerAnchorRef} aria-hidden className="h-0 w-full" />
 
       {/* Full-width venture detail drawer — opens below the card grid */}
       <AnimatePresence>
