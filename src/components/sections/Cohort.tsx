@@ -90,8 +90,12 @@ const JOURNEY_ONE: Venture[] = [
       "Crowd gifting for the GCC. The whole circle chips in for the moments that matter.",
     accent: COLOR.green,
     logoSrc: "/images/ventures/tchipin-symbol.png",
-    sector: "SocialCommerce",
-    ...TBD_INFO,
+    // XGL msg 7133 — real TCHIPIN values, verbatim.
+    sector: "Fintech",
+    segment: "B2C",
+    marketSize: "GCC $XB, GLB $YB",
+    model: "Trx Fee + Revenue Share",
+    stage: "Build → MVP 12/26",
   },
   {
     slug: "petsnation",
