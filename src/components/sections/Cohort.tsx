@@ -118,6 +118,7 @@ const JOURNEY_ONE: Venture[] = [
     eyebrow: "A DRINK OUT OF THIS WORLD",
     summary: "",
     accent: COLOR.yellow,
+    logoSrc: "/images/ventures/liquid-space-symbol.png",
     sector: "F&B",
     ...TBD_INFO,
   },
@@ -131,6 +132,7 @@ const JOURNEY_TWO: Venture[] = [
     summary:
       "Embedded financial wellness for GCC employees, delivered through the employer. The retention engine inside the org chart.",
     accent: COLOR.blue,
+    logoSrc: "/images/ventures/finwel-symbol.png",
     sector: "FinTech",
     ...TBD_INFO,
   },
@@ -140,6 +142,7 @@ const JOURNEY_TWO: Venture[] = [
     eyebrow: "EXECUTIVE TEAM IN A BOX",
     summary: "",
     accent: COLOR.brown,
+    logoSrc: "/images/ventures/aosx-symbol.png",
     // XGL msg 7141 — real AOSX values, verbatim.
     sector: "AI & Device",
     segment: "B2B & B2C",
@@ -167,6 +170,7 @@ const JOURNEY_TWO: Venture[] = [
     eyebrow: "NEXTGEN OF FAN OWNERSHIP",
     summary: "",
     accent: COLOR.purple,
+    logoSrc: "/images/ventures/falcon-symbol.png",
     // XGL msg 7139 — real FALCON values, verbatim.
     sector: "EventsTech",
     segment: "B2B2C",
