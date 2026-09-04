@@ -78,12 +78,27 @@ export default function VentureDrawer({
 
   return (
     <motion.div
+      // XGL msg 7108 (2026-09-04) · softer, stylish open/close.
+      // Open : panel grows first with an easeOutExpo-ish curve, content
+      // fades in 100ms later — feels like the drawer settles, then reveals.
+      // Close : content fades out fast (200ms), then the panel folds up
+      // smoothly — avoids the mechanical snap-shut of a single-track exit.
       initial={{ height: 0, opacity: 0 }}
-      animate={{ height: "auto", opacity: 1 }}
-      exit={{ height: 0, opacity: 0 }}
-      transition={{
-        height: { duration: 0.55, ease: [0.32, 0.72, 0, 1] },
-        opacity: { duration: 0.35 },
+      animate={{
+        height: "auto",
+        opacity: 1,
+        transition: {
+          height: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+          opacity: { duration: 0.55, delay: 0.12, ease: [0.4, 0, 0.2, 1] },
+        },
+      }}
+      exit={{
+        height: 0,
+        opacity: 0,
+        transition: {
+          height: { duration: 0.6, delay: 0.1, ease: [0.65, 0, 0.35, 1] },
+          opacity: { duration: 0.22, ease: [0.4, 0, 1, 1] },
+        },
       }}
       className="relative w-full overflow-hidden"
     >

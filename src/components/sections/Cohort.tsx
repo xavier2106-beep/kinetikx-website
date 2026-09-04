@@ -140,11 +140,13 @@ function VentureCard({
   i,
   isOpen,
   onClick,
+  onMouseEnter,
 }: {
   v: Venture;
   i: number;
   isOpen: boolean;
   onClick: () => void;
+  onMouseEnter?: () => void;
 }) {
   const hasBack = v.summary.trim().length > 0 || v.market.trim().length > 0;
   const hasDetail = Boolean(VENTURE_DETAILS[v.slug]);
@@ -152,6 +154,7 @@ function VentureCard({
     <Reveal delay={i * 0.08}>
       <motion.article
         onClick={onClick}
+        onMouseEnter={onMouseEnter}
         role="button"
         tabIndex={0}
         onKeyDown={(e) => {
@@ -280,6 +283,12 @@ export default function Cohort() {
                 onClick={() =>
                   setOpenSlug((prev) => (prev === v.slug ? null : v.slug))
                 }
+                // XGL msg 7108 (2026-09-04) : hovering another swatch while
+                // a drawer is open closes it — feels natural, avoids
+                // click-close-then-click-other two-step.
+                onMouseEnter={() => {
+                  if (openSlug && openSlug !== v.slug) setOpenSlug(null);
+                }}
               />
             ))}
           </motion.div>
