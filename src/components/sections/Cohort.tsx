@@ -291,6 +291,11 @@ function VentureCard({
                 <h3 className="mt-1 font-heading text-lg font-extralight leading-tight text-white">
                   {v.name}
                 </h3>
+                {v.summary.trim() && (
+                  <p className="mt-2 line-clamp-2 text-[11px] leading-snug text-white/80">
+                    {v.summary}
+                  </p>
+                )}
               </div>
 
               {/* Middle logo slot — fixed square container */}
