@@ -50,6 +50,7 @@ const JOURNEY_ONE: Venture[] = [
     market: "$4B+ HR Tech / Hiring",
     stage: "Stage 0 / MVP",
     accent: COLOR.blue,
+    logoSrc: "/images/ventures/nysm-symbol.svg",
   },
   {
     slug: "heraklys",
@@ -59,6 +60,7 @@ const JOURNEY_ONE: Venture[] = [
     market: "",
     stage: "Stage 0",
     accent: COLOR.purple,
+    logoSrc: "/images/ventures/heraklys-symbol.png",
   },
   {
     slug: "tchipin",

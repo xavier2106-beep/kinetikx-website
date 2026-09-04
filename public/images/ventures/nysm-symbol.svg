@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-222.6 -256.0 1139.0 1139.0" width="800">
+  <!-- White version of NYSM-mark-isolated.svg (XGL msg 7114). Gradients
+       + strokes stripped; both paths unified to solid white so the mark
+       reads as a monochrome symbol on any dark swatch. -->
+  <g transform="translate(0,709) scale(1,-1)">
+    <path d="M280 253.75 8.5 709H214.25L421.25 339.5H276.75L483.75 709H685.25L411.75 253.75ZM258.75 0V326.5H437.5V0Z" fill="#ffffff"/>
+  </g>
+  <path d="M 198.1 -82.0 L 499.9 -82.0 L 349.0 201.2 Z" fill="#ffffff"/>
+</svg>
