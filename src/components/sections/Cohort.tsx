@@ -26,11 +26,12 @@ type Venture = {
 
 // Placeholder shared across all ventures — XGL will supply real values
 // per venture ; using consistent stand-ins so the hover fit reads clean
-// on every swatch in the meantime.
+// on every swatch in the meantime. Format matches XGL msg 7119 style
+// (comma-separated market size, "Tokens" plural, ampersand-joined segment).
 const TBD_INFO = {
-  segment: "B2B2C",
-  marketSize: "GCC $XB · GLB $YB",
-  model: "SaaS + Token",
+  segment: "B2B & B2C",
+  marketSize: "GCC $XB, GLB $YB",
+  model: "SaaS + Tokens",
   stage: "MVP Ready",
 } as const;
 
@@ -60,8 +61,12 @@ const JOURNEY_ONE: Venture[] = [
       "Video résumés that read as authentic and ship as professional. Script, record, reveal.",
     accent: COLOR.blue,
     logoSrc: "/images/ventures/nysm-symbol.svg",
-    sector: "HRTech",
-    ...TBD_INFO,
+    // XGL msg 7119 — real NYSM values, verbatim.
+    sector: "HRtech",
+    segment: "B2B & B2C",
+    marketSize: "GCC $XB, GLB $YB",
+    model: "SaaS + Tokens",
+    stage: "MVP Ready",
   },
   {
     slug: "heraklys",
