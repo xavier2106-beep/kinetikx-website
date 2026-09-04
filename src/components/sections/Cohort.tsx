@@ -14,6 +14,11 @@ type Venture = {
   summary: string;
   accent: string;
   logoSrc?: string;
+  // XGL msg 7147 (2026-09-04) : concept diagram overlay for the drawer's
+  // Concept tab. Populated per Venture so ventures without a full
+  // VentureDetail record can still ship their diagram — the drawer
+  // prefers this prop over `detail.conceptDiagramSrc` when both exist.
+  conceptDiagramSrc?: string;
   // XGL msg 7117-7118 (2026-09-04) : 5-row labeled info block shown on
   // hover, same structure across all ventures. Placeholder values until
   // XGL drops the real numbers per venture.
@@ -90,6 +95,7 @@ const JOURNEY_ONE: Venture[] = [
       "Crowd gifting for the GCC. The whole circle chips in for the moments that matter.",
     accent: COLOR.green,
     logoSrc: "/images/ventures/tchipin-symbol.png",
+    conceptDiagramSrc: "/images/ventures/diagrams/tchipin.png",
     // XGL msg 7133 — real TCHIPIN values, verbatim.
     sector: "Fintech",
     segment: "B2C",
@@ -105,6 +111,7 @@ const JOURNEY_ONE: Venture[] = [
       "Pet care for the GCC, end-to-end. One app for every need your animal has.",
     accent: COLOR.brown,
     logoSrc: "/images/ventures/petsnation-symbol.png",
+    conceptDiagramSrc: "/images/ventures/diagrams/petsnation.png",
     // XGL msg 7135 — real PETSNATION values, verbatim.
     sector: "PetsTech, eCommerce",
     segment: "B2C",
@@ -133,6 +140,7 @@ const JOURNEY_TWO: Venture[] = [
       "Embedded financial wellness for GCC employees, delivered through the employer. The retention engine inside the org chart.",
     accent: COLOR.blue,
     logoSrc: "/images/ventures/finwel-symbol.png",
+    conceptDiagramSrc: "/images/ventures/diagrams/finwel.png",
     sector: "FinTech",
     ...TBD_INFO,
   },
@@ -157,6 +165,7 @@ const JOURNEY_TWO: Venture[] = [
     summary:
       "Fractional ownership of celebrity-owned real-world assets. Fan capital, professionally structured.",
     accent: COLOR.green,
+    conceptDiagramSrc: "/images/ventures/diagrams/stardust.png",
     // XGL msg 7143 — real Stardust Capital values, verbatim.
     sector: "FinTech",
     segment: "B2C",
@@ -460,6 +469,10 @@ export default function Cohort() {
             ventureEyebrow={openVenture.eyebrow || "STAGE 0"}
             accent={openVenture.accent}
             detail={openDetail}
+            // XGL msg 7147 — Venture-level diagram overrides the detail's
+            // one, so ventures without a full VentureDetail record still
+            // ship their concept image via the drawer.
+            conceptDiagramSrcOverride={openVenture.conceptDiagramSrc}
             onClose={() => setOpenSlug(null)}
           />
         ) : null}

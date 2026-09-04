@@ -193,9 +193,8 @@ export const NYSM_DETAIL: VentureDetail = {
     "[LUCY placeholder] Second paragraph — product positioning: why video, why now, what makes NYSM different from Loom-style upload or the LinkedIn one-shot camera.",
     "[LUCY placeholder] Third paragraph — market moment + why-now + KinetiKx thesis fit.",
   ],
-  conceptDiagramSrc: undefined, // XGL to provide the image
-  conceptDiagramCaption:
-    "[LUCY placeholder] One-line caption if the image benefits from context.",
+  conceptDiagramSrc: "/images/ventures/diagrams/nysm.png", // XGL msg 7147
+  conceptDiagramCaption: undefined,
   market: {
     tam: {
       label: "TAM",

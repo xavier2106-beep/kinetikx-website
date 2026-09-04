@@ -46,6 +46,9 @@ type Props = {
   ventureEyebrow: string;
   accent: string; // gradient CSS
   detail: VentureDetail | null;
+  // XGL msg 7147 : Venture-level concept diagram, wins over detail's own.
+  // Set on ventures that ship the diagram alone (no full VentureDetail).
+  conceptDiagramSrcOverride?: string;
   onClose: () => void;
 };
 
@@ -54,6 +57,7 @@ export default function VentureDrawer({
   ventureEyebrow,
   accent,
   detail,
+  conceptDiagramSrcOverride,
   onClose,
 }: Props) {
   const [tab, setTab] = useState<string>("description");
@@ -193,11 +197,19 @@ export default function VentureDrawer({
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.3 }}
-                  className="rounded-lg border border-white/15 bg-white/5 p-8 text-center text-sm text-white/70"
+                  className="space-y-6"
                 >
-                  Detailed content for <strong>{ventureName}</strong> is coming
-                  soon. HERAKLYS is currently the pilot showcase for this
-                  drawer — click it to see the full 8-tab layout.
+                  <div className="rounded-lg border border-white/15 bg-white/5 p-8 text-center text-sm text-white/70">
+                    Detailed content for <strong>{ventureName}</strong> is coming
+                    soon. HERAKLYS is currently the pilot showcase for this
+                    drawer — click it to see the full 8-tab layout.
+                  </div>
+                  {/* XGL msg 7147 : if the venture ships a concept diagram
+                      independently of a full detail record, render it below
+                      the placeholder so the drawer still has visual payload. */}
+                  {conceptDiagramSrcOverride && (
+                    <ConceptTab src={conceptDiagramSrcOverride} />
+                  )}
                 </motion.div>
               ) : (
                 <motion.div
@@ -212,7 +224,7 @@ export default function VentureDrawer({
                   )}
                   {tab === "concept" && (
                     <ConceptTab
-                      src={detail.conceptDiagramSrc}
+                      src={conceptDiagramSrcOverride ?? detail.conceptDiagramSrc}
                       caption={detail.conceptDiagramCaption}
                     />
                   )}
