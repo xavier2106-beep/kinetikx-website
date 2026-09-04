@@ -165,6 +165,7 @@ const JOURNEY_TWO: Venture[] = [
     summary:
       "Fractional ownership of celebrity-owned real-world assets. Fan capital, professionally structured.",
     accent: COLOR.green,
+    logoSrc: "/images/ventures/stardust-symbol.png",
     conceptDiagramSrc: "/images/ventures/diagrams/stardust.png",
     // XGL msg 7143 — real Stardust Capital values, verbatim.
     sector: "FinTech",
