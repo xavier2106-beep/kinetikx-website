@@ -12,16 +12,27 @@ type Venture = {
   name: string;
   eyebrow: string;
   summary: string;
-  market: string;
-  stage: string;
   accent: string;
-  // XGL msg 7111 (2026-09-04) : optional white symbol displayed centered
-  // on hover. Fades in over the swatch, replacing the default front-face
-  // treatment. Pending SVG files for HERAKLYS + NYSM ; undefined = no
-  // logo, fall back to hover behaviour (or no reveal if the card has
-  // no summary/market either).
   logoSrc?: string;
+  // XGL msg 7117-7118 (2026-09-04) : 5-row labeled info block shown on
+  // hover, same structure across all ventures. Placeholder values until
+  // XGL drops the real numbers per venture.
+  sector?: string;
+  segment?: string;
+  marketSize?: string;
+  model?: string;
+  stage?: string;
 };
+
+// Placeholder shared across all ventures — XGL will supply real values
+// per venture ; using consistent stand-ins so the hover fit reads clean
+// on every swatch in the meantime.
+const TBD_INFO = {
+  segment: "B2B2C",
+  marketSize: "GCC $XB · GLB $YB",
+  model: "SaaS + Token",
+  stage: "MVP Ready",
+} as const;
 
 // XGL msg 6461-6462 · Two cohorts. Journey ONE is the current set (5
 // stage-0 ventures). Journey TWO is queued up behind a red arrow —
@@ -47,20 +58,20 @@ const JOURNEY_ONE: Venture[] = [
     eyebrow: "THE REVEALER",
     summary:
       "Video résumés that read as authentic and ship as professional. Script, record, reveal.",
-    market: "$4B+ HR Tech / Hiring",
-    stage: "Stage 0 / MVP",
     accent: COLOR.blue,
     logoSrc: "/images/ventures/nysm-symbol.svg",
+    sector: "HRTech",
+    ...TBD_INFO,
   },
   {
     slug: "heraklys",
     name: "HERAKLYS",
     eyebrow: "THE BACKBONE OF SPORTS VENUES",
     summary: "",
-    market: "",
-    stage: "Stage 0",
     accent: COLOR.purple,
     logoSrc: "/images/ventures/heraklys-symbol.png",
+    sector: "SportsTech",
+    ...TBD_INFO,
   },
   {
     slug: "tchipin",
@@ -68,9 +79,9 @@ const JOURNEY_ONE: Venture[] = [
     eyebrow: "THE GIFTER",
     summary:
       "Crowd gifting for the GCC. The whole circle chips in for the moments that matter.",
-    market: "$30B+ Gifting / Social Commerce",
-    stage: "Stage 0 / MVP",
     accent: COLOR.green,
+    sector: "SocialCommerce",
+    ...TBD_INFO,
   },
   {
     slug: "petsnation",
@@ -78,18 +89,18 @@ const JOURNEY_ONE: Venture[] = [
     eyebrow: "THE CARETAKER",
     summary:
       "Pet care for the GCC, end-to-end. One app for every need your animal has.",
-    market: "$2B+ GCC Pet Economy",
-    stage: "Stage 0 / MVP",
     accent: COLOR.brown,
+    sector: "PetTech",
+    ...TBD_INFO,
   },
   {
     slug: "liquid-space",
     name: "LIQUID SPACE",
     eyebrow: "A DRINK OUT OF THIS WORLD",
     summary: "",
-    market: "",
-    stage: "Stage 0",
     accent: COLOR.yellow,
+    sector: "F&B",
+    ...TBD_INFO,
   },
 ];
 
@@ -100,18 +111,18 @@ const JOURNEY_TWO: Venture[] = [
     eyebrow: "THE UPLIFTER",
     summary:
       "Embedded financial wellness for GCC employees, delivered through the employer. The retention engine inside the org chart.",
-    market: "$2B Embedded Finance + $1.9T GCC Lending",
-    stage: "Stage 0 / MVP",
     accent: COLOR.blue,
+    sector: "FinTech",
+    ...TBD_INFO,
   },
   {
     slug: "aosx",
     name: "AOSX",
     eyebrow: "EXECUTIVE TEAM IN A BOX",
     summary: "",
-    market: "",
-    stage: "Stage 0",
     accent: COLOR.brown,
+    sector: "AI-Enterprise",
+    ...TBD_INFO,
   },
   {
     slug: "stardust",
@@ -119,27 +130,27 @@ const JOURNEY_TWO: Venture[] = [
     eyebrow: "THE PASSIONATE",
     summary:
       "Fractional ownership of celebrity-owned real-world assets. Fan capital, professionally structured.",
-    market: "$1T+ Fan Economy + Alternative Assets",
-    stage: "Stage 0 / MVP",
     accent: COLOR.green,
+    sector: "FanEconomy",
+    ...TBD_INFO,
   },
   {
     slug: "falcon",
     name: "FALCON",
     eyebrow: "NEXTGEN OF FAN OWNERSHIP",
     summary: "",
-    market: "",
-    stage: "Stage 0",
     accent: COLOR.purple,
+    sector: "SportsCulture",
+    ...TBD_INFO,
   },
   {
     slug: "deuce",
     name: "DEUCE",
     eyebrow: "YOUR ADVANTAGE",
     summary: "",
-    market: "",
-    stage: "Stage 0",
     accent: COLOR.yellow,
+    sector: "SportsTech",
+    ...TBD_INFO,
   },
 ];
 
@@ -157,9 +168,20 @@ function VentureCard({
   onMouseEnter?: () => void;
 }) {
   const hasLogo = Boolean(v.logoSrc);
-  // Logo hover takes priority : if a venture has a symbol, we show it
-  // centered on hover instead of the text-heavy summary/market back face.
-  const hasBack = !hasLogo && (v.summary.trim().length > 0 || v.market.trim().length > 0);
+  // XGL msg 7117-7118 : same 5-row labeled info block across all cards.
+  // Rows only render when a value is present, so early cohort placeholders
+  // don't ship empty lines.
+  const infoRows = [
+    { label: "Sector", value: v.sector },
+    { label: "Segment", value: v.segment },
+    { label: "Market Size", value: v.marketSize },
+    { label: "Model", value: v.model },
+    { label: "Stage", value: v.stage },
+  ].filter((r): r is { label: string; value: string } =>
+    Boolean(r.value && r.value.trim())
+  );
+  const hasInfo = infoRows.length > 0;
+  const hasHover = hasLogo || hasInfo;
   return (
     <Reveal delay={i * 0.08}>
       <motion.article
@@ -187,10 +209,10 @@ function VentureCard({
           className="relative aspect-[3/4] overflow-hidden"
           style={{ background: v.accent }}
         >
-          {/* Default front face: large name — fades on hover when there's
-              a reveal treatment underneath (logo or text back). */}
+          {/* Default front face: eyebrow + large name at bottom. Fades
+              out on hover when there's a reveal treatment underneath. */}
           <div
-            className={`absolute inset-0 flex flex-col justify-end p-5 transition-opacity duration-300 ${(hasBack || hasLogo) ? "group-hover:opacity-0" : ""}`}
+            className={`absolute inset-0 flex flex-col justify-end p-5 transition-opacity duration-300 ${hasHover ? "group-hover:opacity-0" : ""}`}
           >
             <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--kx-crimson)]">
               {v.eyebrow || " "}
@@ -200,40 +222,47 @@ function VentureCard({
             </h3>
           </div>
 
-          {/* Hover face — centered white symbol (XGL msg 7111). Takes
-              priority over the text back face when both would apply. */}
-          {hasLogo && (
-            <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={v.logoSrc}
-                alt={`${v.name} symbol`}
-                className="max-h-[45%] max-w-[65%] object-contain"
-              />
+          {/* Hover face — unified overlay (XGL msg 7117-7118) : logo
+              (or fallback headline) top-half + 5-row labeled info block
+              bottom. Same 5-row schema across all cards so ventures read
+              as a family ; per-row render is guarded so empty values
+              don't ship as blank lines. */}
+          {hasHover && (
+            <div className="pointer-events-none absolute inset-0 flex flex-col bg-black/60 opacity-0 backdrop-blur-sm transition-opacity duration-400 group-hover:opacity-100">
+              <div className="flex flex-1 items-center justify-center px-6 pb-2 pt-6">
+                {hasLogo ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={v.logoSrc}
+                    alt={`${v.name} symbol`}
+                    className="max-h-full max-w-[65%] object-contain"
+                  />
+                ) : (
+                  <div className="text-center">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--kx-crimson)]">
+                      {v.eyebrow}
+                    </p>
+                    <h3 className="mt-2 font-heading text-3xl font-extralight text-white">
+                      {v.name}
+                    </h3>
+                  </div>
+                )}
+              </div>
+
+              {hasInfo && (
+                <dl className="space-y-1 px-4 pb-4 font-mono text-[10px] leading-tight text-white/90">
+                  {infoRows.map((r) => (
+                    <div key={r.label} className="flex items-baseline gap-2">
+                      <dt className="min-w-[76px] uppercase tracking-[0.08em] text-white/50">
+                        {r.label}
+                      </dt>
+                      <dd className="flex-1 text-white/95">{r.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
             </div>
           )}
-
-          {/* Text back face — legacy hover for cards with copy but no logo */}
-          {hasBack && (
-            <div className="absolute inset-0 flex flex-col justify-between bg-black/85 p-5 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
-              <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--kx-crimson)]">
-                  {v.eyebrow}
-                </p>
-                <h3 className="mt-2 font-heading text-2xl font-extralight text-white">
-                  {v.name}
-                </h3>
-                <p className="mt-4 text-xs leading-relaxed text-white/85">
-                  {v.summary}
-                </p>
-              </div>
-              <div className="font-mono text-[10px] tracking-wide text-white/55">
-                <p>{v.market}</p>
-                <p className="mt-1">{v.stage}</p>
-              </div>
-            </div>
-          )}
-
         </div>
       </motion.article>
     </Reveal>
