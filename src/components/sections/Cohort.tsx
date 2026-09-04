@@ -89,6 +89,7 @@ const JOURNEY_ONE: Venture[] = [
     summary:
       "Crowd gifting for the GCC. The whole circle chips in for the moments that matter.",
     accent: COLOR.green,
+    logoSrc: "/images/ventures/tchipin-symbol.png",
     sector: "SocialCommerce",
     ...TBD_INFO,
   },
@@ -159,6 +160,7 @@ const JOURNEY_TWO: Venture[] = [
     eyebrow: "YOUR ADVANTAGE",
     summary: "",
     accent: COLOR.yellow,
+    logoSrc: "/images/ventures/deuce-symbol.png",
     sector: "SportsTech",
     ...TBD_INFO,
   },
