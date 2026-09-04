@@ -75,8 +75,12 @@ const JOURNEY_ONE: Venture[] = [
     summary: "",
     accent: COLOR.purple,
     logoSrc: "/images/ventures/heraklys-symbol.png",
+    // XGL msg 7122 — real HERAKLYS values, verbatim.
     sector: "SportsTech",
-    ...TBD_INFO,
+    segment: "B2B",
+    marketSize: "GCC $XB, US & CAN $ZB, GLB $YB",
+    model: "License + Revenue Share",
+    stage: "MVP Ready + Client in Production 12/26",
   },
   {
     slug: "tchipin",
