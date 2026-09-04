@@ -15,6 +15,12 @@ type Venture = {
   market: string;
   stage: string;
   accent: string;
+  // XGL msg 7111 (2026-09-04) : optional white symbol displayed centered
+  // on hover. Fades in over the swatch, replacing the default front-face
+  // treatment. Pending SVG files for HERAKLYS + NYSM ; undefined = no
+  // logo, fall back to hover behaviour (or no reveal if the card has
+  // no summary/market either).
+  logoSrc?: string;
 };
 
 // XGL msg 6461-6462 · Two cohorts. Journey ONE is the current set (5
@@ -148,8 +154,10 @@ function VentureCard({
   onClick: () => void;
   onMouseEnter?: () => void;
 }) {
-  const hasBack = v.summary.trim().length > 0 || v.market.trim().length > 0;
-  const hasDetail = Boolean(VENTURE_DETAILS[v.slug]);
+  const hasLogo = Boolean(v.logoSrc);
+  // Logo hover takes priority : if a venture has a symbol, we show it
+  // centered on hover instead of the text-heavy summary/market back face.
+  const hasBack = !hasLogo && (v.summary.trim().length > 0 || v.market.trim().length > 0);
   return (
     <Reveal delay={i * 0.08}>
       <motion.article
@@ -177,9 +185,10 @@ function VentureCard({
           className="relative aspect-[3/4] overflow-hidden"
           style={{ background: v.accent }}
         >
-          {/* Default front face: large name */}
+          {/* Default front face: large name — fades on hover when there's
+              a reveal treatment underneath (logo or text back). */}
           <div
-            className={`absolute inset-0 flex flex-col justify-end p-5 transition-opacity duration-300 ${hasBack ? "group-hover:opacity-0" : ""}`}
+            className={`absolute inset-0 flex flex-col justify-end p-5 transition-opacity duration-300 ${(hasBack || hasLogo) ? "group-hover:opacity-0" : ""}`}
           >
             <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--kx-crimson)]">
               {v.eyebrow || " "}
@@ -189,7 +198,20 @@ function VentureCard({
             </h3>
           </div>
 
-          {/* Hover face: only if there's content behind */}
+          {/* Hover face — centered white symbol (XGL msg 7111). Takes
+              priority over the text back face when both would apply. */}
+          {hasLogo && (
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={v.logoSrc}
+                alt={`${v.name} symbol`}
+                className="max-h-[45%] max-w-[65%] object-contain"
+              />
+            </div>
+          )}
+
+          {/* Text back face — legacy hover for cards with copy but no logo */}
           {hasBack && (
             <div className="absolute inset-0 flex flex-col justify-between bg-black/85 p-5 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
               <div>
@@ -210,12 +232,6 @@ function VentureCard({
             </div>
           )}
 
-          {/* Bottom-right badge signals deep-dive drawer is available */}
-          {hasDetail && (
-            <span className="pointer-events-none absolute bottom-3 right-3 font-mono text-[9px] uppercase tracking-[0.15em] text-white/60">
-              {isOpen ? "Open →" : "Click to expand →"}
-            </span>
-          )}
         </div>
       </motion.article>
     </Reveal>
@@ -263,7 +279,41 @@ export default function Cohort() {
         </div>
       </Reveal>
 
-      <div className="mx-auto mt-16 max-w-7xl overflow-hidden px-6">
+      {/* XGL msg 7111 (2026-09-04) : JOURNEY title + navigation arrows
+          moved ABOVE the swatches — makes the current cohort context read
+          first, before the eye lands on the cards. */}
+      <Reveal delay={0.15}>
+        <div className="mx-auto mt-12 flex max-w-3xl items-center justify-center gap-4 px-6">
+          {cohort === 2 && (
+            <button
+              type="button"
+              onClick={() => swapCohort(1)}
+              aria-label="Voir Journey One"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--kx-crimson)]/40 text-[var(--kx-crimson)] transition hover:border-[var(--kx-crimson)] hover:bg-[var(--kx-crimson)]/10"
+            >
+              <ChevronLeft size={20} strokeWidth={1.5} />
+            </button>
+          )}
+
+          <h4 className="font-heading text-3xl font-light uppercase tracking-[0.25em] sm:text-4xl">
+            <span className="text-[#1a1a1a]">JOURNEY</span>
+            <span className="text-[var(--kx-crimson)]">&middot;{cohort === 1 ? "ONE" : "TWO"}</span>
+          </h4>
+
+          {cohort === 1 && (
+            <button
+              type="button"
+              onClick={() => swapCohort(2)}
+              aria-label="Voir Journey Two"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--kx-crimson)]/40 text-[var(--kx-crimson)] transition hover:border-[var(--kx-crimson)] hover:bg-[var(--kx-crimson)]/10"
+            >
+              <ChevronRight size={20} strokeWidth={1.5} />
+            </button>
+          )}
+        </div>
+      </Reveal>
+
+      <div className="mx-auto mt-8 max-w-7xl overflow-hidden px-6">
         <AnimatePresence mode="wait" custom={direction} initial={false}>
           <motion.div
             key={cohort}
@@ -309,36 +359,6 @@ export default function Cohort() {
         ) : null}
       </AnimatePresence>
 
-      <Reveal delay={0.2}>
-        <div className="mx-auto mt-16 flex max-w-3xl items-center justify-center gap-4 px-6">
-          {cohort === 2 && (
-            <button
-              type="button"
-              onClick={() => swapCohort(1)}
-              aria-label="Voir Journey One"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--kx-crimson)]/40 text-[var(--kx-crimson)] transition hover:border-[var(--kx-crimson)] hover:bg-[var(--kx-crimson)]/10"
-            >
-              <ChevronLeft size={20} strokeWidth={1.5} />
-            </button>
-          )}
-
-          <h4 className="font-heading text-3xl font-light uppercase tracking-[0.25em] sm:text-4xl">
-            <span className="text-[#1a1a1a]">JOURNEY</span>
-            <span className="text-[var(--kx-crimson)]">&middot;{cohort === 1 ? "ONE" : "TWO"}</span>
-          </h4>
-
-          {cohort === 1 && (
-            <button
-              type="button"
-              onClick={() => swapCohort(2)}
-              aria-label="Voir Journey Two"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--kx-crimson)]/40 text-[var(--kx-crimson)] transition hover:border-[var(--kx-crimson)] hover:bg-[var(--kx-crimson)]/10"
-            >
-              <ChevronRight size={20} strokeWidth={1.5} />
-            </button>
-          )}
-        </div>
-      </Reveal>
     </section>
   );
 }
