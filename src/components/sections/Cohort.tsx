@@ -471,6 +471,7 @@ export default function Cohort() {
             key={openVenture.slug}
             ventureName={openVenture.name}
             ventureEyebrow={openVenture.eyebrow || "STAGE 0"}
+            ventureSlug={openVenture.slug}
             accent={openVenture.accent}
             detail={openDetail}
             // XGL msg 7147 — Venture-level diagram overrides the detail's

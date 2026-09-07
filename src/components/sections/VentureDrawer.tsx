@@ -11,6 +11,19 @@ import type { VentureDetail } from "@/data/ventures";
 // diagram. ssr:false because @rive-app/react-canvas touches window.
 const RiveDiagram = dynamic(() => import("./RiveDiagram"), { ssr: false });
 
+// XGL msg 7206 (2026-09-07 nuit) · Rive abandonné (msg 7200-7204) au
+// profit de framer-motion codé main. Registry per-slug : quand un
+// venture a un composant custom, il override l'image PNG. Chaque
+// diagramme est un chunk séparé (ssr:false suffit pour éviter le
+// hydration mismatch quand l'anim démarre au mount).
+const TchipinDiagram = dynamic(
+  () => import("./diagrams/TchipinDiagram"),
+  { ssr: false },
+);
+const DIAGRAM_COMPONENTS: Record<string, React.ComponentType> = {
+  tchipin: TchipinDiagram,
+};
+
 // XGL msg 7042 (2026-09-03) · full-width drawer that opens downward when a
 // swatch is clicked. 8 tabs, parallax background gradient, sticky tab nav.
 // Pilot = HERAKLYS ; other ventures currently render a "coming soon" state.
@@ -50,6 +63,7 @@ const TABS: Tab[] = [
 type Props = {
   ventureName: string;
   ventureEyebrow: string;
+  ventureSlug: string;
   accent: string; // gradient CSS
   detail: VentureDetail | null;
   // XGL msg 7147 : Venture-level concept diagram, wins over detail's own.
@@ -61,6 +75,7 @@ type Props = {
 export default function VentureDrawer({
   ventureName,
   ventureEyebrow,
+  ventureSlug,
   accent,
   detail,
   conceptDiagramSrcOverride,
@@ -213,8 +228,11 @@ export default function VentureDrawer({
                   {/* XGL msg 7147 : if the venture ships a concept diagram
                       independently of a full detail record, render it below
                       the placeholder so the drawer still has visual payload. */}
-                  {conceptDiagramSrcOverride && (
-                    <ConceptTab src={conceptDiagramSrcOverride} />
+                  {(DIAGRAM_COMPONENTS[ventureSlug] || conceptDiagramSrcOverride) && (
+                    <ConceptTab
+                      src={conceptDiagramSrcOverride}
+                      ventureSlug={ventureSlug}
+                    />
                   )}
                 </motion.div>
               ) : (
@@ -232,6 +250,7 @@ export default function VentureDrawer({
                     <ConceptTab
                       src={conceptDiagramSrcOverride ?? detail.conceptDiagramSrc}
                       caption={detail.conceptDiagramCaption}
+                      ventureSlug={ventureSlug}
                     />
                   )}
                   {tab === "market" && <MarketTab market={detail.market} />}
@@ -269,10 +288,29 @@ function DescriptionTab({ paragraphs }: { paragraphs: string[] }) {
 function ConceptTab({
   src,
   caption,
+  ventureSlug,
 }: {
   src?: string;
   caption?: string;
+  ventureSlug?: string;
 }) {
+  // XGL msg 7206 : per-slug custom framer-motion component wins over
+  // src (PNG or .riv). Registry lives at the top of this file. When a
+  // slug has an entry, render it ; caption still displays below.
+  const CustomDiagram = ventureSlug ? DIAGRAM_COMPONENTS[ventureSlug] : undefined;
+  if (CustomDiagram) {
+    return (
+      <figure className="mx-auto max-w-2xl">
+        <CustomDiagram />
+        {caption ? (
+          <figcaption className="mt-3 text-center text-xs text-white/60">
+            {caption}
+          </figcaption>
+        ) : null}
+      </figure>
+    );
+  }
+
   if (!src) {
     return (
       <div className="flex min-h-[300px] flex-col items-center justify-center rounded-lg border border-dashed border-white/25 bg-white/5 p-8 text-center">
