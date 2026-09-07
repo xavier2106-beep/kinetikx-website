@@ -1,9 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { X, ExternalLink } from "lucide-react";
 import type { VentureDetail } from "@/data/ventures";
+
+// XGL msg 7182-7185 (2026-09-07) · Rive runtime is lazy-loaded so the
+// ~200 KB canvas engine only ships when a venture actually has a .riv
+// diagram. ssr:false because @rive-app/react-canvas touches window.
+const RiveDiagram = dynamic(() => import("./RiveDiagram"), { ssr: false });
 
 // XGL msg 7042 (2026-09-03) · full-width drawer that opens downward when a
 // swatch is clicked. 8 tabs, parallax background gradient, sticky tab nav.
@@ -279,13 +285,22 @@ function ConceptTab({
       </div>
     );
   }
+  // XGL msg 7182-7185 : if the concept asset is a .riv file, render via
+  // the Rive runtime for object-by-object animated build-up + tooltip /
+  // audio triggers. Any other extension falls back to the static <img>
+  // path we've been shipping.
+  const isRive = src.toLowerCase().endsWith(".riv");
   return (
     <figure className="mx-auto max-w-2xl">
-      <img
-        src={src}
-        alt={caption ?? "Concept diagram"}
-        className="w-full rounded-lg border border-white/15 shadow-2xl"
-      />
+      {isRive ? (
+        <RiveDiagram src={src} />
+      ) : (
+        <img
+          src={src}
+          alt={caption ?? "Concept diagram"}
+          className="w-full rounded-lg border border-white/15 shadow-2xl"
+        />
+      )}
       {caption ? (
         <figcaption className="mt-3 text-center text-xs text-white/60">
           {caption}
