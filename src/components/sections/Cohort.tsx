@@ -371,7 +371,7 @@ export default function Cohort() {
   }, [openSlug]);
 
   return (
-    <section id="cohort" className="w-full bg-[#f5f1ea] py-24 sm:py-32 text-[#1a1a1a]">
+    <section id="cohort" className="w-full bg-[#f5f1ea] pb-5 pt-24 sm:pt-32 text-[#1a1a1a]">
       <Reveal>
         <div className="mx-auto max-w-3xl px-6 text-center">
           <h2 className="font-heading text-3xl font-light leading-tight sm:text-5xl">
