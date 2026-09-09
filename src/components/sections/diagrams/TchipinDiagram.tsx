@@ -113,10 +113,10 @@ export default function TchipinDiagram() {
   }, []);
 
   return (
-    <div className="mx-auto max-w-2xl">
+    <div className="h-full w-full">
       <div
         onClick={() => setRunKey((k) => k + 1)}
-        className="relative aspect-[4/3] cursor-pointer overflow-hidden rounded-lg border border-white/15 bg-[#0a0a0a] shadow-2xl"
+        className="relative h-full w-full cursor-pointer overflow-hidden bg-[#0a0a0a]"
         title="Click to replay"
       >
         {mounted && (

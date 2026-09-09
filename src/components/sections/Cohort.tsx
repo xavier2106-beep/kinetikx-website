@@ -209,13 +209,11 @@ function VentureCard({
   i,
   isOpen,
   onClick,
-  onMouseEnter,
 }: {
   v: Venture;
   i: number;
   isOpen: boolean;
   onClick: () => void;
-  onMouseEnter?: () => void;
 }) {
   const hasLogo = Boolean(v.logoSrc);
   // XGL msg 7117-7118 + 7124 : same 5-row labeled info block across all
@@ -235,7 +233,6 @@ function VentureCard({
     <Reveal delay={i * 0.08}>
       <motion.article
         onClick={onClick}
-        onMouseEnter={onMouseEnter}
         role="button"
         tabIndex={0}
         onKeyDown={(e) => {
@@ -354,18 +351,21 @@ export default function Cohort() {
   const openVenture = openSlug ? list.find((v) => v.slug === openSlug) : null;
   const openDetail = openSlug ? VENTURE_DETAILS[openSlug] ?? null : null;
 
-  // XGL msg 7129 : on mobile the drawer opens below the fold and looks
-  // like nothing happened. Autoscroll the drawer anchor into view on
-  // narrow viewports only ; desktop keeps its natural layout since the
-  // grid + drawer both fit on the same screen. The 120ms delay lets the
-  // AnimatePresence child mount before we scroll to it.
-  const drawerAnchorRef = useRef<HTMLDivElement>(null);
+  // XGL msg 7213 (2026-09-09) : on ANY viewport (was mobile-only), on
+  // swatch click, scroll the swatches row to sit near the top of the
+  // viewport so swatches + drawer render in the same screen frame.
+  // Offset ~80px accounts for the top nav bar. Target = swatches
+  // container's top ; that pins the cohort strip while the drawer
+  // opens below.
+  const swatchesRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!openSlug || typeof window === "undefined") return;
-    const isMobile = window.matchMedia("(max-width: 639.98px)").matches;
-    if (!isMobile) return;
     const t = window.setTimeout(() => {
-      drawerAnchorRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      const el = swatchesRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const targetY = window.scrollY + rect.top - 80;
+      window.scrollTo({ top: targetY, behavior: "smooth" });
     }, 120);
     return () => window.clearTimeout(t);
   }, [openSlug]);
@@ -427,7 +427,7 @@ export default function Cohort() {
         </div>
       </Reveal>
 
-      <div className="mx-auto mt-8 max-w-7xl overflow-hidden px-6">
+      <div ref={swatchesRef} className="mx-auto mt-8 max-w-7xl overflow-hidden px-6">
         <AnimatePresence mode="wait" custom={direction} initial={false}>
           <motion.div
             key={cohort}
@@ -447,22 +447,14 @@ export default function Cohort() {
                 onClick={() =>
                   setOpenSlug((prev) => (prev === v.slug ? null : v.slug))
                 }
-                // XGL msg 7108 (2026-09-04) : hovering another swatch while
-                // a drawer is open closes it — feels natural, avoids
-                // click-close-then-click-other two-step.
-                onMouseEnter={() => {
-                  if (openSlug && openSlug !== v.slug) setOpenSlug(null);
-                }}
+                // XGL msg 7213 (2026-09-09) : hover-to-close removed —
+                // it "annoyed". User must explicitly click another
+                // swatch or the X to change drawer.
               />
             ))}
           </motion.div>
         </AnimatePresence>
       </div>
-
-      {/* Anchor for mobile autoscroll — placed right where the drawer
-          appears so scrollIntoView brings the drawer top to the viewport
-          top. Zero-height, invisible ; purely for scroll targeting. */}
-      <div ref={drawerAnchorRef} aria-hidden className="h-0 w-full" />
 
       {/* Full-width venture detail drawer — opens below the card grid */}
       <AnimatePresence>

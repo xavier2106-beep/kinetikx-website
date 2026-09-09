@@ -208,8 +208,10 @@ export default function VentureDrawer({
             </div>
           </motion.nav>
 
-          {/* Tab content — fade + Y translate transitions */}
-          <div className="min-h-[280px]">
+          {/* Tab content — fixed height so switching tabs never resizes
+              the drawer frame (XGL msg 7213). Content that overflows
+              scrolls INSIDE this container ; the drawer outer stays put. */}
+          <div className="h-[560px] overflow-y-auto">
             <AnimatePresence mode="wait">
               {!detail ? (
                 <motion.div
@@ -294,14 +296,23 @@ function ConceptTab({
   caption?: string;
   ventureSlug?: string;
 }) {
+  // XGL msg 7213 (2026-09-09) : absolute consistency across all
+  // ventures + all tabs — fixed 16/9 frame at max-w-2xl. Any diagram
+  // source (PNG, SVG, .riv, custom React) renders INSIDE this box.
+  // No drawer reflow when switching between ventures with wildly
+  // different image aspect ratios.
+  const FRAME_CLASSES =
+    "mx-auto aspect-[16/9] w-full max-w-2xl overflow-hidden rounded-lg border border-white/15 bg-black/40 shadow-2xl";
+
   // XGL msg 7206 : per-slug custom framer-motion component wins over
-  // src (PNG or .riv). Registry lives at the top of this file. When a
-  // slug has an entry, render it ; caption still displays below.
+  // src (PNG or .riv). Registry lives at the top of this file.
   const CustomDiagram = ventureSlug ? DIAGRAM_COMPONENTS[ventureSlug] : undefined;
   if (CustomDiagram) {
     return (
       <figure className="mx-auto max-w-2xl">
-        <CustomDiagram />
+        <div className={FRAME_CLASSES}>
+          <CustomDiagram />
+        </div>
         {caption ? (
           <figcaption className="mt-3 text-center text-xs text-white/60">
             {caption}
@@ -313,32 +324,37 @@ function ConceptTab({
 
   if (!src) {
     return (
-      <div className="flex min-h-[300px] flex-col items-center justify-center rounded-lg border border-dashed border-white/25 bg-white/5 p-8 text-center">
-        <p className="text-sm text-white/70">
-          Concept diagram — image forthcoming.
-        </p>
-        {caption ? (
-          <p className="mt-3 max-w-lg text-xs text-white/50">{caption}</p>
-        ) : null}
-      </div>
+      <figure className="mx-auto max-w-2xl">
+        <div
+          className={
+            FRAME_CLASSES + " flex flex-col items-center justify-center p-8 text-center"
+          }
+        >
+          <p className="text-sm text-white/70">
+            Concept diagram — image forthcoming.
+          </p>
+          {caption ? (
+            <p className="mt-3 max-w-lg text-xs text-white/50">{caption}</p>
+          ) : null}
+        </div>
+      </figure>
     );
   }
-  // XGL msg 7182-7185 : if the concept asset is a .riv file, render via
-  // the Rive runtime for object-by-object animated build-up + tooltip /
-  // audio triggers. Any other extension falls back to the static <img>
-  // path we've been shipping.
+  // .riv → Rive runtime (animated build-up), else static <img>.
   const isRive = src.toLowerCase().endsWith(".riv");
   return (
     <figure className="mx-auto max-w-2xl">
-      {isRive ? (
-        <RiveDiagram src={src} />
-      ) : (
-        <img
-          src={src}
-          alt={caption ?? "Concept diagram"}
-          className="w-full rounded-lg border border-white/15 shadow-2xl"
-        />
-      )}
+      <div className={FRAME_CLASSES + " flex items-center justify-center"}>
+        {isRive ? (
+          <RiveDiagram src={src} className="h-full w-full" />
+        ) : (
+          <img
+            src={src}
+            alt={caption ?? "Concept diagram"}
+            className="h-full w-full object-contain"
+          />
+        )}
+      </div>
       {caption ? (
         <figcaption className="mt-3 text-center text-xs text-white/60">
           {caption}
