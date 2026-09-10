@@ -26,11 +26,15 @@ export default function Hero() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-[70%_center] opacity-90 sm:object-center"
+            className="object-cover object-[70%_center] sm:object-center"
           />
         </div>
       </motion.div>
-      <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/30 via-black/10 to-black/60 mix-blend-multiply" />
+      {/* XGL msg 7306 : drop mix-blend-multiply so the dragon renders even
+          on browsers with hardware acceleration disabled (blend modes fall
+          back to a solid overlay that fully hides the image). Regular alpha
+          gradient darkens the edges without depending on GPU compositing. */}
+      <div className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-black/40 via-transparent to-black/70" />
 
       <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
         <motion.div
