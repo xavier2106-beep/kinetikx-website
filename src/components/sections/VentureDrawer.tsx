@@ -6,16 +6,12 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { X, ExternalLink } from "lucide-react";
 import type { VentureDetail } from "@/data/ventures";
 
-// XGL msg 7182-7185 (2026-09-07) · Rive runtime is lazy-loaded so the
-// ~200 KB canvas engine only ships when a venture actually has a .riv
-// diagram. ssr:false because @rive-app/react-canvas touches window.
-const RiveDiagram = dynamic(() => import("./RiveDiagram"), { ssr: false });
-
-// XGL msg 7206 (2026-09-07 nuit) · Rive abandonné (msg 7200-7204) au
-// profit de framer-motion codé main. Registry per-slug : quand un
-// venture a un composant custom, il override l'image PNG. Chaque
-// diagramme est un chunk séparé (ssr:false suffit pour éviter le
-// hydration mismatch quand l'anim démarre au mount).
+// XGL msg 7284 (2026-09-10) · Rive dead-code excised — no .riv files
+// exist in the data model (msg 7206 abandoned Rive for framer-motion),
+// but the dynamic import kept @rive-app/react-canvas in a lazy chunk
+// that got prefetched at hydration and its runtime init was the
+// prime suspect for the permanent Chrome tab spinner. Diagram
+// registry below stays.
 const TchipinDiagram = dynamic(
   () => import("./diagrams/TchipinDiagram"),
   { ssr: false },
@@ -340,20 +336,14 @@ function ConceptTab({
       </figure>
     );
   }
-  // .riv → Rive runtime (animated build-up), else static <img>.
-  const isRive = src.toLowerCase().endsWith(".riv");
   return (
     <figure className="mx-auto max-w-2xl">
       <div className={FRAME_CLASSES + " flex items-center justify-center"}>
-        {isRive ? (
-          <RiveDiagram src={src} className="h-full w-full" />
-        ) : (
-          <img
-            src={src}
-            alt={caption ?? "Concept diagram"}
-            className="h-full w-full object-contain"
-          />
-        )}
+        <img
+          src={src}
+          alt={caption ?? "Concept diagram"}
+          className="h-full w-full object-contain"
+        />
       </div>
       {caption ? (
         <figcaption className="mt-3 text-center text-xs text-white/60">
