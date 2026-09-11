@@ -112,23 +112,59 @@ function hardStop() {
 
 /** Start a venture voiceover from t=0. Called by VentureDrawer when it
  * mounts and by the in-drawer Play button. Silent no-op when muted, when
- * the venture has no clip, or before the user has clicked once. */
+ * the venture has no clip, or before the user has clicked once.
+ *
+ * XGL msg 7331 (2026-09-11 bug report) : on the very first click, the
+ * voiceover started then paused within ~1s. Root cause = race between
+ * setting el.src and calling el.play() while the media is still loading
+ * — Chrome resolves the play() promise, starts playback for a beat, then
+ * the load pipeline interrupts. Fix : wait for `canplay` before calling
+ * play() when the src changes, so playback starts from a decoded frame. */
 export function playVentureFromStart(slug: string) {
   if (typeof window === "undefined") return;
   if (state.muted || !state.unlocked) return;
   if (!AVAILABLE.has(slug)) return;
 
-  hardStop();
   const el = getEl();
   const src = `/audio/ventures/${slug}.mp3`;
-  if (!el.src.endsWith(src)) el.src = src;
-  el.currentTime = 0;
-  el.volume = 1;
+  const sameSrc = el.src.endsWith(src);
+
+  // Reset bookkeeping BEFORE touching the element so an in-flight `play`
+  // callback (from a previous invocation) can no-op on the state.playing
+  // check.
   state.playing = slug;
   state.ended = false;
-  el.play().catch(() => {
-    state.playing = null;
-  });
+  state.suspendedByVideo = false;
+  el.volume = 1;
+
+  const start = () => {
+    if (state.playing !== slug) return; // superseded by another call
+    try {
+      el.currentTime = 0;
+    } catch {
+      /* NotAllowedError on unloaded element — ignore, canplay will retry */
+    }
+    el.play().catch(() => {
+      // Autoplay policy may still refuse (rare after unlock) ; the
+      // in-drawer Play button + mute toggle give the user recourse.
+      state.playing = null;
+    });
+  };
+
+  if (sameSrc && el.readyState >= 3 /* HAVE_FUTURE_DATA */) {
+    // Cached from a previous play — restart in place, no reload.
+    el.pause();
+    start();
+    return;
+  }
+
+  if (!sameSrc) el.src = src;
+  el.load();
+  const onReady = () => {
+    el.removeEventListener("canplay", onReady);
+    start();
+  };
+  el.addEventListener("canplay", onReady, { once: true });
 }
 
 /** Called on drawer close. Hard stop + reset — no fade, no resume. */
