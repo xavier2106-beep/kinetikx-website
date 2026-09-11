@@ -172,6 +172,19 @@ export function stopVenture() {
   hardStop();
 }
 
+/** Scoped stop : only pauses if THIS venture is still the owner.
+ *
+ * XGL msg 7336 · switching from swatch A to swatch B keeps A's drawer
+ * alive during framer-motion's exit animation. When A finally unmounts,
+ * its cleanup fires AFTER B has already claimed state.playing and
+ * started its own audio. A bare stopVenture() would kill B's playback.
+ *
+ * Guarding by slug means : the drawer cleans up after itself only when
+ * no newer drawer has taken over the singleton. */
+export function stopVentureIfOwned(slug: string) {
+  if (state.playing === slug) hardStop();
+}
+
 /** Called when a video-with-audio inside a drawer tab starts playing.
  * Pauses the voiceover but keeps its position so we can resume when the
  * video ends / pauses. No-op if voiceover isn't playing. */

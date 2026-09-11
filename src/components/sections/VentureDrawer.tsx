@@ -14,7 +14,7 @@ import {
   onMuteChange,
   playVentureFromStart,
   resumeFromVideoSuspend,
-  stopVenture,
+  stopVentureIfOwned,
   suspendForVideo,
 } from "@/lib/venture-audio";
 
@@ -126,7 +126,11 @@ export default function VentureDrawer({
       if (muted) setAudioEnded(false);
     });
     return () => {
-      stopVenture();
+      // Scoped stop — see venture-audio.ts. AnimatePresence keeps the
+      // outgoing drawer mounted through its exit animation ; if we
+      // unconditionally stopped here, the incoming drawer's audio (which
+      // has already claimed state.playing) would be silenced.
+      stopVentureIfOwned(ventureSlug);
       unsubEnded();
       unsubMute();
       setAudioEnded(false);
