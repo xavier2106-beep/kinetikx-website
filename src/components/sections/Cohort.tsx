@@ -5,7 +5,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
 import VentureDrawer from "@/components/sections/VentureDrawer";
+import VentureAudioToggle from "@/components/sections/VentureAudioToggle";
 import { VENTURE_DETAILS } from "@/data/ventures";
+import {
+  hasAudio,
+  playVenture,
+  stopVenture,
+} from "@/lib/venture-audio";
 
 type Venture = {
   slug: string;
@@ -229,10 +235,26 @@ function VentureCard({
   ];
   const hasInfo = infoRows.some((r) => r.value.trim().length > 0);
   const hasHover = hasLogo || hasInfo;
+  // XGL msg 7317-7324 (Lucy brief 2026-09-10) : hover-play voiceover.
+  // Handlers no-op silently when the venture has no clip so J2 ventures
+  // (falcon/aosx/stardust/deuce/finwel) stay quiet until their audio is
+  // scoped in later.
+  const ventureHasAudio = hasAudio(v.slug);
+  const handleMouseEnter = () => {
+    if (ventureHasAudio) playVenture(v.slug);
+  };
+  const handleMouseLeave = () => {
+    if (ventureHasAudio) stopVenture(v.slug);
+  };
+
   return (
     <Reveal delay={i * 0.08}>
       <motion.article
         onClick={onClick}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onFocus={handleMouseEnter}
+        onBlur={handleMouseLeave}
         role="button"
         tabIndex={0}
         onKeyDown={(e) => {
@@ -474,6 +496,11 @@ export default function Cohort() {
           />
         ) : null}
       </AnimatePresence>
+
+      {/* XGL msg 7317-7324 (Lucy brief) : mute toggle only on pages with
+          swatches — rendered inside Cohort so it doesn't clutter /our-team
+          or /sources. Fixed-position, so it floats over the section. */}
+      <VentureAudioToggle />
 
     </section>
   );
