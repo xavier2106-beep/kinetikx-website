@@ -3,8 +3,20 @@
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { X, ExternalLink } from "lucide-react";
+import { X, ExternalLink, Play } from "lucide-react";
 import type { VentureDetail } from "@/data/ventures";
+import {
+  ensureUnlockListener,
+  hasAudio,
+  isEnded,
+  isMuted,
+  onEnded,
+  onMuteChange,
+  playVentureFromStart,
+  resumeFromVideoSuspend,
+  stopVenture,
+  suspendForVideo,
+} from "@/lib/venture-audio";
 
 // XGL msg 7284 (2026-09-10) · Rive dead-code excised — no .riv files
 // exist in the data model (msg 7206 abandoned Rive for framer-motion),
@@ -97,6 +109,100 @@ export default function VentureDrawer({
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
+  // XGL msg 7325 · voiceover playback lifecycle. Fires once on mount from
+  // t=0, hard-stops on unmount. Subscribes to the `ended` event so the
+  // in-drawer replay button appears when the clip finishes.
+  const [audioEnded, setAudioEnded] = useState(false);
+  const ventureHasVoiceover = hasAudio(ventureSlug);
+  useEffect(() => {
+    if (!ventureHasVoiceover) return;
+    ensureUnlockListener();
+    setAudioEnded(isEnded() && !isMuted());
+    playVentureFromStart(ventureSlug);
+    const unsubEnded = onEnded(({ slug }) => {
+      if (slug === ventureSlug) setAudioEnded(true);
+    });
+    const unsubMute = onMuteChange((muted) => {
+      if (muted) setAudioEnded(false);
+    });
+    return () => {
+      stopVenture();
+      unsubEnded();
+      unsubMute();
+      setAudioEnded(false);
+    };
+  }, [ventureHasVoiceover, ventureSlug]);
+
+  // XGL msg 7325 · video-in-drawer interception. Watch every <video>
+  // element inside the drawer scroll container ; when one starts playing
+  // WITH audio, suspend the voiceover ; resume on pause / ended.
+  // Videos without an audio track (muted or no soundtrack) don't
+  // interrupt — voiceover plays through them.
+  useEffect(() => {
+    if (!ventureHasVoiceover) return;
+    const root = scrollRef.current;
+    if (!root) return;
+
+    type VideoLike = HTMLVideoElement & { mozHasAudio?: boolean; webkitAudioDecodedByteCount?: number };
+    const hasAudioTrack = (v: VideoLike) => {
+      if (v.muted) return false;
+      // Modern Chrome/Safari: check the AudioTracks API when available.
+      const tracks = (v as HTMLVideoElement & { audioTracks?: { length: number } }).audioTracks;
+      if (tracks && typeof tracks.length === "number") return tracks.length > 0;
+      // Firefox exposes mozHasAudio ; Safari has webkitAudioDecodedByteCount.
+      if (typeof v.mozHasAudio === "boolean") return v.mozHasAudio;
+      if (typeof v.webkitAudioDecodedByteCount === "number") return v.webkitAudioDecodedByteCount > 0;
+      // Conservative default : assume audio present so we don't talk over it.
+      return true;
+    };
+
+    const onPlay = (e: Event) => {
+      const v = e.target as VideoLike;
+      if (hasAudioTrack(v)) suspendForVideo();
+    };
+    const onPauseOrEnded = () => resumeFromVideoSuspend();
+
+    const attach = (v: HTMLVideoElement) => {
+      v.addEventListener("play", onPlay);
+      v.addEventListener("pause", onPauseOrEnded);
+      v.addEventListener("ended", onPauseOrEnded);
+    };
+    const detach = (v: HTMLVideoElement) => {
+      v.removeEventListener("play", onPlay);
+      v.removeEventListener("pause", onPauseOrEnded);
+      v.removeEventListener("ended", onPauseOrEnded);
+    };
+
+    root.querySelectorAll("video").forEach(attach);
+    const mo = new MutationObserver((records) => {
+      records.forEach((r) => {
+        r.addedNodes.forEach((n) => {
+          if (n instanceof HTMLElement) {
+            if (n instanceof HTMLVideoElement) attach(n);
+            n.querySelectorAll?.("video").forEach(attach);
+          }
+        });
+        r.removedNodes.forEach((n) => {
+          if (n instanceof HTMLElement) {
+            if (n instanceof HTMLVideoElement) detach(n);
+            n.querySelectorAll?.("video").forEach(detach);
+          }
+        });
+      });
+    });
+    mo.observe(root, { childList: true, subtree: true });
+    return () => {
+      mo.disconnect();
+      root.querySelectorAll("video").forEach(detach);
+    };
+  }, [ventureHasVoiceover, tab]);
+
+  const handleReplay = () => {
+    if (!ventureHasVoiceover) return;
+    setAudioEnded(false);
+    playVentureFromStart(ventureSlug);
+  };
+
   return (
     <motion.div
       // XGL msg 7108 (2026-09-04) · softer, stylish open/close.
@@ -158,9 +264,25 @@ export default function VentureDrawer({
               <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--kx-crimson)]">
                 {ventureEyebrow}
               </p>
-              <h3 className="mt-2 font-heading text-4xl font-extralight sm:text-5xl">
-                {ventureName}
-              </h3>
+              <div className="mt-2 flex items-center gap-3">
+                <h3 className="font-heading text-4xl font-extralight sm:text-5xl">
+                  {ventureName}
+                </h3>
+                {/* XGL msg 7325 · replay button surfaces only after the
+                    voiceover ends. Muted state hides it too (the user
+                    opted out). */}
+                {ventureHasVoiceover && audioEnded ? (
+                  <button
+                    type="button"
+                    onClick={handleReplay}
+                    aria-label="Rejouer le voice over"
+                    title="Rejouer le voice over"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/40 text-white/85 transition hover:border-white hover:bg-white/10"
+                  >
+                    <Play size={14} strokeWidth={1.8} />
+                  </button>
+                ) : null}
+              </div>
             </div>
             <button
               type="button"
