@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
-import VentureDrawer from "@/components/sections/VentureDrawer";
-import { VENTURE_DETAILS } from "@/data/ventures";
+// XGL msg 7317 (2026-09-11) : VentureDrawer + VENTURE_DETAILS wiring
+// stays on `staging` branch only. On `main` the swatch click is a
+// no-op — the drawer opens only on staging.kinetikx.com while XGL
+// signs off the design, then we promote to prod.
 
 type Venture = {
   slug: string;
@@ -336,39 +338,9 @@ function VentureCard({
 export default function Cohort() {
   // 1 = JOURNEY·ONE (default), 2 = JOURNEY·TWO
   const [cohort, setCohort] = useState<1 | 2>(1);
-  // Slug of the currently expanded venture ; null = drawer closed.
-  const [openSlug, setOpenSlug] = useState<string | null>(null);
   const list = cohort === 1 ? JOURNEY_ONE : JOURNEY_TWO;
   const direction = cohort === 1 ? -1 : 1;
-
-  // Close the drawer whenever the user swaps journeys (open venture may
-  // no longer be visible in the new list) — feels clean, avoids stale UI.
-  const swapCohort = (target: 1 | 2) => {
-    setOpenSlug(null);
-    setCohort(target);
-  };
-
-  const openVenture = openSlug ? list.find((v) => v.slug === openSlug) : null;
-  const openDetail = openSlug ? VENTURE_DETAILS[openSlug] ?? null : null;
-
-  // XGL msg 7213 (2026-09-09) : on ANY viewport (was mobile-only), on
-  // swatch click, scroll the swatches row to sit near the top of the
-  // viewport so swatches + drawer render in the same screen frame.
-  // Offset ~80px accounts for the top nav bar. Target = swatches
-  // container's top ; that pins the cohort strip while the drawer
-  // opens below.
-  const swatchesRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (!openSlug || typeof window === "undefined") return;
-    const t = window.setTimeout(() => {
-      const el = swatchesRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const targetY = window.scrollY + rect.top - 80;
-      window.scrollTo({ top: targetY, behavior: "smooth" });
-    }, 120);
-    return () => window.clearTimeout(t);
-  }, [openSlug]);
+  const swapCohort = (target: 1 | 2) => setCohort(target);
 
   return (
     <section id="cohort" className="w-full bg-[#f5f1ea] pb-5 pt-24 sm:pt-32 text-[#1a1a1a]">
@@ -427,7 +399,7 @@ export default function Cohort() {
         </div>
       </Reveal>
 
-      <div ref={swatchesRef} className="mx-auto mt-8 max-w-7xl overflow-hidden px-6">
+      <div className="mx-auto mt-8 max-w-7xl overflow-hidden px-6">
         <AnimatePresence mode="wait" custom={direction} initial={false}>
           <motion.div
             key={cohort}
@@ -443,37 +415,18 @@ export default function Cohort() {
                 key={`${cohort}-${v.name}`}
                 v={v}
                 i={i}
-                isOpen={openSlug === v.slug}
-                onClick={() =>
-                  setOpenSlug((prev) => (prev === v.slug ? null : v.slug))
-                }
-                // XGL msg 7213 (2026-09-09) : hover-to-close removed —
-                // it "annoyed". User must explicitly click another
-                // swatch or the X to change drawer.
+                isOpen={false}
+                // XGL msg 7317 (2026-09-11) : drawer disabled on prod
+                // until the design is signed off. Staging keeps the
+                // drawer live — dev iterates there, we promote once
+                // XGL is happy. Click is a no-op on prod ; the hover
+                // flip still runs for visual interest.
+                onClick={() => {}}
               />
             ))}
           </motion.div>
         </AnimatePresence>
       </div>
-
-      {/* Full-width venture detail drawer — opens below the card grid */}
-      <AnimatePresence>
-        {openVenture ? (
-          <VentureDrawer
-            key={openVenture.slug}
-            ventureName={openVenture.name}
-            ventureEyebrow={openVenture.eyebrow || "STAGE 0"}
-            ventureSlug={openVenture.slug}
-            accent={openVenture.accent}
-            detail={openDetail}
-            // XGL msg 7147 — Venture-level diagram overrides the detail's
-            // one, so ventures without a full VentureDetail record still
-            // ship their concept image via the drawer.
-            conceptDiagramSrcOverride={openVenture.conceptDiagramSrc}
-            onClose={() => setOpenSlug(null)}
-          />
-        ) : null}
-      </AnimatePresence>
 
     </section>
   );
