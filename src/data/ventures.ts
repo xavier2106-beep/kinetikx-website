@@ -195,24 +195,27 @@ export const NYSM_DETAIL: VentureDetail = {
   ],
   conceptDiagramSrc: "/images/ventures/diagrams/nysm.png", // XGL msg 7147
   conceptDiagramCaption: undefined,
+  // === TAM · SAM · SOM · Teresa v1 (2026-09-10, QC Lucy) ==================
+  // Source : Content-Kits/_cross-venture/03-tam-sam-som/
+  //          KVS-TAM-SAM-SOM-9-ventures-v1.pdf (NYSM section, pp. 2-4).
   market: {
     tam: {
       label: "TAM",
-      amountLabel: "[LUCY]",
+      amountLabel: "$1.5B",
       paragraph:
-        "[LUCY placeholder] Total addressable — global HR tech / hiring software (already teased at $4B+ on the cohort card). Bottom-up ideal: annual job-seeker × ARPU + recruiter seats × ACV.",
+        "The GCC HR-tech software market — the software-mediated slice of talent acquisition and management — is the defensible ceiling for a video-first hiring platform priced in AED. IMARC pegs it at USD 760 M in 2025 with a 9.45% CAGR to USD 1.76 B by 2034 ; Astute Analytica's broader read (including outsourced HR services) sizes it at USD 2.56 B in 2023 growing to USD 5.48 B by 2032. NYSM anchors on the USD 1.5 B midpoint (2024/2025), which sits comfortably between the IMARC floor and the Astute upper bound and matches the software-only frame in which NYSM competes.",
     },
     sam: {
       label: "SAM",
-      amountLabel: "[LUCY]",
+      amountLabel: "$200–250M",
       paragraph:
-        "[LUCY placeholder] Serviceable available — geography + language + segment filters applied to the TAM over 24-36 months.",
+        "The serviceable slice is online, structured recruitment software for white-collar mid-to-high-volume employers across the GCC — excluding blue-collar volume hiring, government procurement, and enterprise HCM suites. Applying a 25–30% subsegment filter to the working TAM (recruitment share of GCC HR-tech spend) yields USD 375–450 M, tightened with a MENA video-interview cross-check (~USD 58–61 M today) to a defensible working SAM of USD 200–250 M. The universe : UAE alone has ~390,000 registered private-sector companies with >12,000 subject to Emiratisation targets across 14 sectors, and 69% of UAE employers reported expansion hiring plans for 2024.",
     },
     som: {
       label: "SOM",
-      amountLabel: "[LUCY]",
+      amountLabel: "~$7M · modelled",
       paragraph:
-        "[LUCY placeholder] Serviceable obtainable — realistic 24-36 month capture given pilot + warm-intro pipeline.",
+        "NYSM's GTM stages Dubai-first launch (September 2026) → UAE penetration through 2027 → KSA and wider GCC from 2027/2028. Year 1 targets the ~12,000+ Emiratisation-mandate companies plus mid-size white-collar employers on digital channels. Capturing 0.5–1% of SAM in Year 1 yields USD 1.1–2.25 M ARR, rising to 2–5% by Year 3 as UAE penetration matures and KSA/Qatar layer in — a modelled 3-year cumulative capture of USD 4.5–11 M, midpoint ~USD 7 M by end of Year 3 (~3% of SAM). Conservative on purpose : no enterprise or government anchor assumed, consistent with an AED-priced token economy that favours volume SME and mid-market adoption.",
     },
   },
   uiUx: {
@@ -256,9 +259,290 @@ export const NYSM_DETAIL: VentureDetail = {
   },
 };
 
+// === TCHIP·IN ============================================================
+// XGL msg 7341-7345 (2026-09-13) : populate drawer with Teresa's market
+// data from KVS-TAM-SAM-SOM-9-ventures-v1.pdf. Other tabs are [LUCY]
+// placeholders until Lucy pushes the corresponding Content-Kits buckets.
+export const TCHIPIN_DETAIL: VentureDetail = {
+  description: [
+    "TCHIP·IN is The Gifter — a crowd-gifting platform built for the GCC's occasion economy. The whole circle chips in for the moments that matter : weddings, Eid, corporate milestones, birthdays, farewells. One GiftPot, many contributors, one collective gift.",
+    "[LUCY placeholder] Second paragraph — product positioning : why crowd-gifting, why now, what makes Tchip·In different from Western equivalents (GoFundMe-for-gifts, group-buy tools) in a market where the occasion pool is fundamentally larger and denser.",
+    "[LUCY placeholder] Third paragraph — market moment + why GCC first + KinetiKx thesis fit.",
+  ],
+  conceptDiagramSrc: "/images/ventures/diagrams/tchipin.png",
+  conceptDiagramCaption: undefined,
+  market: {
+    tam: {
+      label: "TAM",
+      amountLabel: "$4.5B",
+      paragraph:
+        "The addressable market is the GCC digitally-enabled gifting economy — the subset of gifting spend that moves through digital rails or is addressable by a digital-first platform. Triangulating the MENA food-and-specialty gifting market (USD 6.04 B in 2024 → USD 8.47 B by 2032) and the Middle East gift card and incentive card market (USD 7.32 B in 2024, 12.2% CAGR), the GCC-only digitally-addressable pool — personal plus corporate, excluding in-person retail gift purchases — is estimated at USD 4–5 B in 2025. The Eid/Ramadan seasonal spike alone reached USD 17.3 B in KSA and USD 16.4 B in the UAE economy-wide. USD 4.5 B is used as the mid-point conservative anchor.",
+    },
+    sam: {
+      label: "SAM",
+      amountLabel: "$600M",
+      paragraph:
+        "Tchip·In doesn't compete for all gifting spend — it competes for occasions where a group collectively funds a gift : weddings, Eid household giving, corporate employee milestones, farewells, birthdays. Bottom-up : UAE hosts ~17,700–21,000 weddings/year at ~USD 68,000 average spend, and KSA holds 150,000+ weddings/year ; guest cash gifts represent 15–25% of wedding occasion spend, yielding a GCC crowd-giftable wedding pool of USD 1.5–2 B. Layer in a conservative Gulf Eid household digital-gifting pool of ~USD 1.6 B and corporate milestone gifting (~USD 240–640 M), then apply a 15–25% digital penetration rate, and the crowd-gifting SAM lands at USD 500–700 M in 2025 — mid-point USD 600 M.",
+    },
+    som: {
+      label: "SOM",
+      amountLabel: "~$18M · modelled",
+      paragraph:
+        "Tchip·In's GTM is UAE-first, regulation-first : the MVP is scoped against the UAE's regulated payments and stored-value framework, with licensed program-management partners as the foundation. Year 1 opens the ~17,700–21,000 UAE weddings + Eid occasion volumes + initial corporate partnerships ; at a 0.5–1% capture rate in Year 1, growing to 3–5% by Year 3 as UAE penetration matures and KSA is added, the three-year cumulative capture is 2–4% of SAM = USD 12–24 M. In GiftPot terms : ~36,000–60,000 active GiftPots closed over three years at USD 300–500 average GiftPot value. Modelled midpoint : ~USD 18 M cumulative / ~45,000 active GiftPots / ~3% of SAM by Year 3.",
+    },
+  },
+  uiUx: {
+    paragraph:
+      "[LUCY placeholder] Product experience — GiftPot creation, contribution flow, delivery + redemption. Mobile-first with WhatsApp share as the primary invite channel.",
+    demoUrl: undefined,
+    demoLabel: undefined,
+    demoNote: undefined,
+    screenshots: [],
+  },
+  businessModel: [
+    "[LUCY placeholder] Revenue model — Trx fee + revenue share ; per Tchip·In cohort card summary.",
+    "[LUCY placeholder] Segment split : B2C (household occasion pots) vs corporate milestone pots.",
+  ],
+  gtm: [
+    "[LUCY placeholder] Acquisition strategy — occasion-anchored (wedding season Q3/Q4, Eid Q1/Q2), influencer + venue partnerships, corporate HR sponsor deals.",
+    "[LUCY placeholder] Expected cycle, ARPPU, CAC assumptions.",
+  ],
+  keyNumbers: [
+    { label: "Product status", value: "Build → MVP 12/26", hint: "per cohort card" },
+    { label: "[LUCY] Waitlist", value: "[LUCY]", hint: "to-date" },
+    { label: "[LUCY] Anchor occasion partners", value: "[LUCY]", hint: "signed / in talks" },
+    { label: "[LUCY] Regulatory scope", value: "[LUCY]", hint: "UAE stored-value licence path" },
+    { label: "Market opportunity", value: "$4.5B TAM", hint: "GCC digital gifting (Teresa v1)" },
+    { label: "[LUCY] Corporate pilots", value: "[LUCY]", hint: "HR sponsor deals" },
+    { label: "[LUCY] Languages at launch", value: "[LUCY]", hint: "AR / EN" },
+    { label: "[LUCY] Team size", value: "[LUCY]", hint: "current headcount" },
+  ],
+  team: {
+    intro:
+      "[LUCY placeholder] KinetiKx Venture Studios framing — founder-led with an AI-native squad. Mirror the HERAKLYS team paragraph, tuned for Tchip·In's product surface.",
+    members: [
+      { name: "Xavier (XGL)", role: "Founder + Product Architect", note: "Vision + partnerships + GCC network" },
+      { name: "[LUCY] Nina Solheim", role: "Engineering (web + payments)", note: "[LUCY]" },
+      { name: "[LUCY] Rebecca Falcone", role: "Legal counsel", note: "Payments licence + KYC/AML" },
+      { name: "[LUCY] Lucy del Mar", role: "Brand, marketing & sales", note: "[LUCY]" },
+      { name: "[LUCY] additions", role: "[LUCY]", note: "Advisors, occasion / venue partners" },
+    ],
+  },
+};
+
+// === PETS·NATION =========================================================
+export const PETSNATION_DETAIL: VentureDetail = {
+  description: [
+    "PETS·NATION is The Caretaker — a full-lifecycle pet-care platform for the GCC. One app for every need your animal has : food and treats delivered, vet booked, groomer or sitter matched, insurance managed, records kept.",
+    "[LUCY placeholder] Second paragraph — product positioning : why an integrated stack, why the GCC market is under-served by 200+ fragmented single-service tools with no dominant platform.",
+    "[LUCY placeholder] Third paragraph — market moment + regulatory landscape + KinetiKx thesis fit.",
+  ],
+  conceptDiagramSrc: "/images/ventures/diagrams/petsnation.png",
+  conceptDiagramCaption: undefined,
+  market: {
+    tam: {
+      label: "TAM",
+      amountLabel: "$1.1B",
+      paragraph:
+        "The GCC pet economy — food, veterinary services, grooming, boarding and sitting, insurance, accessories, and retail — is the cleanest anchor for a full-lifecycle platform. GCC veterinary hospitals were valued at USD 766 M in 2024 (7.31% CAGR toward USD 1.43 B by 2033), with the companion-animal segment (cats, dogs, smaller pets — the Pets·Nation core) accounting for ~USD 494 M. GCC pet food adds USD 266 M in 2024 (4.88% CAGR), and grooming, boarding, sitting, insurance and accessories add USD 300–380 M, summing to a GCC total pet economy of USD 1.06–1.14 B — anchored at USD 1.1 B.",
+    },
+    sam: {
+      label: "SAM",
+      amountLabel: "$200M",
+      paragraph:
+        "The SAM is the share of the GCC pet economy transactable via digital channels — the urban, high-digital-adoption slice Pets·Nation can reach without physical-only engagement. Bottom-up : 62.1 M GCC population × urbanisation rates yields ~10.9 M urban households ; applying an 18–20% pet-ownership rate for primary markets (UAE/KSA/Qatar/Kuwait) and 12–15% for Bahrain/Oman gives ~2.2 M pet-owning households and ~3.3 M pets. At a 28% digital-addressable spend per pet (blended UAE + KSA per-pet spend of ~USD 400/year), the bottom-up SAM lands at USD 190–220 M — anchored at USD 200 M in 2024.",
+    },
+    som: {
+      label: "SOM",
+      amountLabel: "~$3.5M · modelled",
+      paragraph:
+        "Pets·Nation is pre-build as of September 2026 ; the SOM models a conservative pre-launch penetration curve in a nascent-digital vertical. Three-phase GTM : Year 1 UAE MVP targets 3–5% of UAE digitally-active pet-owning households (~8,800 active pet profiles) ; Year 2 deepens UAE to 7–8% and adds KSA at 2–3% (~26,000–28,000 profiles) ; Year 3 scales UAE to ~12%, KSA to 6%, plus Qatar/Kuwait entry (~55,000–65,000 profiles). At USD 350/year average digital spend × 15% blended take rate (12% commission + premium subs), plus USD 300 K–500 K B2B merchant fees, modelled Year 3 revenue is USD 3.4–3.7 M — ~1.75% of SAM.",
+    },
+  },
+  uiUx: {
+    paragraph:
+      "[LUCY placeholder] Product experience — one app, unified pet profile, all services accessible in a few taps. Mobile-first ; vet-integration white-label option for clinics.",
+    demoUrl: undefined,
+    demoLabel: undefined,
+    demoNote: undefined,
+    screenshots: [],
+  },
+  businessModel: [
+    "[LUCY placeholder] Revenue model — Subscription + Revenue Share (per cohort card).",
+    "[LUCY placeholder] Segment split : B2C households vs B2B clinics/groomers.",
+  ],
+  gtm: [
+    "[LUCY placeholder] Acquisition strategy — vet clinic partnerships as trust anchor, pet-influencer content, adoption-event sponsorships.",
+    "[LUCY placeholder] Expected cycle, ARPPU per pet, CAC assumptions.",
+  ],
+  keyNumbers: [
+    { label: "Product status", value: "Build → MVP Q1 27", hint: "per cohort card" },
+    { label: "[LUCY] Vet partners", value: "[LUCY]", hint: "signed / in pipeline" },
+    { label: "[LUCY] Pet profiles seed", value: "[LUCY]", hint: "beta cohort" },
+    { label: "[LUCY] SKU depth", value: "[LUCY]", hint: "food + accessories catalog" },
+    { label: "Market opportunity", value: "$1.1B TAM", hint: "GCC pet economy (Teresa v1)" },
+    { label: "[LUCY] Insurance partners", value: "[LUCY]", hint: "underwriting integrations" },
+    { label: "[LUCY] Retention D30", value: "[LUCY]", hint: "beta cohort curves" },
+    { label: "[LUCY] Team size", value: "[LUCY]", hint: "current headcount" },
+  ],
+  team: {
+    intro:
+      "[LUCY placeholder] KinetiKx Venture Studios framing — founder-led with an AI-native squad. Mirror the HERAKLYS team paragraph, tuned for Pets·Nation's product surface.",
+    members: [
+      { name: "Xavier (XGL)", role: "Founder + Product Architect", note: "Vision + partnerships" },
+      { name: "[LUCY] Nina Solheim", role: "Engineering (web + mobile)", note: "[LUCY]" },
+      { name: "[LUCY] Rebecca Falcone", role: "Legal counsel", note: "Vet regulation + insurance" },
+      { name: "[LUCY] Lucy del Mar", role: "Brand, marketing & sales", note: "[LUCY]" },
+      { name: "[LUCY] additions", role: "[LUCY]", note: "Vet advisor board, kennel/grooming partners" },
+    ],
+  },
+};
+
+// === LIQUID SPACE ========================================================
+export const LIQUID_SPACE_DETAIL: VentureDetail = {
+  description: [
+    "LIQUID SPACE is a drink out of this world — a premium non-alcoholic beverage brand engineered as ritual, not substitute. GCC-designed, Canadian-produced, distributed through nightlife on-premise and premium retail. The bartender's serve, the mocktail base, the hero drink of the alcohol-free venue.",
+    "[LUCY placeholder] Second paragraph — product positioning : why the ritual over the ingredient, why the GCC is the only major market where the majority of the nightlife-attending population does not drink alcohol.",
+    "[LUCY placeholder] Third paragraph — market moment + why Canadian production + KinetiKx thesis fit.",
+  ],
+  conceptDiagramSrc: undefined,
+  conceptDiagramCaption: undefined,
+  market: {
+    tam: {
+      label: "TAM",
+      amountLabel: "$1.2–1.5B",
+      paragraph:
+        "The broadest defensible frame is the GCC premium and zero-alcohol beverage subsegment, sitting within a ~USD 20 B GCC non-alcoholic beverage market (MEA NAB was USD 59.7 B in 2025 at 5.27% CAGR). The UAE zero-alcohol beverages market alone reached USD 1.2 B in 2025, growing at a historical 8.8% CAGR (2020–2025) with a forward CAGR of 7.96% through 2032 ; GCC non-alcoholic beer — the closest publicly benchmarked analog — was USD 92 M in 2025 at 4.75% CAGR. The GCC is the only major market where the majority of the nightlife-attending population does not drink alcohol, making it uniquely over-indexed for premium NA product development ; TAM anchors at USD 1.2–1.5 B (GCC premium/zero-alcohol, 2025).",
+    },
+    sam: {
+      label: "SAM",
+      amountLabel: "~$100M",
+      paragraph:
+        "The serviceable market is bounded to venues and channels where Liquid Space's ritual positioning commands a premium serve : on-premise nightlife (clubs, lounges, beach clubs, festivals) plus adjacent premium retail and DTC across the GCC, with UAE as the launch anchor. Dubai hosts ~268 licensed nightclub-category venues plus ~70 beach clubs ; adding hotel bars, licensed rooftop lounges, and festival circuits lifts total GCC-accessible premium on-premise venues to 400–500, with a further 300–400 as the entertainment build-out matures. Applying an 8–12% premium-experiential share to the UAE zero-alcohol market, scaling to GCC reach, and filtering to Liquid Space's addressable on-premise + selective-retail channels yields a working SAM of ~USD 100 M (2025–2026 midpoint), growing to USD 130–180 M by 2028.",
+    },
+    som: {
+      label: "SOM · Year 3",
+      amountLabel: "~$3–5M · modelled",
+      paragraph:
+        "Liquid Space's GTM is on-premise-first, with bartenders as evangelists — a proven diffusion model in premium NA (Athletic Brewing, Lyre's). Year 1 (2027, UAE launch) targets 30–50 venue partnerships (clubs, lounges, beach clubs) averaging 60 cans/service night over a 6-month active season, implying ~400,000–500,000 cans. Year 2 (UAE deepening + KSA entry) scales to 100–150 active venues UAE + early KSA/Qatar entry at 1.2–1.8 M cans annually. Year 3 (2029, GCC momentum) reaches 200–250 GCC venues plus retail + DTC at 2.5–3.5 M cans annually. Modelled headline : ~USD 3–5 M revenue / ~2.5–3.5 M cans / ~3–5% of SAM by Year 3.",
+    },
+  },
+  uiUx: {
+    paragraph:
+      "[LUCY placeholder] Product experience — CPG-first : the packaging is the interface. Ritual + retail + render (the visual codes) : a 250 ml sleek can, three signature serves (Signature, Sunset, Midnight), bartender toolkit + shelf-ready secondary packaging.",
+    demoUrl: undefined,
+    demoLabel: undefined,
+    demoNote: undefined,
+    screenshots: [],
+  },
+  businessModel: [
+    "[LUCY placeholder] Revenue model — CPG margin (wholesale + on-premise partnerships + selective premium retail + DTC). Bartender revenue-share on hero-serve programs.",
+    "[LUCY placeholder] Segment split : UAE launch → GCC (KSA / Qatar / Kuwait) expansion → optional retail-first entry into KSA where regulation permits.",
+  ],
+  gtm: [
+    "[LUCY placeholder] Acquisition strategy — bartender-led seeding, venue tastings, festival + hotel partnerships, targeted premium retail placement (spinneys / carrefour premium / speciality).",
+    "[LUCY placeholder] Expected sell-in cycle, per-venue economics, distribution partner landscape.",
+  ],
+  keyNumbers: [
+    { label: "Product status", value: "MVP formulation", hint: "Canadian production, GCC-designed" },
+    { label: "[LUCY] Anchor venue LOIs", value: "[LUCY]", hint: "UAE nightlife pilot" },
+    { label: "[LUCY] Distributor pipeline", value: "[LUCY]", hint: "GCC-1 partners" },
+    { label: "[LUCY] Regulatory clearances", value: "[LUCY]", hint: "UAE registration status" },
+    { label: "Market opportunity", value: "$1.2–1.5B TAM", hint: "GCC premium/zero-alcohol (Teresa v1)" },
+    { label: "[LUCY] Team size", value: "[LUCY]", hint: "GCC + Canadian ops" },
+    { label: "[LUCY] Founders", value: "[LUCY]", hint: "co-founder profiles" },
+    { label: "[LUCY] Formulation IP", value: "[LUCY]", hint: "unique to GCC preferences" },
+  ],
+  team: {
+    intro:
+      "[LUCY placeholder] KinetiKx Venture Studios framing — founder-led with a Canadian production anchor and GCC nightlife anchors. Mirror the HERAKLYS team paragraph, tuned for Liquid Space's CPG surface.",
+    members: [
+      { name: "Xavier (XGL)", role: "Founder + Product Architect", note: "Vision + GCC nightlife network" },
+      { name: "[LUCY] Co-founder (unnamed)", role: "F&B / product formulation", note: "Canadian production lead" },
+      { name: "[LUCY] Rebecca Falcone", role: "Legal counsel", note: "F&B regulation + GCC registration" },
+      { name: "[LUCY] Lucy del Mar", role: "Brand, marketing & venue relationships", note: "[LUCY]" },
+      { name: "[LUCY] additions", role: "[LUCY]", note: "Distributor advisors, bartender ambassadors" },
+    ],
+  },
+};
+
+// === KINETIKX VENTURE STUDIOS (K·VS) =====================================
+// The studio itself has a drawer — same pattern as its ventures. The
+// content leans on K·VS's own operating model rather than a product.
+export const KINETIKX_VS_DETAIL: VentureDetail = {
+  description: [
+    "K·VS is the venture studio behind every KinetiKx venture — founder-led, AI-native, anchor-client funded. We build ventures on mandate for GCC enterprises, family offices, and government-linked principals ; every mandate seeds a venture that KinetiKx retains equity in and operates alongside the anchor.",
+    "[LUCY placeholder] Second paragraph — operating model : five ventures per Journey cohort, Journey One live, Journey Two queued, senior-heavy teams accelerated by agentic AI delivery, shared platform and tooling across cohort.",
+    "[LUCY placeholder] Third paragraph — market position : why the GCC needs an owner-operator studio (not a consulting firm, not a fund), why we are that studio.",
+  ],
+  conceptDiagramSrc: undefined,
+  conceptDiagramCaption: undefined,
+  market: {
+    tam: {
+      label: "TAM",
+      amountLabel: "~$2.0B",
+      paragraph:
+        "The addressable market for K·VS is the GCC/MENA corporate mandate market — the budget envelope GCC enterprises, family offices, and government-linked entities allocate to outside partners to build, transform, or spin out ventures on their behalf. GCC consulting reached USD 7.4 B in 2024 and USD 8.3 B in 2025 (12% growth), one of the fastest-growing consulting markets globally ; within that envelope, the transformation-and-innovation segment is anchored on the GCC strategy consulting proxy of USD 2.1 B (2024) → USD 2.2 B (2025), and a conservative 8–10% venture-building-mandate share of GCC digital-transformation spend (USD 18.2 B, 2025) implies a GCC mandate TAM of ~USD 1.5–1.8 B. Widened to include MENA (Egypt, Jordan, Morocco), the working TAM lands at ~USD 2.0 B in 2025.",
+    },
+    sam: {
+      label: "SAM",
+      amountLabel: "~$38M/yr",
+      paragraph:
+        "The SAM filters that TAM to enterprises and principals who can realistically engage a high-touch, IP-retaining venture studio : GCC large enterprises with active innovation mandates (~250, filtered from Fortune 500 Arabia and Vision 2030-aligned sectors), GCC/MENA family offices with venture-building appetite (~45, from ~290 MENA SFOs × 58% VC-active rate × mandate-readiness filter), and government-linked / quasi-sovereign entities (~20 conservative estimate) — ~315 addressable anchor-client mandates in total. Applying an average anchor-mandate value of ~USD 1 M/mandate/year (blended fee-and-equity, conservative vs. BCG Digital Ventures' implied USD 1.5–2 M) and a 12% mandate-active rate yields ~38 active mandates/year at USD 1 M each = ~USD 38 M/year, with a ceiling near ~USD 71 M/year at higher activity and mandate value.",
+    },
+    som: {
+      label: "SOM",
+      amountLabel: "~$18M · modelled",
+      paragraph:
+        "Studio capacity — not market opportunity — is the constraint. K·VS runs senior-heavy teams with agentic AI-accelerated delivery and a Journeys structure of five ventures per cohort ; Journey One is live, Journey Two follows as the next cohort. A realistic capacity envelope is 3–4 active anchor-client mandates in Year 1, 5–7 in Year 2, and 7–10 in Year 3 as Journey Two opens and the studio expands into a second cohort. At the anchor mandate-value proxy of USD 1 M/mandate, the SOM revenue range is USD 3–4 M in Year 1, USD 5–6 M in Year 2, USD 8–10 M in Year 3 — 3-year cumulative ~USD 16–20 M, modelled midpoint ~USD 18 M, or 14–17% of the 3-year SAM pool.",
+    },
+  },
+  uiUx: {
+    paragraph:
+      "[LUCY placeholder] Operating platform — internal tooling stack that every K·VS venture inherits (shared auth, comms, data plane, brand system, legal templates). This is not a customer-facing app ; the demo is the cohort of ventures themselves.",
+    demoUrl: "https://www.kinetikx.com/#cohort",
+    demoLabel: "Meet the cohort",
+    demoNote: "The cohort strip on this page is the studio's product surface.",
+    screenshots: [],
+  },
+  businessModel: [
+    "[LUCY placeholder] Revenue model — Mandate fees (Founding LP + anchor-client) + venture equity + platform royalty from spun-out ventures once they reach revenue thresholds.",
+    "[LUCY placeholder] Segment split : Anchor-client mandates (enterprise / family office / government-linked) vs Founding LP capital pool.",
+  ],
+  gtm: [
+    "[LUCY placeholder] Acquisition — direct engagement with GCC enterprise and family-office principals ; Founding LP class is invitation-based (qualified investors by warm intro).",
+    "[LUCY placeholder] Journey One is closed to new anchor mandates ; Journey Two opens for anchor conversations in [LUCY quarter].",
+  ],
+  keyNumbers: [
+    { label: "Journey One", value: "5 ventures live", hint: "NYSM · HERAKLYS · TCHIP·IN · PETS·NATION · LIQUID SPACE" },
+    { label: "Journey Two", value: "5 ventures queued", hint: "FIN·WEL · AOSX · STAR·DUST · FALCON · DEUCE" },
+    { label: "Thesis horizon", value: "36 months", hint: "$15M today → $65M SEED → $240M Series A" },
+    { label: "Model", value: "SaaS + equity", hint: "mandate + platform royalty" },
+    { label: "Studio location", value: "Dubai + Montréal", hint: "GCC ops + Canadian engineering hub" },
+    { label: "Market opportunity", value: "~$2.0B TAM", hint: "GCC/MENA mandate market (Teresa v1)" },
+    { label: "[LUCY] Founding LPs signed", value: "[LUCY]", hint: "conversion vs cap" },
+    { label: "[LUCY] Anchor mandates 2026", value: "[LUCY]", hint: "signed / in DD" },
+  ],
+  team: {
+    intro:
+      "[LUCY placeholder] K·VS's operating team — senior-heavy, AI-native, cross-cohort. Mirror the HERAKLYS team paragraph, framed as \"the operators behind the ventures\".",
+    members: [
+      { name: "Xavier (XGL)", role: "Founder + General Partner", note: "Studio principal + venture architect" },
+      { name: "[LUCY] Rebecca Falcone", role: "Senior Legal + CIO", note: "Governance, IP, compliance" },
+      { name: "[LUCY] Lucy del Mar", role: "Brand + Marketing lead", note: "Cross-cohort narrative + sales" },
+      { name: "[LUCY] Nina Solheim", role: "Studio Engineer in Residence", note: "Shared tooling + venture engineering support" },
+      { name: "[LUCY] additions", role: "[LUCY]", note: "Advisors, GP network, cohort operators" },
+    ],
+  },
+};
+
 // Slug → detail lookup. Add new venture keys here as content lands.
 // A venture without an entry hides the "click to expand" affordance.
 export const VENTURE_DETAILS: Record<string, VentureDetail> = {
   heraklys: HERAKLYS_DETAIL,
   nysm: NYSM_DETAIL,
+  tchipin: TCHIPIN_DETAIL,
+  petsnation: PETSNATION_DETAIL,
+  "liquid-space": LIQUID_SPACE_DETAIL,
+  "kinetikx-vs": KINETIKX_VS_DETAIL,
 };
