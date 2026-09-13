@@ -598,7 +598,7 @@ export const FALCON_EOS_DETAIL: VentureDetail = {
 export const KINETIKX_VS_DETAIL: VentureDetail = {
   description: [
     "K•VS takes ideas — ours or a client's — from zero to one, then escorts them beyond Series A. What makes the model unusual is who funds it: enterprise anchor clients engage the studio on their own transformation, for fees, equity or both. The client funds the build and keeps the benefit; where the fit is right, an anchor client can come all the way in as a shareholder. Services become platforms. Clients become partners. IP stays in the studio. For investors, family offices and institutions, that means venture upside with a de-risked cost base. For corporates, it means an innovation engine with real venture economics — not a lab that ships nothing.",
-    "The studio operates by Journeys — cohorts of five ventures built in parallel on one shared playbook. Journey One is live: NYSM (HRtech), HERAKLYS (sportstech), Liquid Space (F&B), Tchip•In (fintech) and Pets•Nation (petcare). All are built AI-accelerated: small senior teams, agentic delivery, enterprise-grade output at startup speed. What one venture learns on Monday, the other four apply on Tuesday. A failure doesn't kill the studio; a win lifts everything. Journey Two opens in 2027.",
+    "The studio operates by Journeys — cohorts of five ventures built in parallel on one shared playbook. Journey One is live: NYSM (HRtech), HERAKLYS (sportstech), Liquid Space (F&B), Tchip•In (fintech) and Pets•Nation (petcare). All are built AI-accelerated: small senior teams, agentic delivery, enterprise-grade output at startup speed. What one venture learns on Monday, the other four apply on Tuesday. A failure doesn't kill the studio; a win lifts everything. Journey Two follows.",
     "Because the founder has done the hard version of this for 25+ years in the GCC: turning a $3M-deficit subsidiary into a $25M+ revenue business, running a $25M innovation fund, building and exiting his own agency. The studio industrialises that operating pattern — and Dubai gives it the capital, the talent and the regulatory runway to compound.",
   ],
   conceptDiagramSrc: undefined,
@@ -625,7 +625,7 @@ export const KINETIKX_VS_DETAIL: VentureDetail = {
   },
   uiUx: {
     paragraph:
-      "**KinetiKx Venture Studios (K•VS)** is a Dubai venture studio that takes ideas from zero to one and escorts them beyond Series A. The model is de-risked by design: enterprise anchor clients fund the build and keep the benefit — and where the fit is right, an anchor client can come all the way in as a shareholder. Studio surfaces: **kinetikx.com** (studio site, venture drawers, JOURNEY•ONE), the venture products themselves, and the founder's build-in-public channel. Proof points: **AOSX** (sovereign on-premise AI platform — named AI colleagues on client-owned hardware, concept to operational prototype inside the studio); **Sport & Leisure Management OS** (enterprise ERP under Canadian client mandate — API-first, multi-tenant, unifying membership, reservations, payments, retail, F&B and analytics); **NYSM** (two-sided video-first recruitment platform from concept to working product with cloud video pipeline and native apps in progress). Current state September 2026: Journey One in full build — one venture approaching public launch (NYSM), one platform in production with its anchor client (sports OS), one consumer product heading to first commercial sale (Liquid Space), AOSX proven as an operational prototype.",
+      "**KinetiKx Venture Studios (K•VS)** is a Dubai venture studio that takes ideas from zero to one and escorts them beyond Series A. The model is de-risked by design: enterprise anchor clients fund the build and keep the benefit — and where the fit is right, an anchor client can come all the way in as a shareholder. Studio surfaces: **kinetikx.com** (studio site, venture drawers, JOURNEY•ONE), the venture products themselves, and the founder's build-in-public channel. Proof points: **AOSX** (sovereign on-premise AI platform — named AI colleagues on client-owned hardware, concept to operational prototype inside the studio); **Sport & Leisure Management OS** (enterprise ERP under Canadian client mandate — API-first, multi-tenant, unifying membership, reservations, payments, retail, F&B and analytics); **NYSM** (two-sided video-first recruitment platform from concept to working product with cloud video pipeline and native apps in progress). Current state September 2026: Journey One in full build — one venture approaching public launch (NYSM), one platform under contract and moving to production with its anchor client (sports OS), one consumer product heading to first commercial sale (Liquid Space), AOSX proven as an operational prototype. Studio bench and six co-founders assembled.",
     demoUrl: "https://www.kinetikx.com/#cohort",
     demoLabel: "Meet the cohort",
     demoNote: "The cohort strip on this page is the studio's product surface.",
@@ -653,9 +653,14 @@ export const KINETIKX_VS_DETAIL: VentureDetail = {
       "Studio bench and six co-founders assembled. The K•VS bench spans strategy, venture architecture, commercial and development, augmented with agentic AI delivery — small senior teams building enterprise-grade output at startup speed.",
     members: [
       {
-        name: "[CO-FOUNDER NAMES PENDING]",
+        name: "Xavier G. Layre",
+        role: "Founder",
+        note: "[BIO + PHOTO PENDING]",
+      },
+      {
+        name: "Other co-founders",
         role: "Co-founders",
-        note: "XGL ruling requested 2026-09-13 (DM 2408). Until ruled, no individual name appears on the studio Team surface.",
+        note: "To be confirmed.",
       },
     ],
   },
