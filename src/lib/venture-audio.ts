@@ -131,6 +131,7 @@ export function playVentureFromStart(slug: string) {
   const el = getEl();
   const src = `/audio/ventures/${slug}.mp3`;
   const sameSrc = el.src.endsWith(src);
+  const wasEnded = state.ended || el.ended;
 
   // Reset bookkeeping BEFORE touching the element so an in-flight `play`
   // callback (from a previous invocation) can no-op on the state.playing
@@ -154,7 +155,13 @@ export function playVentureFromStart(slug: string) {
     });
   };
 
-  if (sameSrc && el.readyState >= 3 /* HAVE_FUTURE_DATA */) {
+  // XGL msg 7356 · replay button was silently no-op after the clip
+  // finished. Chrome keeps `el.ended = true` after playback ends, and
+  // although currentTime=0 seeks the head back, the subsequent play()
+  // promise resolves optimistically then bails without producing sound.
+  // Fix : whenever the element was in the ended state, force the full
+  // load()+canplay cycle so the media pipeline re-primes from scratch.
+  if (sameSrc && !wasEnded && el.readyState >= 3 /* HAVE_FUTURE_DATA */) {
     // Cached from a previous play — restart in place, no reload.
     el.pause();
     start();
