@@ -160,6 +160,22 @@ const JOURNEY_TWO: Venture[] = [
     stage: "Build → MVP Q1-27",
   },
   {
+    slug: "stardust",
+    name: "STAR•DUST",
+    eyebrow: "THE PASSIONATE",
+    summary:
+      "Fractional ownership of celebrity-owned real-world assets. Fan capital, professionally structured.",
+    accent: COLOR.green,
+    logoSrc: "/images/ventures/stardust-symbol.png",
+    conceptDiagramSrc: "/images/ventures/diagrams/stardust.png",
+    // XGL msg 7143 — real Stardust Capital values, verbatim.
+    sector: "FinTech",
+    segment: "B2C",
+    marketSize: "GCC $XB, US & CAN $ZB, GLB $YB",
+    model: "Trx Fee + Revenue Share",
+    stage: "Validation & Regulatory Assessment",
+  },
+  {
     // Lucy DM 2026-09-13 : swatch slug aligned to VENTURE_DETAILS key
     // "falcon-eos" so the drawer opens (was "falcon" and missed the
     // lookup). Falcon content is STAGING-ONLY per XGL genericisation
@@ -177,10 +193,24 @@ const JOURNEY_TWO: Venture[] = [
     model: "License + Revenue Share",
     stage: "Validation + 2x Anchor Clients pitch",
   },
-  // Lucy DM 2026-09-13 : STARDUST and DEUCE removed from staging.
-  // Rule : J2 exposure limited to finwel / aosx / falcon(-eos). Stardust
-  // (internal J2 kit only) and Deuce (public embargo) get zero surface —
-  // no swatch, no drawer — until XGL flips them.
+  {
+    slug: "deuce",
+    name: "DEUCE",
+    eyebrow: "YOUR ADVANTAGE",
+    summary: "",
+    accent: COLOR.yellow,
+    logoSrc: "/images/ventures/deuce-symbol.png",
+    // XGL msg 7137 — real DEUCE values, verbatim (Collection typo fixed).
+    sector: "Fashion & Apparel",
+    segment: "B2B2C & B2C",
+    marketSize: "GCC $XB, US & CAN $ZB, GLB $YB",
+    model: "Sales Margin",
+    stage: "Validation + Collection V1",
+  },
+  // XGL msg 7359 · STARDUST + DEUCE restored to J2 (5-ventures cohort).
+  // Swatches show real values ; drawers ship the "content TBC" fallback
+  // until Lucy lifts the .md canon (deuce still under public embargo,
+  // stardust internal J2 kit only per Lucy 2026-09-13 DM).
 ];
 
 function VentureCard({
