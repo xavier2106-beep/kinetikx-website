@@ -133,38 +133,9 @@ export const HERAKLYS_DETAIL: VentureDetail = {
   ],
   team: {
     intro:
-      "HERAKLYS is built by KinetiKx Venture Studios the way it believes ventures should be built in 2026: a founder with an AI-native operating squad, not an org chart. One human at the wheel, a digital-native squad at every function, human validation on everything that ships — the same governance model the product itself sells.",
+      "KinetiKx Venture Studios is the founder. HERAKLYS is a studio venture — conceived, built and operated by the K•VS bench: strategy, venture architecture, commercial and development, augmented with agentic AI delivery.",
     members: [
-      {
-        name: "Xavier (XGL)",
-        role: "Founder + Product Architect",
-        note: "Venue economics, platform vision, GCC / Canada network",
-      },
-      {
-        name: "Nina Solheim",
-        role: "Studio Engineer in Residence",
-        note: "Platform + web engineering, AI Core, infrastructure",
-      },
-      {
-        name: "Noémie Bérenger",
-        role: "Dedicated Developer",
-        note: "Venue ERP, digital signage, content management",
-      },
-      {
-        name: "Rebecca Falcone",
-        role: "Legal Counsel",
-        note: "Contracts, Loi 25 / Loi 96 compliance, data governance",
-      },
-      {
-        name: "Lucy del Mar",
-        role: "Brand, Marketing & Sales",
-        note: "Positioning, kinetikx.com, prospect materials",
-      },
-      {
-        name: "Sonnet",
-        role: "Engineering Support",
-        note: "Overnight builds, tests, code review",
-      },
+      { name: "KinetiKx Venture Studios", role: "Founder" },
     ],
   },
 };
@@ -679,9 +650,13 @@ export const KINETIKX_VS_DETAIL: VentureDetail = {
   ],
   team: {
     intro:
-      "[LUCY placeholder — Content-Kits/kinetikx-vs/07-founders-team/ empty as of 2026-09-13 · Lucy to drop the file, Nina re-lifts on delivery.]",
+      "Studio bench and six co-founders assembled. The K•VS bench spans strategy, venture architecture, commercial and development, augmented with agentic AI delivery — small senior teams building enterprise-grade output at startup speed.",
     members: [
-      { name: "Xavier G. Layre", role: "Founder", note: "[BIO + PHOTO PENDING]" },
+      {
+        name: "[CO-FOUNDER NAMES PENDING]",
+        role: "Co-founders",
+        note: "XGL ruling requested 2026-09-13 (DM 2408). Until ruled, no individual name appears on the studio Team surface.",
+      },
     ],
   },
 };
