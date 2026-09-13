@@ -236,8 +236,12 @@ export const NYSM_DETAIL: VentureDetail = {
     { label: "Launch", value: "2026", hint: "Built, staged and launching now — not a pitch deck." },
   ],
   team: {
-    intro: "[LUCY placeholder] — Team draft blocked on XGL input per Lucy DM 2026-09-13.",
-    members: [{ name: "Xavier (XGL)", role: "Founder + Product Architect" }],
+    intro:
+      "Built within KinetiKx Venture Studios (Journey One): the studio bench — strategy, venture architecture, commercial and development — stands behind the founding team.",
+    members: [
+      { name: "Rana Naoum", role: "Co-Founder", note: "[BIO + PHOTO PENDING]" },
+      { name: "Osman Sultan", role: "Co-Founder", note: "[BIO + PHOTO PENDING]" },
+    ],
   },
 };
 
@@ -296,8 +300,11 @@ export const TCHIPIN_DETAIL: VentureDetail = {
     { label: "Regulated", value: "100%", hint: "Pooled funds run through the UAE's licensed payments framework. Regulation-first is the moat." },
   ],
   team: {
-    intro: "[LUCY placeholder] — Team draft blocked on XGL input per Lucy DM 2026-09-13.",
-    members: [{ name: "Xavier (XGL)", role: "Founder + Product Architect" }],
+    intro:
+      "Built within KinetiKx Venture Studios (Journey One): the studio bench — strategy, venture architecture, commercial and development — stands behind the founding team.",
+    members: [
+      { name: "Louloua Younes", role: "Co-Founder", note: "[BIO + PHOTO PENDING]" },
+    ],
   },
 };
 
@@ -356,8 +363,11 @@ export const PETSNATION_DETAIL: VentureDetail = {
     { label: "Post-pandemic", value: "+30%", hint: "UAE pet ownership up nearly a third since the pandemic — and spend per pet keeps climbing." },
   ],
   team: {
-    intro: "[LUCY placeholder] — Team draft blocked on XGL input per Lucy DM 2026-09-13.",
-    members: [{ name: "Xavier (XGL)", role: "Founder + Product Architect" }],
+    intro:
+      "KinetiKx Venture Studios is the founder. Pets•Nation is a studio venture — conceived, built and operated by the K•VS bench: strategy, venture architecture, commercial and development, augmented with agentic AI delivery.",
+    members: [
+      { name: "KinetiKx Venture Studios", role: "Founder" },
+    ],
   },
 };
 
@@ -417,8 +427,12 @@ export const LIQUID_SPACE_DETAIL: VentureDetail = {
     { label: "Proven line", value: "1M+", hint: "Manufactured on a specialised line that has already shipped a million cans in the category." },
   ],
   team: {
-    intro: "[LUCY placeholder] — Team draft blocked on XGL input per Lucy DM 2026-09-13.",
-    members: [{ name: "Xavier (XGL)", role: "Founder + Product Architect" }],
+    intro:
+      "Built within KinetiKx Venture Studios (Journey One): the studio bench — strategy, venture architecture, commercial and development — stands behind the founding team.",
+    members: [
+      { name: "Xavier G. Layre", role: "Co-Founder", note: "Founder of KinetiKx Venture Studios. [BIO + PHOTO PENDING]" },
+      { name: "J.N Gautier", role: "Co-Founder", note: "[BIO + PHOTO PENDING]" },
+    ],
   },
 };
 
@@ -477,8 +491,11 @@ export const FINWEL_DETAIL: VentureDetail = {
     { label: "The moment", value: "2026", hint: "The UAE's unified-payday resolution turned early wage access from perk into pressure valve." },
   ],
   team: {
-    intro: "[LUCY placeholder] — Team draft blocked on XGL input per Lucy DM 2026-09-13.",
-    members: [{ name: "Xavier (XGL)", role: "Founder + Product Architect" }],
+    intro:
+      "KinetiKx Venture Studios is the founder. FIN•WEL is a studio venture — conceived, built and operated by the K•VS bench: strategy, venture architecture, commercial and development, augmented with agentic AI delivery.",
+    members: [
+      { name: "KinetiKx Venture Studios", role: "Founder" },
+    ],
   },
 };
 
@@ -537,8 +554,11 @@ export const AOSX_DETAIL: VentureDetail = {
     { label: "Data leaving", value: "0", hint: "Sovereign by design: your data never becomes someone else's training set." },
   ],
   team: {
-    intro: "[LUCY placeholder] — Team draft blocked on XGL input per Lucy DM 2026-09-13.",
-    members: [{ name: "Xavier (XGL)", role: "Founder + Product Architect" }],
+    intro:
+      "KinetiKx Venture Studios is the founder. AOSX is a studio venture — conceived, built and operated by the K•VS bench: strategy, venture architecture, commercial and development, augmented with agentic AI delivery.",
+    members: [
+      { name: "KinetiKx Venture Studios", role: "Founder" },
+    ],
   },
 };
 
@@ -658,8 +678,11 @@ export const KINETIKX_VS_DETAIL: VentureDetail = {
     { label: "Journey One", value: "5", hint: "Five ventures in active build — and a second journey already forming behind them." },
   ],
   team: {
-    intro: "[LUCY placeholder] — Team draft blocked on XGL input per Lucy DM 2026-09-13.",
-    members: [{ name: "Xavier (XGL)", role: "Founder + Product Architect" }],
+    intro:
+      "[LUCY placeholder — Content-Kits/kinetikx-vs/07-founders-team/ empty as of 2026-09-13 · Lucy to drop the file, Nina re-lifts on delivery.]",
+    members: [
+      { name: "Xavier G. Layre", role: "Founder", note: "[BIO + PHOTO PENDING]" },
+    ],
   },
 };
 
