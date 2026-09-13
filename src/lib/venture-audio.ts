@@ -23,6 +23,9 @@ const AVAILABLE = new Set([
   "liquid-space",
   "tchipin",
   "petsnation",
+  "finwel",
+  "aosx",
+  "falcon-eos",
 ]);
 
 type Listener<T> = (value: T) => void;
