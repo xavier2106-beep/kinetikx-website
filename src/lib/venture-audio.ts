@@ -41,6 +41,7 @@ type State = {
   ended: boolean; // true once the current clip has finished
   muteListeners: Set<Listener<boolean>>;
   endedListeners: Set<Listener<{ slug: string }>>;
+  playStateListeners: Set<Listener<void>>;
 };
 
 function readMuted(): boolean {
@@ -61,7 +62,12 @@ const state: State = {
   ended: false,
   muteListeners: new Set(),
   endedListeners: new Set(),
+  playStateListeners: new Set(),
 };
+
+function notifyPlayState() {
+  state.playStateListeners.forEach((fn) => fn());
+}
 
 function persistMuted() {
   if (typeof window === "undefined") return;
@@ -97,7 +103,10 @@ function getEl(): HTMLAudioElement {
     if (slug) {
       state.endedListeners.forEach((fn) => fn({ slug }));
     }
+    notifyPlayState();
   });
+  el.addEventListener("play", notifyPlayState);
+  el.addEventListener("pause", notifyPlayState);
   document.body.appendChild(el);
   state.el = el;
   return el;
@@ -252,4 +261,41 @@ export function onEnded(cb: Listener<{ slug: string }>): () => void {
 /** True iff this venture ships an audio file. */
 export function hasAudio(slug: string): boolean {
   return AVAILABLE.has(slug);
+}
+
+/** Playback-state snapshot for the in-drawer pause/play button. */
+export type VoiceState = "idle" | "playing" | "paused" | "ended";
+export function getVoiceState(): VoiceState {
+  const el = state.el;
+  if (!el || state.playing === null) return "idle";
+  if (state.ended) return "ended";
+  return el.paused ? "paused" : "playing";
+}
+
+/** XGL msg 7382 (2026-09-14) : header pause/play button. Playing →
+ * pause without losing position ; paused mid-clip → resume in place ;
+ * paused after natural end → restart from t=0 (same behaviour as the
+ * old replay button, now unified). No-op when muted or idle. */
+export function togglePauseByUser() {
+  const el = state.el;
+  if (!el || state.playing === null || state.muted) return;
+  if (state.ended) {
+    playVentureFromStart(state.playing);
+    return;
+  }
+  if (el.paused) {
+    el.play().catch(() => {
+      state.playing = null;
+      notifyPlayState();
+    });
+  } else {
+    el.pause();
+  }
+}
+
+export function onPlayStateChange(cb: Listener<void>): () => void {
+  state.playStateListeners.add(cb);
+  return () => {
+    state.playStateListeners.delete(cb);
+  };
 }

@@ -3,19 +3,20 @@
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { X, ExternalLink, Play } from "lucide-react";
+import { X, ExternalLink, Play, Pause } from "lucide-react";
 import type { VentureDetail } from "@/data/ventures";
 import {
   ensureUnlockListener,
+  getVoiceState,
   hasAudio,
-  isEnded,
-  isMuted,
-  onEnded,
   onMuteChange,
+  onPlayStateChange,
   playVentureFromStart,
   resumeFromVideoSuspend,
   stopVentureIfOwned,
   suspendForVideo,
+  togglePauseByUser,
+  type VoiceState,
 } from "@/lib/venture-audio";
 
 // XGL msg 7284 (2026-09-10) · Rive dead-code excised — no .riv files
@@ -28,8 +29,13 @@ const TchipinDiagram = dynamic(
   () => import("./diagrams/TchipinDiagram"),
   { ssr: false },
 );
+const PetsnationDiagram = dynamic(
+  () => import("./diagrams/PetsnationDiagram"),
+  { ssr: false },
+);
 const DIAGRAM_COMPONENTS: Record<string, React.ComponentType> = {
   tchipin: TchipinDiagram,
+  petsnation: PetsnationDiagram,
 };
 
 // XGL msg 7042 (2026-09-03) · full-width drawer that opens downward when a
@@ -109,21 +115,20 @@ export default function VentureDrawer({
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
-  // XGL msg 7325 · voiceover playback lifecycle. Fires once on mount from
-  // t=0, hard-stops on unmount. Subscribes to the `ended` event so the
-  // in-drawer replay button appears when the clip finishes.
-  const [audioEnded, setAudioEnded] = useState(false);
+  // XGL msg 7325 + 7382 · voiceover playback lifecycle. Fires once on
+  // mount from t=0, hard-stops on unmount. Subscribes to `playstate`
+  // events so the pause/play/replay button next to the venture name
+  // reflects the current audio element state.
+  const [voiceState, setVoiceState] = useState<VoiceState>("idle");
   const ventureHasVoiceover = hasAudio(ventureSlug);
   useEffect(() => {
     if (!ventureHasVoiceover) return;
     ensureUnlockListener();
-    setAudioEnded(isEnded() && !isMuted());
     playVentureFromStart(ventureSlug);
-    const unsubEnded = onEnded(({ slug }) => {
-      if (slug === ventureSlug) setAudioEnded(true);
-    });
+    setVoiceState(getVoiceState());
+    const unsubState = onPlayStateChange(() => setVoiceState(getVoiceState()));
     const unsubMute = onMuteChange((muted) => {
-      if (muted) setAudioEnded(false);
+      if (muted) setVoiceState("idle");
     });
     return () => {
       // Scoped stop — see venture-audio.ts. AnimatePresence keeps the
@@ -131,9 +136,9 @@ export default function VentureDrawer({
       // unconditionally stopped here, the incoming drawer's audio (which
       // has already claimed state.playing) would be silenced.
       stopVentureIfOwned(ventureSlug);
-      unsubEnded();
+      unsubState();
       unsubMute();
-      setAudioEnded(false);
+      setVoiceState("idle");
     };
   }, [ventureHasVoiceover, ventureSlug]);
 
@@ -201,10 +206,9 @@ export default function VentureDrawer({
     };
   }, [ventureHasVoiceover, tab]);
 
-  const handleReplay = () => {
+  const handleVoiceToggle = () => {
     if (!ventureHasVoiceover) return;
-    setAudioEnded(false);
-    playVentureFromStart(ventureSlug);
+    togglePauseByUser();
   };
 
   return (
@@ -272,18 +276,35 @@ export default function VentureDrawer({
                 <h3 className="font-heading text-4xl font-extralight sm:text-5xl">
                   {ventureName}
                 </h3>
-                {/* XGL msg 7325 · replay button surfaces only after the
-                    voiceover ends. Muted state hides it too (the user
-                    opted out). */}
-                {ventureHasVoiceover && audioEnded ? (
+                {/* XGL msg 7382 · pause / play button. Playing → Pause
+                    icon (click to pause). Paused mid-clip → Play icon
+                    (click to resume in place). Ended → Play icon (click
+                    to restart from t=0). Hidden when idle or muted. */}
+                {ventureHasVoiceover && voiceState !== "idle" ? (
                   <button
                     type="button"
-                    onClick={handleReplay}
-                    aria-label="Rejouer le voice over"
-                    title="Rejouer le voice over"
+                    onClick={handleVoiceToggle}
+                    aria-label={
+                      voiceState === "playing"
+                        ? "Mettre le voice over en pause"
+                        : voiceState === "paused"
+                          ? "Reprendre le voice over"
+                          : "Rejouer le voice over"
+                    }
+                    title={
+                      voiceState === "playing"
+                        ? "Pause"
+                        : voiceState === "paused"
+                          ? "Reprendre"
+                          : "Rejouer"
+                    }
                     className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/40 text-white/85 transition hover:border-white hover:bg-white/10"
                   >
-                    <Play size={14} strokeWidth={1.8} />
+                    {voiceState === "playing" ? (
+                      <Pause size={14} strokeWidth={1.8} />
+                    ) : (
+                      <Play size={14} strokeWidth={1.8} />
+                    )}
                   </button>
                 ) : null}
               </div>
