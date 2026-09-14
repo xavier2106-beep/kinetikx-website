@@ -349,15 +349,13 @@ export default function VentureDrawer({
                     soon. HERAKLYS is currently the pilot showcase for this
                     drawer — click it to see the full 8-tab layout.
                   </div>
-                  {/* XGL msg 7147 : if the venture ships a concept diagram
-                      independently of a full detail record, render it below
-                      the placeholder so the drawer still has visual payload. */}
-                  {(DIAGRAM_COMPONENTS[ventureSlug] || conceptDiagramSrcOverride) && (
-                    <ConceptTab
-                      src={conceptDiagramSrcOverride}
-                      ventureSlug={ventureSlug}
-                    />
-                  )}
+                  {/* XGL msg 7372 : always render the concept-diagram frame
+                      on the empty state too — actual diagram when the venture
+                      ships one, 1200×400 dashed placeholder otherwise. */}
+                  <ConceptTab
+                    src={conceptDiagramSrcOverride}
+                    ventureSlug={ventureSlug}
+                  />
                 </motion.div>
               ) : (
                 <motion.div
@@ -418,21 +416,22 @@ function ConceptTab({
   caption?: string;
   ventureSlug?: string;
 }) {
-  // XGL msg 7213 (2026-09-09) : absolute consistency across all
-  // ventures + all tabs — fixed 16/9 frame at max-w-2xl. Any diagram
-  // source (PNG, SVG, .riv, custom React) renders INSIDE this box.
-  // No drawer reflow when switching between ventures with wildly
-  // different image aspect ratios.
-  const FRAME_CLASSES =
-    "mx-auto aspect-[16/9] w-full max-w-2xl overflow-hidden rounded-lg border border-white/15 bg-black/40 shadow-2xl";
+  // XGL msg 7372 (2026-09-14) : canonical diagram frame is now
+  // 1200 × 400 (3:1). Every future concept diagram is drawn to fit
+  // inside these proportions ; missing ones show a dashed-border
+  // placeholder at the same footprint so the drawer height stays
+  // stable venture-to-venture.
+  const FRAME_BOX = "mx-auto w-full max-w-[1200px]";
+  const FRAME_INNER =
+    "aspect-[3/1] w-full overflow-hidden rounded-lg bg-black/40 shadow-2xl";
 
   // XGL msg 7206 : per-slug custom framer-motion component wins over
   // src (PNG or .riv). Registry lives at the top of this file.
   const CustomDiagram = ventureSlug ? DIAGRAM_COMPONENTS[ventureSlug] : undefined;
   if (CustomDiagram) {
     return (
-      <figure className="mx-auto max-w-2xl">
-        <div className={FRAME_CLASSES}>
+      <figure className={FRAME_BOX}>
+        <div className={`${FRAME_INNER} border border-white/15`}>
           <CustomDiagram />
         </div>
         {caption ? (
@@ -446,14 +445,15 @@ function ConceptTab({
 
   if (!src) {
     return (
-      <figure className="mx-auto max-w-2xl">
+      <figure className={FRAME_BOX}>
         <div
-          className={
-            FRAME_CLASSES + " flex flex-col items-center justify-center p-8 text-center"
-          }
+          className={`${FRAME_INNER} flex flex-col items-center justify-center border-2 border-dashed border-white/40 p-8 text-center`}
         >
           <p className="text-sm text-white/70">
             Concept diagram — image forthcoming.
+          </p>
+          <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
+            1200 × 400
           </p>
           {caption ? (
             <p className="mt-3 max-w-lg text-xs text-white/50">{caption}</p>
@@ -463,8 +463,8 @@ function ConceptTab({
     );
   }
   return (
-    <figure className="mx-auto max-w-2xl">
-      <div className={FRAME_CLASSES + " flex items-center justify-center"}>
+    <figure className={FRAME_BOX}>
+      <div className={`${FRAME_INNER} flex items-center justify-center border border-white/15`}>
         <img
           src={src}
           alt={caption ?? "Concept diagram"}
