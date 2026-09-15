@@ -3,15 +3,15 @@ import { useEffect, useState } from "react";
 
 type Section = { id: string; label: string };
 
+// XGL msg 7395 (2026-09-15) · same pruning as Nav.tsx : Model,
+// Operators, Math dropped from the right-side dot nav.
 const SECTIONS: Section[] = [
   { id: "home",      label: "Home" },
   { id: "thesis",    label: "Thesis" },
-  { id: "model",     label: "Model" },
   { id: "studio",    label: "Studio" },
   { id: "cohort",    label: "Cohort" },
   { id: "why-now",   label: "Why Now" },
-  { id: "operators", label: "Operators" },
-  { id: "math",      label: "Math" },
+  { id: "reads",     label: "Reads" },
   { id: "contact",   label: "Contact" },
 ];
 

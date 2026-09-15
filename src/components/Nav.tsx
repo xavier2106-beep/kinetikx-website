@@ -1,13 +1,14 @@
 import Image from "next/image";
 
+// XGL msg 7395 (2026-09-15) · MODEL / OPERATORS / MATH pruned from
+// the top nav. Sections themselves stay in the page — they just no
+// longer surface as jump links.
 const LINKS = [
   { href: "#thesis", label: "Thesis" },
-  { href: "#model", label: "Model" },
   { href: "#studio", label: "Studio" },
   { href: "#cohort", label: "Cohort" },
   { href: "#why-now", label: "Why Now" },
-  { href: "#operators", label: "Operators" },
-  { href: "#math", label: "Math" },
+  { href: "#reads", label: "Reads" },
   { href: "#contact", label: "Contact" },
 ];
 
