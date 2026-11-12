@@ -49,8 +49,9 @@ const TBD_INFO = {
 // XGL msg 7039 (2026-09-03) · colour is now a BRAND attribute, not a
 // slot attribute. Each venture in J1 pairs with one in J2 on the same
 // colour (NYSM↔FinWel blue, Heraklys↔Falcon purple, Tchipin↔Stardust
-// green, PetsNation↔AOSX brown, LiquidSpace↔Deuce yellow). Positions
-// within each row are independent.
+// green, PetsNation↔AOSX brown). Positions within each row are
+// independent. LiquidSpace's yellow pair was DEUCE, removed per
+// XGL msg 9730 (2026-11-12); yellow slot in J2 is now empty.
 const COLOR = {
   blue:   "linear-gradient(135deg, #1a3a5c 0%, #0a0a0a 100%)",
   purple: "linear-gradient(135deg, #4a1a3a 0%, #0a0a0a 100%)",
@@ -190,20 +191,7 @@ const JOURNEY_TWO: Venture[] = [
     model: "License + Revenue Share",
     stage: "Validation + 2x Anchor Clients pitch",
   },
-  {
-    slug: "deuce",
-    name: "DEUCE",
-    eyebrow: "YOUR ADVANTAGE",
-    summary: "",
-    accent: COLOR.yellow,
-    logoSrc: "/images/ventures/deuce-symbol.png",
-    // XGL msg 7137 — real DEUCE values, verbatim (Collection typo fixed).
-    sector: "Fashion & Apparel",
-    segment: "B2B2C & B2C",
-    marketSize: "GCC $XB, US & CAN $ZB, GLB $YB",
-    model: "Sales Margin",
-    stage: "Validation + Collection V1",
-  },
+  // XGL msg 9730 (2026-11-12) · DEUCE removed from J2 portfolio.
 ];
 
 function VentureCard({
