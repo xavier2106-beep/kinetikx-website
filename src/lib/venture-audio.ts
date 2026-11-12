@@ -27,7 +27,6 @@ const AVAILABLE = new Set([
   "aosx",
   "falcon-eos",
   "stardust",
-  "deuce",
 ]);
 
 type Listener<T> = (value: T) => void;
