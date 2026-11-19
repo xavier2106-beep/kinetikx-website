@@ -192,6 +192,22 @@ const JOURNEY_TWO: Venture[] = [
     stage: "Validation + 2x Anchor Clients pitch",
   },
   // XGL msg 9730 (2026-11-12) · DEUCE removed from J2 portfolio.
+  // XGL msg 10003-10004 (2026-11-19) · yellow slot now holds a promo
+  // swatch inviting external pitches. Same design/colours/layout/fonts
+  // as the DEUCE card it replaces — only the copy changes.
+  {
+    slug: "your-idea",
+    name: "YOUR IDEA?",
+    eyebrow: "JOIN JOURNEY TWO",
+    summary:
+      "If you want to be part of Journey TWO, submit your pitch and let's talk!",
+    accent: COLOR.yellow,
+    sector: "YOUR SECTOR",
+    segment: "YOUR SEGMENT",
+    marketSize: "YOUR OPPORTUNITY",
+    model: "YOUR MODEL",
+    stage: "SUBMIT YOUR PITCH",
+  },
 ];
 
 function VentureCard({
